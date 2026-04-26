@@ -72,7 +72,7 @@
                 <button onclick="setWCurrency('usd')" id="wBtnUsd" class="btn-secondary flex-1 text-sm py-2">USD</button>
                 <button onclick="setWCurrency('syp')" id="wBtnSyp" class="btn-secondary flex-1 text-sm py-2">SYP</button>
             </div>
-            <div class="text-center text-xs" style="color:var(--muted)">الرصيد: <span id="wBalance">0.00000000</span> BTC</div>
+            <div class="text-center text-xs" style="color:var(--muted)">رصيدك الحالي: <span id="wBalance">0.00000000</span> BTC</div>
             <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)">المبلغ (<span id="wCurrLabel">BTC</span>)</label><input id="withdrawAmount" type="number" step="any" class="input-field" placeholder="0.00" dir="ltr" oninput="calcEquivalent()"></div>
             <div class="text-center text-xs" style="color:var(--accent)">المعادل: <span id="wEquiv">0.00000000</span> BTC</div>
             <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)">عنوان المحفظة / معلومات الاستلام</label><input id="walletAddress" type="text" class="input-field" placeholder="bc1q..." dir="ltr"></div>
@@ -109,7 +109,6 @@
         <!-- لوحة التعدين -->
         <section id="miningSection" class="py-20 px-4 hidden">
             <div class="max-w-7xl mx-auto">
-                <!-- زر التعدين -->
                 <div class="text-center mb-16">
                     <div id="miningButton" class="relative inline-block cursor-pointer" onclick="toggleMining()">
                         <div id="miningRing" class="w-56 h-56 rounded-full flex items-center justify-center mx-auto transition-all duration-500" style="background:linear-gradient(135deg,rgba(247,147,26,0.1),rgba(247,147,26,0.02));border:4px solid var(--border)">
@@ -119,14 +118,12 @@
                     <div class="mt-6 font-orbitron text-2xl font-bold" id="miningStatus" style="color:var(--muted)">اضغط لبدء التعدين</div>
                 </div>
 
-                <!-- بطاقات الأرصدة بالعملات الثلاث -->
                 <div class="grid sm:grid-cols-3 gap-6 mb-10">
                     <div class="glass-card p-6 text-center"><div class="font-orbitron text-4xl font-black" style="color:var(--accent)" id="balBtc">0.00000000</div><div class="text-sm mt-2" style="color:var(--muted)">BTC</div></div>
                     <div class="glass-card p-6 text-center"><div class="font-orbitron text-4xl font-black" style="color:var(--success)" id="balUsd">0.00</div><div class="text-sm mt-2" style="color:var(--muted)">USD</div></div>
                     <div class="glass-card p-6 text-center"><div class="font-orbitron text-3xl font-black" style="color:var(--accent2)" id="balSyp">0</div><div class="text-sm mt-2" style="color:var(--muted)">SYP</div></div>
                 </div>
 
-                <!-- أزرار الإجراءات -->
                 <div class="flex flex-wrap gap-4 justify-center mb-10">
                     <button onclick="openWithdrawModal()" class="btn-primary flex items-center gap-2"><i class="fas fa-wallet"></i> سحب الأرباح</button>
                 </div>
@@ -157,10 +154,12 @@
         if(!u||!p){showToast('أدخل البيانات','error');return;}
         const btn=document.getElementById('verifyBtn');btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جارٍ الاتصال...';
         try {
-            const res=await fetch(`${NGROK_URL}/verify?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&api_key=${API_KEY}`);
+            const res=await fetch(`${NGROK_URL}/verify?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&api_key=${API_KEY}`, {
+                headers: { 'ngrok-skip-browser-warning': 'true' } // مهم جداً لتجاوز صفحة ngrok
+            });
             if(res.ok){const data=await res.json();if(data.subscribed){appState.isSubscribed=true;appState.balance=data.balance||0;appState.btc_usd=data.btc_usd||65000;appState.usd_syp=data.usd_syp||14500;handleVerificationSuccess();btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> دخول';return;}}
-            showToast('بيانات خاطئة','error');
-        } catch(e){showToast('خطأ في الاتصال','error');}
+            showToast('بيانات خاطئة أو البوت متوقف','error');
+        } catch(e){showToast('خطأ في الاتصال بالسيرفر، تأكد أن البوت و ngrok يعملان','error');}
         btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> دخول';
     }
 
@@ -177,7 +176,7 @@
     }
 
     function toggleMining() {
-        if(!appState.isMining){appState.isMining=true;document.getElementById('miningIcon').className='fas fa-pause text-6xl text-black';document.getElementById('miningStatus').textContent='التعدين جارٍ...';document.getElementById('miningStatus').style.color='var(--success)';document.getElementById('miningRing').classList.add('mining-pulse');appState.miningInterval=setInterval(()=>{appState.balance+=0.0000001;updateBalUI();document.getElementById('hashRate')&&(document.getElementById('hashRate').textContent=(25+Math.random()*20).toFixed(2));},1000);}
+        if(!appState.isMining){appState.isMining=true;document.getElementById('miningIcon').className='fas fa-pause text-6xl text-black';document.getElementById('miningStatus').textContent='التعدين جارٍ...';document.getElementById('miningStatus').style.color='var(--success)';document.getElementById('miningRing').classList.add('mining-pulse');appState.miningInterval=setInterval(()=>{appState.balance+=0.0000001;updateBalUI();},1000);}
         else{appState.isMining=false;clearInterval(appState.miningInterval);document.getElementById('miningIcon').className='fas fa-play text-6xl text-black';document.getElementById('miningStatus').textContent='متوقف';document.getElementById('miningStatus').style.color='var(--muted)';document.getElementById('miningRing').classList.remove('mining-pulse');}
     }
 
