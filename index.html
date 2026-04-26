@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoMine Pro - منصة تعدين البيتكوين</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Orbitron:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        :root { --bg:#030308; --card:rgba(12,12,30,0.7); --border:rgba(247,147,26,0.12); --accent:#f7931a; --accent2:#ffd700; --accent-glow:rgba(247,147,26,0.35); --fg:#f0f0f5; --muted:#7a7a9e; --success:#00e676; --danger:#ff3d57; }
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body { font-family:'Cairo',sans-serif; background:var(--bg); color:var(--fg); overflow-x:hidden; }
+        .font-orbitron { font-family:'Orbitron',sans-serif; }
+        #particles-js { position:fixed; width:100%; height:100%; top:0; left:0; z-index:0; pointer-events:none; }
+        .glass-card { background:var(--card); border:1px solid var(--border); backdrop-filter:blur(25px); border-radius:20px; transition:all 0.4s; }
+        .glass-card:hover { border-color:rgba(247,147,26,0.4); box-shadow:0 0 40px rgba(247,147,26,0.1); transform:translateY(-5px); }
+        .btn-primary { background:linear-gradient(135deg,var(--accent),#e8850f); color:#000; font-weight:800; padding:16px 40px; border-radius:14px; border:none; cursor:pointer; font-size:17px; font-family:'Cairo'; transition:all 0.3s; box-shadow:0 4px 15px rgba(247,147,26,0.3); }
+        .btn-primary:hover { transform:translateY(-3px); box-shadow:0 8px 25px rgba(247,147,26,0.5); }
+        .btn-primary:disabled { opacity:0.4; cursor:not-allowed; transform:none; }
+        .btn-secondary { background:transparent; border:2px solid rgba(247,147,26,0.4); color:var(--accent); font-weight:700; padding:14px 32px; border-radius:14px; cursor:pointer; font-size:16px; font-family:'Cairo'; transition:all 0.3s; }
+        .btn-secondary:hover { background:rgba(247,147,26,0.1); border-color:var(--accent); }
+        .input-field { background:rgba(5,5,15,0.9); border:1.5px solid rgba(247,147,26,0.2); border-radius:14px; padding:16px 20px; color:var(--fg); font-size:16px; font-family:'Cairo'; width:100%; outline:none; transition:all 0.3s; }
+        .input-field:focus { border-color:var(--accent); box-shadow:0 0 20px rgba(247,147,26,0.15); }
+        .modal-overlay { position:fixed; inset:0; background:rgba(0,0,0,0.85); backdrop-filter:blur(12px); z-index:1000; display:none; align-items:center; justify-content:center; padding:20px; }
+        .modal-overlay.active { display:flex; }
+        .modal-content { background:linear-gradient(145deg,#0c0c24,#080818); border:1px solid var(--border); border-radius:24px; padding:50px; max-width:500px; width:100%; animation:modalIn 0.5s ease; box-shadow:0 0 80px rgba(247,147,26,0.15); }
+        @keyframes modalIn { from{opacity:0;transform:scale(0.8)translateY(30px)} to{opacity:1;transform:scale(1)translateY(0)} }
+        .toast { position:fixed; top:30px; left:50%; transform:translateX(-50%) translateY(-150px); z-index:9999; padding:18px 32px; border-radius:16px; font-weight:700; backdrop-filter:blur(20px); transition:transform 0.5s cubic-bezier(0.34,1.56,0.64,1); max-width:90vw; text-align:center; }
+        .toast.show { transform:translateX(-50%) translateY(0); }
+        .toast.success { background:rgba(0,230,118,0.15); border:1px solid rgba(0,230,118,0.5); color:var(--success); }
+        .toast.error { background:rgba(255,61,87,0.15); border:1px solid rgba(255,61,87,0.5); color:var(--danger); }
+        .toast.info { background:rgba(247,147,26,0.15); border:1px solid rgba(247,147,26,0.5); color:var(--accent); }
+        .mining-pulse { animation:miningPulse 2s ease-in-out infinite; }
+        @keyframes miningPulse { 0%,100%{box-shadow:0 0 30px rgba(247,147,26,0.3)} 50%{box-shadow:0 0 80px rgba(247,147,26,0.7),0 0 120px rgba(247,147,26,0.3)} }
+        .spin-slow { animation:spin 10s linear infinite; } @keyframes spin{to{transform:rotate(360deg)}}
+        .float-anim { animation:float 6s ease-in-out infinite; } @keyframes float{0%,100%{transform:translateY(0)} 50%{transform:translateY(-20px)}}
+    </style>
+</head>
+<body>
+
+<div id="particles-js"></div>
+<div id="toast" class="toast" role="alert"></div>
+
+<!-- مودال الدخول -->
+<div id="verifyModal" class="modal-overlay" role="dialog">
+    <div class="modal-content">
+        <button onclick="closeModal()" style="position:absolute;top:20px;left:20px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:24px;"><i class="fas fa-times"></i></button>
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6 float-anim" style="background:linear-gradient(135deg,var(--accent),#e8850f);box-shadow:0 0 40px var(--accent-glow);"><i class="fas fa-user-shield text-5xl text-black"></i></div>
+            <h3 class="text-3xl font-black mb-2" style="color:var(--accent)">تسجيل الدخول</h3>
+        </div>
+        <div class="space-y-5">
+            <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)"><i class="fas fa-user ml-1"></i> اسم المستخدم</label><input id="loginUsername" type="text" class="input-field" placeholder="Username" dir="ltr"></div>
+            <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)"><i class="fas fa-lock ml-1"></i> كلمة السر</label><input id="loginPassword" type="password" class="input-field" placeholder="Password" dir="ltr"></div>
+            <button id="verifyBtn" onclick="verifySubscription()" class="btn-primary w-full flex items-center justify-center gap-3 text-lg mt-4"><i class="fas fa-sign-in-alt"></i> دخول</button>
+        </div>
+    </div>
+</div>
+
+<!-- مودال السحب -->
+<div id="withdrawModal" class="modal-overlay" role="dialog">
+    <div class="modal-content">
+        <button onclick="closeWithdrawModal()" style="position:absolute;top:20px;left:20px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:24px;"><i class="fas fa-times"></i></button>
+        <div class="text-center mb-8">
+            <div class="w-24 h-24 mx-auto rounded-full flex items-center justify-center mb-6 float-anim" style="background:rgba(0,230,118,0.1);border:2px solid rgba(0,230,118,0.3);"><i class="fas fa-wallet text-5xl" style="color:var(--success)"></i></div>
+            <h3 class="text-3xl font-black mb-2">سحب الأرباح</h3>
+        </div>
+        <div class="space-y-5">
+            <div class="flex gap-2">
+                <button onclick="setWCurrency('btc')" id="wBtnBtc" class="btn-secondary flex-1 text-sm py-2">BTC</button>
+                <button onclick="setWCurrency('usd')" id="wBtnUsd" class="btn-secondary flex-1 text-sm py-2">USD</button>
+                <button onclick="setWCurrency('syp')" id="wBtnSyp" class="btn-secondary flex-1 text-sm py-2">SYP</button>
+            </div>
+            <div class="text-center text-xs" style="color:var(--muted)">الرصيد: <span id="wBalance">0.00000000</span> BTC</div>
+            <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)">المبلغ (<span id="wCurrLabel">BTC</span>)</label><input id="withdrawAmount" type="number" step="any" class="input-field" placeholder="0.00" dir="ltr" oninput="calcEquivalent()"></div>
+            <div class="text-center text-xs" style="color:var(--accent)">المعادل: <span id="wEquiv">0.00000000</span> BTC</div>
+            <div><label class="block text-sm mb-2 font-bold" style="color:var(--muted)">عنوان المحفظة / معلومات الاستلام</label><input id="walletAddress" type="text" class="input-field" placeholder="bc1q..." dir="ltr"></div>
+            <button onclick="processWithdraw()" class="btn-primary w-full flex items-center justify-center gap-2" style="background:linear-gradient(135deg,var(--success),#00b862);"><i class="fas fa-paper-plane"></i> تأكيد السحب</button>
+        </div>
+    </div>
+</div>
+
+<!-- المحتوى الرئيسي -->
+<div class="relative z-10">
+    <nav class="fixed top-0 w-full z-50" style="background:rgba(3,3,8,0.85);backdrop-filter:blur(30px);border-bottom:1px solid var(--border);">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-3"><div class="w-11 h-11 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg,var(--accent),#e8850f);box-shadow:0 0 20px var(--accent-glow);"><i class="fas fa-gem text-black text-lg"></i></div><span class="font-orbitron font-black text-xl tracking-wider" style="color:var(--accent)">CRYPTOMINE</span></div>
+            <div class="flex items-center gap-4">
+                <div id="statusBadge" class="hidden items-center gap-2 px-4 py-2 rounded-full text-xs font-bold" style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.3);color:var(--success)"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> متصل</div>
+                <div id="balanceNav" class="hidden items-center gap-2 px-4 py-2 rounded-xl text-sm font-black font-orbitron" style="background:rgba(247,147,26,0.1);border:1px solid var(--border)"><i class="fab fa-bitcoin" style="color:var(--accent)"></i><span id="navBalance" style="color:var(--accent2)">0.00000000</span></div>
+                <button onclick="openModal()" class="btn-secondary text-sm py-2 px-5" id="loginBtn"><i class="fas fa-lock ml-1"></i> الدخول</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="pt-20">
+        <!-- الهيرو -->
+        <section class="min-h-screen flex items-center justify-center relative px-4 overflow-hidden">
+            <div class="absolute inset-0 pointer-events-none"><div class="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-20" style="background:radial-gradient(circle,var(--accent),transparent 70%)"></div></div>
+            <div class="text-center max-w-5xl mx-auto relative">
+                <div class="mb-10 relative inline-block float-anim"><div class="w-44 h-44 mx-auto rounded-full flex items-center justify-center spin-slow" style="background:linear-gradient(135deg,var(--accent),#e8850f);box-shadow:0 0 80px var(--accent-glow),inset 0 0 20px rgba(0,0,0,0.3);"><i class="fab fa-bitcoin text-8xl text-black"></i></div></div>
+                <h1 class="font-orbitron text-6xl md:text-8xl font-black mb-8 leading-tight"><span style="color:var(--fg)">مستقبل</span><br><span style="background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;">التعدين الرقمي</span></h1>
+                <p class="text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed font-light" style="color:var(--muted)">سجل في البوت، ادخل بياناتك وابدأ بجمع الأرباح والسحب بالدولار أو الليرة السورية.</p>
+                <button onclick="openModal()" class="btn-primary text-xl px-14 py-5 flex items-center gap-3 mx-auto mb-16"><i class="fas fa-rocket"></i> ابدأ الآن</button>
+            </div>
+        </section>
+
+        <!-- لوحة التعدين -->
+        <section id="miningSection" class="py-20 px-4 hidden">
+            <div class="max-w-7xl mx-auto">
+                <!-- زر التعدين -->
+                <div class="text-center mb-16">
+                    <div id="miningButton" class="relative inline-block cursor-pointer" onclick="toggleMining()">
+                        <div id="miningRing" class="w-56 h-56 rounded-full flex items-center justify-center mx-auto transition-all duration-500" style="background:linear-gradient(135deg,rgba(247,147,26,0.1),rgba(247,147,26,0.02));border:4px solid var(--border)">
+                            <div class="w-44 h-44 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg,var(--accent),#e8850f);box-shadow:0 0 30px var(--accent-glow);"><i class="fas fa-play text-6xl text-black" id="miningIcon"></i></div>
+                        </div>
+                    </div>
+                    <div class="mt-6 font-orbitron text-2xl font-bold" id="miningStatus" style="color:var(--muted)">اضغط لبدء التعدين</div>
+                </div>
+
+                <!-- بطاقات الأرصدة بالعملات الثلاث -->
+                <div class="grid sm:grid-cols-3 gap-6 mb-10">
+                    <div class="glass-card p-6 text-center"><div class="font-orbitron text-4xl font-black" style="color:var(--accent)" id="balBtc">0.00000000</div><div class="text-sm mt-2" style="color:var(--muted)">BTC</div></div>
+                    <div class="glass-card p-6 text-center"><div class="font-orbitron text-4xl font-black" style="color:var(--success)" id="balUsd">0.00</div><div class="text-sm mt-2" style="color:var(--muted)">USD</div></div>
+                    <div class="glass-card p-6 text-center"><div class="font-orbitron text-3xl font-black" style="color:var(--accent2)" id="balSyp">0</div><div class="text-sm mt-2" style="color:var(--muted)">SYP</div></div>
+                </div>
+
+                <!-- أزرار الإجراءات -->
+                <div class="flex flex-wrap gap-4 justify-center mb-10">
+                    <button onclick="openWithdrawModal()" class="btn-primary flex items-center gap-2"><i class="fas fa-wallet"></i> سحب الأرباح</button>
+                </div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    const NGROK_URL = 'https://xxxx.ngrok-free.app'; // ضع رابط ngrok هنا
+    const API_KEY = 'SECRET_KEY_123';
+
+    let appState = { isSubscribed:false, isMining:false, balance:0, btc_usd:65000, usd_syp:14500, wCurrency:'btc' };
+
+    document.addEventListener('DOMContentLoaded', function() {
+        particlesJS('particles-js', { particles:{ number:{value:60}, color:{value:['#f7931a','#ffffff']}, shape:{type:'circle'}, opacity:{value:0.3,random:true}, size:{value:2.5,random:true}, line_linked:{enable:true,distance:150,color:'#f7931a',opacity:0.06,width:1}, move:{enable:true,speed:1}}, interactivity:{events:{onhover:{enable:true,mode:'grab'}}}, retina_detect:true });
+    });
+
+    function showToast(msg,type='info'){const t=document.getElementById('toast');t.textContent=msg;t.className=`toast ${type}`;setTimeout(()=>t.classList.add('show'),10);setTimeout(()=>t.classList.remove('show'),5000);}
+    function openModal(){document.getElementById('verifyModal').classList.add('active');}
+    function closeModal(){document.getElementById('verifyModal').classList.remove('active');}
+    function openWithdrawModal(){updateBalUI();document.getElementById('withdrawAmount').value='';document.getElementById('wEquiv').textContent='0.00000000';document.getElementById('withdrawModal').classList.add('active');}
+    function closeWithdrawModal(){document.getElementById('withdrawModal').classList.remove('active');}
+
+    async function verifySubscription() {
+        const u=document.getElementById('loginUsername').value.trim(),p=document.getElementById('loginPassword').value.trim();
+        if(!u||!p){showToast('أدخل البيانات','error');return;}
+        const btn=document.getElementById('verifyBtn');btn.disabled=true;btn.innerHTML='<i class="fas fa-spinner fa-spin"></i> جارٍ الاتصال...';
+        try {
+            const res=await fetch(`${NGROK_URL}/verify?username=${encodeURIComponent(u)}&password=${encodeURIComponent(p)}&api_key=${API_KEY}`);
+            if(res.ok){const data=await res.json();if(data.subscribed){appState.isSubscribed=true;appState.balance=data.balance||0;appState.btc_usd=data.btc_usd||65000;appState.usd_syp=data.usd_syp||14500;handleVerificationSuccess();btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> دخول';return;}}
+            showToast('بيانات خاطئة','error');
+        } catch(e){showToast('خطأ في الاتصال','error');}
+        btn.disabled=false;btn.innerHTML='<i class="fas fa-sign-in-alt"></i> دخول';
+    }
+
+    function handleVerificationSuccess() {
+        document.getElementById('statusBadge').style.display='flex';document.getElementById('balanceNav').style.display='flex';document.getElementById('loginBtn').style.display='none';document.getElementById('miningSection').classList.remove('hidden');
+        updateBalUI();document.getElementById('miningSection').scrollIntoView({behavior:'smooth'});closeModal();showToast('تم الدخول بنجاح!','success');
+    }
+
+    function updateBalUI() {
+        const b=appState.balance;const u=b*appState.btc_usd;const s=u*appState.usd_syp;
+        document.getElementById('balBtc').textContent=b.toFixed(8);document.getElementById('navBalance').textContent=b.toFixed(8);
+        document.getElementById('balUsd').textContent=u.toFixed(2);document.getElementById('balSyp').textContent=s.toFixed(0);
+        document.getElementById('wBalance').textContent=b.toFixed(8);
+    }
+
+    function toggleMining() {
+        if(!appState.isMining){appState.isMining=true;document.getElementById('miningIcon').className='fas fa-pause text-6xl text-black';document.getElementById('miningStatus').textContent='التعدين جارٍ...';document.getElementById('miningStatus').style.color='var(--success)';document.getElementById('miningRing').classList.add('mining-pulse');appState.miningInterval=setInterval(()=>{appState.balance+=0.0000001;updateBalUI();document.getElementById('hashRate')&&(document.getElementById('hashRate').textContent=(25+Math.random()*20).toFixed(2));},1000);}
+        else{appState.isMining=false;clearInterval(appState.miningInterval);document.getElementById('miningIcon').className='fas fa-play text-6xl text-black';document.getElementById('miningStatus').textContent='متوقف';document.getElementById('miningStatus').style.color='var(--muted)';document.getElementById('miningRing').classList.remove('mining-pulse');}
+    }
+
+    function setWCurrency(c) {
+        appState.wCurrency=c;document.getElementById('wCurrLabel').textContent=c.toUpperCase();
+        ['btc','usd','syp'].forEach(x=>{document.getElementById(`wBtn${x.charAt(0).toUpperCase()+x.slice(1)}`).style.background=x===c?'var(--accent)':'transparent';document.getElementById(`wBtn${x.charAt(0).toUpperCase()+x.slice(1)}`).style.color=x===c?'#000':'var(--accent)';});
+    }
+
+    function calcEquivalent() {
+        let val=parseFloat(document.getElementById('withdrawAmount').value)||0;let btcEquiv=0;
+        if(appState.wCurrency==='btc')btcEquiv=val;else if(appState.wCurrency==='usd')btcEquiv=val/appState.btc_usd;else if(appState.wCurrency==='syp')btcEquiv=val/(appState.btc_usd*appState.usd_syp);
+        document.getElementById('wEquiv').textContent=btcEquiv.toFixed(8);
+    }
+
+    function processWithdraw() {
+        let val=parseFloat(document.getElementById('withdrawAmount').value)||0;const wallet=document.getElementById('walletAddress').value.trim();
+        if(!wallet){showToast('أدخل معلومات الاستلام','error');return;}
+        let btcEquiv=0;
+        if(appState.wCurrency==='btc')btcEquiv=val;else if(appState.wCurrency==='usd')btcEquiv=val/appState.btc_usd;else if(appState.wCurrency==='syp')btcEquiv=val/(appState.btc_usd*appState.usd_syp);
+        if(btcEquiv>appState.balance){showToast('رصيد غير كافٍ','error');return;}
+        appState.balance-=btcEquiv;updateBalUI();closeWithdrawModal();showToast(`تم تقديم طلب سحب ${val} ${appState.wCurrency.toUpperCase()} بنجاح. سيتم المراجعة.`,'success');
+    }
+</script>
+</body>
+</html>
