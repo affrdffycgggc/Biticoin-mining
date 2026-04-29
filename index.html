@@ -28,7 +28,6 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'Share Tech Mono', monospace; }
         
-        /* Modern Glass Cards */
         .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.3)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
         .glass-card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
         .glass-card:hover { transform: translateY(-4px); box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px rgba(247,147,26,0.05); border-color: rgba(247,147,26,0.2); }
@@ -45,7 +44,6 @@
         .spin-slow { animation: spin 10s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* Modern Toast */
         .toast { position: fixed; top: 20px; left: 20px; transform: translateX(-150%); z-index: 10001; padding: 16px 24px; border-radius: 12px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 350px; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; }
         .toast.show { transform: translateX(0); }
         .toast.success { background: rgba(0,230,118,0.1); border-color: rgba(0,230,118,0.3); color: var(--success); }
@@ -66,7 +64,6 @@
         .input-group .input-field { padding-right: 48px; }
         .input-group:focus-within .input-icon { color: var(--neon-cyan); }
 
-        /* Admin OS */
         .admin-os { position: fixed; inset: 0; background: var(--os-bg); z-index: 10000; display: none; flex-direction: column; font-family: 'Share Tech Mono', monospace; border: 1px solid var(--os-border); }
         .admin-os.active { display: flex; }
         .os-header { background: linear-gradient(90deg, rgba(0, 243, 255, 0.05), transparent); border-bottom: 1px solid var(--os-border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--os-accent); }
@@ -209,15 +206,16 @@
     
     let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningInterval: null, saveCounter: 0 }; 
     let activeSupportUserId = null;
+    let userChatInterval = null;
+    let adminChatInterval = null;
     
     window.onload = () => { 
         const session = localStorage.getItem('cryptoSession'); 
         if (session) { const db = getDB(); const user = db.users.find(u => u.id === parseInt(session)); if (user) loginSuccess(user, true); } 
         updateOsTime(); setInterval(updateOsTime, 1000); 
-        animateParticles(); // Init background animation only ONCE
+        animateParticles(); 
     };
 
-    // Force save on tab close to prevent data loss
     window.addEventListener('beforeunload', () => {
         if(appState.isMining && appState.currentUser) {
             const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id);
@@ -229,8 +227,8 @@
     });
     
     function updateOsTime() { const d = new Date(); const el = document.getElementById('osTime'); if(el) el.innerText = d.toLocaleTimeString('en-US', {hour12:false}); }
-    function openModal(id) { if(id === 'paymentModal') populateDepositWallets(); if(id === 'withdrawModal') populateWithdrawWallets(); if(id === 'supportModal') renderUserChat(); document.getElementById(id).classList.add('active'); }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    function openModal(id) { if(id === 'paymentModal') populateDepositWallets(); if(id === 'withdrawModal') populateWithdrawWallets(); if(id === 'supportModal') { renderUserChat(); startUserChatPolling(); } document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); if(id === 'supportModal') stopUserChatPolling(); }
     
     function switchAuthTab(tab) {
         const loginTab = document.getElementById('loginTab');
@@ -329,7 +327,6 @@
         const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); 
         document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; 
         
-        // Performance Fix: Save to DB only every 10 seconds
         appState.miningInterval = setInterval(() => { 
             if (!appState.isMining) return; 
             appState.currentUser.balance += 0.000000015 * (0.9 + Math.random() * 0.2); 
@@ -341,7 +338,7 @@
             if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } 
             
             appState.saveCounter++;
-            if (appState.saveCounter >= 10) { // Save every 10s instead of 1s
+            if (appState.saveCounter >= 10) {
                 const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); 
                 if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); }
                 appState.saveCounter = 0;
@@ -382,9 +379,18 @@
 
     // Admin Logic
     function openAdminOS() { if(!appState.currentUser || appState.currentUser.role !== 'admin') return; document.getElementById('adminOS').classList.add('active'); renderAdminData(); }
-    function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; }
-    function switchOsTab(tab, el) { document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); document.getElementById(`os-tab-${tab}`).style.display = 'block'; el.classList.add('active'); renderAdminData(); }
-    function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); renderAdminSupport(); loadAdminSettings(); }
+    function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; stopAdminChatPolling(); }
+    function switchOsTab(tab, el) { 
+        document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); 
+        document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); 
+        document.getElementById(`os-tab-${tab}`).style.display = 'block'; 
+        el.classList.add('active'); 
+        renderAdminData();
+        // Handle Chat Polling for Admin
+        if(tab === 'support') startAdminChatPolling();
+        else stopAdminChatPolling();
+    }
+    function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); if(document.getElementById('os-tab-support').style.display === 'block') renderAdminSupport(); loadAdminSettings(); }
     function renderAdminUsers() { const db = getDB(); const t = document.getElementById('adminUsersTable'); t.innerHTML = ''; const users = db.users.filter(u=>u.role!=='admin'); document.getElementById('userCount').innerText = `${users.length} Users`; users.forEach(u => { t.innerHTML += `<tr><td>${u.username}</td><td class="${u.isSubscribed?'text-green-400':'text-red-400'}">${u.isSubscribed?'مسدد':'لا'}</td><td class="font-mono text-xs">${(u.balance||0).toFixed(8)}</td><td><button onclick="toggleBan(${u.id}, ${!u.banned})" class="os-btn text-xs py-1 px-2 ${u.banned?'':'os-btn-danger'}">${u.banned?'فك الحظر':'حظر'}</button></td></tr>`; }); }
     function toggleBan(id, ban) { const db = getDB(); const u = db.users.find(u=>u.id===id); if(u) { u.banned = ban; saveDB(db); renderAdminUsers(); } }
     function renderAdminPayments() { const db = getDB(); const t = document.getElementById('adminPaymentsTable'); t.innerHTML = ''; db.paymentRequests.filter(p=>p.status==='pending').forEach(r => { t.innerHTML += `<tr><td>${r.username}</td><td class="font-mono text-xs" dir="ltr">${r.txId}</td><td>${parseInt(r.amount).toLocaleString()} ل.س</td><td class="text-xs">${r.walletName}</td><td class="flex gap-1"><button onclick="approvePayment(${r.id})" class="os-btn text-xs py-1 px-2">قبول</button><button onclick="rejectPayment(${r.id})" class="os-btn os-btn-danger text-xs py-1 px-2">رفض</button></td></tr>`; }); }
@@ -402,13 +408,92 @@
     function togglePassView() { const el = document.getElementById('passMask'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); el.innerText = el.innerText === '********' ? admin.password : '********'; }
     function changePassword() { const curr = document.getElementById('currentPass').value; const newP = document.getElementById('newPass').value; const confP = document.getElementById('confirmNewPass').value; if(!curr || !newP || !confP) return showToast('املأ جميع الحقول', 'error'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); if(curr !== admin.password) return showToast('كلمة المرور الحالية خاطئة', 'error'); if(newP !== confP) return showToast('كلمة المرور الجديدة غير متطابقة', 'error'); admin.password = newP; saveDB(db); showToast('تم تغيير كلمة المرور بنجاح', 'success'); document.getElementById('currentPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confirmNewPass').value=''; document.getElementById('passMask').innerText = '********'; }
 
-    // Support Logic
-    function renderUserChat() { if(!appState.currentUser) return; const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); const box = document.getElementById('userChatBox'); box.innerHTML = ''; if(thread && thread.messages.length > 0) { thread.messages.forEach(msg => { box.innerHTML += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); } else { box.innerHTML = '<div class="text-center text-gray-500 text-sm mt-10">لا توجد رسائل بعد</div>'; } box.scrollTop = box.scrollHeight; }
-    function sendUserMsg() { const input = document.getElementById('userMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderUserChat(); }
-    function renderAdminSupport() { const db = getDB(); const list = document.getElementById('supportUserList'); list.innerHTML = ''; if(db.supportMessages.length === 0) { list.innerHTML = '<div class="p-4 text-center text-gray-600 text-xs">لا توجد تذاكر دعم</div>'; return; } db.supportMessages.forEach(t => { const lastMsg = t.messages[t.messages.length - 1]; const isActive = activeSupportUserId === t.userId; list.innerHTML += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg.text}</div></div>`; }); if(activeSupportUserId) renderAdminChat(); }
+    // Support Logic - FIXED & OPTIMIZED
+    function startUserChatPolling() { stopUserChatPolling(); userChatInterval = setInterval(renderUserChat, 2000); }
+    function stopUserChatPolling() { if(userChatInterval) clearInterval(userChatInterval); userChatInterval = null; }
+    
+    function startAdminChatPolling() { stopAdminChatPolling(); adminChatInterval = setInterval(renderAdminSupport, 2000); }
+    function stopAdminChatPolling() { if(adminChatInterval) clearInterval(adminChatInterval); adminChatInterval = null; }
+
+    function renderUserChat() { 
+        if(!appState.currentUser) return; 
+        const db = getDB(); 
+        let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
+        const box = document.getElementById('userChatBox'); 
+        let html = '';
+        if(thread && thread.messages.length > 0) { 
+            thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); 
+        } else { 
+            html = '<div class="text-center text-gray-500 text-sm mt-10">لا توجد رسائل بعد</div>'; 
+        }
+        // Prevent scroll jump and input focus loss by only updating if content changed
+        if(box.innerHTML !== html) {
+            box.innerHTML = html;
+            box.scrollTop = box.scrollHeight;
+        }
+    }
+    
+    function sendUserMsg() { 
+        const input = document.getElementById('userMsgInput'); 
+        const text = input.value.trim(); 
+        if(!text) return; 
+        const db = getDB(); 
+        let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
+        if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } 
+        thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); 
+        saveDB(db); input.value = ''; renderUserChat(); // Instant render for sender
+    } 
+    
+    function renderAdminSupport() { 
+        const db = getDB(); 
+        const list = document.getElementById('supportUserList'); 
+        let listHtml = '';
+        if(db.supportMessages.length === 0) { 
+            listHtml = '<div class="p-4 text-center text-gray-600 text-xs">لا توجد تذاكر دعم</div>'; 
+        } else { 
+            db.supportMessages.forEach(t => { 
+                const lastMsg = t.messages[t.messages.length - 1]; 
+                const isActive = activeSupportUserId === t.userId; 
+                listHtml += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg ? lastMsg.text : ''}</div></div>`; 
+            }); 
+        }
+        if(list.innerHTML !== listHtml) list.innerHTML = listHtml;
+        if(activeSupportUserId) renderAdminChat(); 
+    }
+    
     function viewChat(userId) { activeSupportUserId = userId; renderAdminSupport(); }
-    function renderAdminChat() { const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); const box = document.getElementById('adminChatBox'); const nameEl = document.getElementById('chatUserName'); box.innerHTML = ''; if(thread) { nameEl.innerText = thread.username; thread.messages.forEach(msg => { box.innerHTML += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); } box.scrollTop = box.scrollHeight; }
-    function sendAdminReply() { if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); const input = document.getElementById('adminMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); if(thread) { thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderAdminChat(); } }
+    
+    function renderAdminChat() { 
+        const db = getDB(); 
+        const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); 
+        const box = document.getElementById('adminChatBox'); 
+        const nameEl = document.getElementById('chatUserName'); 
+        let html = '';
+        if(thread) { 
+            nameEl.innerText = thread.username; 
+            thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); 
+        } else {
+            nameEl.innerText = '';
+            html = '<div class="text-center text-gray-500 text-sm mt-10">اختر مستخدمًا للمحادثة</div>';
+        }
+        if(box.innerHTML !== html) {
+            box.innerHTML = html;
+            box.scrollTop = box.scrollHeight;
+        }
+    } 
+    
+    function sendAdminReply() { 
+        if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); 
+        const input = document.getElementById('adminMsgInput'); 
+        const text = input.value.trim(); 
+        if(!text) return; 
+        const db = getDB(); 
+        const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); 
+        if(thread) { 
+            thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); 
+            saveDB(db); input.value = ''; renderAdminChat(); // Instant render for sender
+        } 
+    }
 
     // Background Animation
     const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
