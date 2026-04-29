@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CryptoMine Pro - Web3 Platform</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
@@ -16,197 +16,215 @@
             --os-bg: #020206; --os-border: rgba(0, 243, 255, 0.2); --os-accent: #00f3ff; --os-danger: #ff0044;
             --neon-glow: 0 0 10px rgba(247, 147, 26, 0.4), 0 0 40px rgba(247, 147, 26, 0.1);
         }
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; min-height: 100vh; }
         
+        /* Deep Space Web3 Background */
         #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: 0; pointer-events: none; opacity: 0.15; animation: float 15s infinite ease-in-out; }
-        .orb-1 { width: 600px; height: 600px; background: var(--accent); top: -200px; right: -200px; }
-        .orb-2 { width: 600px; height: 600px; background: var(--neon-cyan); bottom: -200px; left: -200px; animation-delay: 7s; }
-        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(20px, -30px); } }
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(120px); z-index: 0; pointer-events: none; opacity: 0.2; animation: float 15s infinite ease-in-out; }
+        .orb-1 { width: 800px; height: 800px; background: var(--accent); top: -300px; right: -300px; }
+        .orb-2 { width: 800px; height: 800px; background: var(--neon-cyan); bottom: -300px; left: -300px; animation-delay: 7s; }
+        .orb-3 { width: 400px; height: 400px; background: var(--neon-purple); top: 40%; left: 40%; animation-delay: 3s; }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -40px); } }
         
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'Share Tech Mono', monospace; }
         
-        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 20px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.3s; }
-        .glass-card:hover { border-color: rgba(247,147,26,0.2); }
+        /* Advanced Glass Cards */
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
+        .glass-card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px rgba(247,147,26,0.05); border-color: rgba(247,147,26,0.2); }
         
-        .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 700; padding: 14px 24px; border-radius: 14px; border: none; cursor: pointer; font-size: 15px; font-family: 'Cairo', sans-serif; transition: 0.3s; width: 100%; box-shadow: var(--neon-glow); }
-        .btn-primary:hover { box-shadow: 0 0 30px rgba(247,147,26,0.6); }
-        .btn-secondary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--fg); font-weight: 600; padding: 12px 20px; border-radius: 12px; cursor: pointer; font-size: 13px; font-family: 'Cairo', sans-serif; transition: 0.3s; backdrop-filter: blur(5px); white-space: nowrap; }
-        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); color: var(--accent); }
-        .input-field { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 16px; color: var(--fg); font-size: 14px; font-family: 'Cairo', sans-serif; width: 100%; outline: none; transition: 0.3s; }
-        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 20px rgba(247,147,26,0.1); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 700; padding: 16px 32px; border-radius: 16px; border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif; transition: 0.3s; width: 100%; box-shadow: var(--neon-glow); position: relative; overflow: hidden; }
+        .btn-primary::after { content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.2), transparent); transform: rotate(45deg) translateY(-100%); transition: 0.6s; }
+        .btn-primary:hover::after { transform: rotate(45deg) translateY(0); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(247,147,26,0.6); }
+        .btn-secondary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--fg); font-weight: 600; padding: 14px 28px; border-radius: 14px; cursor: pointer; font-size: 14px; font-family: 'Cairo', sans-serif; transition: 0.3s; backdrop-filter: blur(5px); }
+        .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); color: var(--accent); box-shadow: 0 0 15px rgba(247,147,26,0.1); }
+        .input-field { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 20px; color: var(--fg); font-size: 15px; font-family: 'Cairo', sans-serif; width: 100%; outline: none; transition: 0.3s; }
+        .input-field:focus { border-color: var(--accent); box-shadow: 0 0 25px rgba(247,147,26,0.15); background: rgba(0,0,0,0.8); }
         
         .mining-pulse { animation: miningPulse 2s ease-in-out infinite; }
-        @keyframes miningPulse { 0%, 100% { box-shadow: 0 0 40px rgba(247,147,26,0.5); } 50% { box-shadow: 0 0 80px rgba(247,147,26,0.8); } }
+        @keyframes miningPulse { 0%, 100% { box-shadow: 0 0 40px rgba(247,147,26,0.5); } 50% { box-shadow: 0 0 100px rgba(247,147,26,0.9), 0 0 20px var(--neon-cyan); } }
         .spin-slow { animation: spin 10s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        .toast { position: fixed; top: 15px; left: 50%; transform: translateX(-50%) translateY(-150px); z-index: 10001; padding: 14px 24px; border-radius: 14px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 92vw; text-align: center; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-150px); z-index: 10001; padding: 18px 32px; border-radius: 16px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; font-size: 15px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { background: rgba(0,230,118,0.1); border-color: rgba(0,230,118,0.3); color: var(--success); }
         .toast.error { background: rgba(255,61,87,0.1); border-color: rgba(255,61,87,0.3); color: var(--danger); }
         .toast.info { background: rgba(247,147,26,0.1); border-color: rgba(247,147,26,0.3); color: var(--accent); }
         
-        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 10px; }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: linear-gradient(160deg, rgba(15,15,30,0.95), rgba(5,5,15,0.98)); border: 1px solid rgba(255,255,255,0.05); border-radius: 24px; padding: 24px; max-width: 460px; width: 100%; position: relative; animation: modalIn 0.3s ease; box-shadow: 0 0 60px rgba(0,0,0,0.5); max-height: 95vh; overflow-y: auto; }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.95) translateY(20px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-content { background: linear-gradient(160deg, rgba(15,15,30,0.95), rgba(5,5,15,0.98)); border: 1px solid rgba(255,255,255,0.05); border-radius: 28px; padding: 40px; max-width: 500px; width: 100%; position: relative; animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 80px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.02); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
-        .auth-tab { flex: 1; border-radius: 10px; cursor: pointer; font-weight: 700; font-size: 13px; transition: all 0.3s; text-align: center; font-family: 'Cairo', sans-serif; padding: 10px; }
-        .auth-tab.active { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; box-shadow: 0 0 15px rgba(247,147,26,0.3); }
+        /* Advanced Auth UI - FIXED CSS SYNTAX */
+        .auth-tab { flex: 1; padding: 12px 0; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.3s; text-align: center; font-family: 'Cairo', sans-serif; }
+        .auth-tab.active { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; box-shadow: 0 0 20px rgba(247,147,26,0.3); }
         .auth-tab.inactive { color: var(--muted); background: rgba(255,255,255,0.03); }
+        .auth-tab.inactive:hover { color: var(--fg); background: rgba(255,255,255,0.05); }
         .input-group { position: relative; }
-        .input-group .input-icon { position: absolute; top: 50%; right: 14px; transform: translateY(-50%); color: var(--muted); transition: 0.3s; pointer-events: none; font-size: 14px; }
-        .input-group .input-field { padding-right: 40px; }
+        .input-group .input-icon { position: absolute; top: 50%; right: 16px; transform: translateY(-50%); color: var(--muted); transition: 0.3s; pointer-events: none; }
+        .input-group .input-field { padding-right: 48px; }
         .input-group:focus-within .input-icon { color: var(--accent); }
 
-        .admin-os { position: fixed; inset: 0; background: var(--os-bg); z-index: 10000; display: none; flex-direction: column; font-family: 'Share Tech Mono', monospace; }
+        /* Admin OS */
+        .admin-os { position: fixed; inset: 0; background: var(--os-bg); z-index: 10000; display: none; flex-direction: column; font-family: 'Share Tech Mono', monospace; border: 1px solid var(--os-border); }
         .admin-os.active { display: flex; }
-        .os-header { background: linear-gradient(90deg, rgba(0, 243, 255, 0.05), transparent); border-bottom: 1px solid var(--os-border); padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; color: var(--os-accent); font-size: 12px; }
-        .os-body { display: flex; flex-direction: column; md:flex-row; flex: 1; overflow: hidden; }
-        .os-sidebar { width: 100%; md:w-[220px]; background: rgba(0, 10, 20, 0.8); border-left: 1px solid var(--os-border); display: flex; overflow-x-auto; md:flex-col; border-bottom: 1px solid var(--os-border); md:border-b-0; }
-        .os-content { flex: 1; padding: 15px; overflow-y: auto; background: radial-gradient(circle at top left, rgba(0, 243, 255, 0.03) 0%, transparent 50%); }
-        .os-nav-item { padding: 12px 15px; color: #4a5568; cursor: pointer; border-right: 3px solid transparent; transition: 0.2s; display: flex; align-items: center; gap: 8px; font-size: 12px; white-space: nowrap; border-bottom: 1px solid transparent; md:border-b-0; }
+        .os-header { background: linear-gradient(90deg, rgba(0, 243, 255, 0.05), transparent); border-bottom: 1px solid var(--os-border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--os-accent); }
+        .os-body { display: flex; flex: 1; overflow: hidden; }
+        .os-sidebar { width: 260px; background: rgba(0, 10, 20, 0.8); border-left: 1px solid var(--os-border); padding: 20px 0; display: flex; flex-direction: column; }
+        .os-content { flex: 1; padding: 30px; overflow-y: auto; background: radial-gradient(circle at top left, rgba(0, 243, 255, 0.03) 0%, transparent 50%); }
+        .os-nav-item { padding: 14px 20px; color: #4a5568; cursor: pointer; border-right: 3px solid transparent; transition: 0.2s; display: flex; align-items: center; gap: 12px; font-size: 14px; }
         .os-nav-item:hover { background: rgba(0, 243, 255, 0.05); color: var(--os-accent); }
         .os-nav-item.active { background: rgba(0, 243, 255, 0.1); color: var(--os-accent); border-right-color: var(--os-accent); text-shadow: 0 0 8px rgba(0,243,255,0.6); }
-        .os-card { background: rgba(10, 15, 25, 0.6); border: 1px solid var(--os-border); border-radius: 8px; padding: 15px; margin-bottom: 15px; }
-        .os-card-header { border-bottom: 1px solid var(--os-border); padding-bottom: 8px; margin-bottom: 10px; color: var(--os-accent); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; display: flex; justify-content: space-between; }
-        .os-input { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,243,255,0.2); color: var(--os-accent); padding: 8px 10px; font-family: 'Share Tech Mono', monospace; width: 100%; outline: none; font-size: 12px; border-radius: 4px; }
-        .os-btn { background: transparent; border: 1px solid var(--os-accent); color: var(--os-accent); padding: 6px 12px; cursor: pointer; font-family: 'Share Tech Mono', monospace; transition: 0.2s; border-radius: 4px; font-size: 11px; }
-        .os-btn:hover { background: var(--os-accent); color: #000; }
+        .os-card { background: rgba(10, 15, 25, 0.6); border: 1px solid var(--os-border); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.4); backdrop-filter: blur(10px); }
+        .os-card-header { border-bottom: 1px solid var(--os-border); padding-bottom: 10px; margin-bottom: 15px; color: var(--os-accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; }
+        .os-input { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,243,255,0.2); color: var(--os-accent); padding: 10px 14px; font-family: 'Share Tech Mono', monospace; width: 100%; outline: none; font-size: 14px; border-radius: 4px; }
+        .os-input:focus { border-color: var(--os-accent); box-shadow: 0 0 15px rgba(0,243,255,0.2); }
+        .os-btn { background: transparent; border: 1px solid var(--os-accent); color: var(--os-accent); padding: 8px 16px; cursor: pointer; font-family: 'Share Tech Mono', monospace; transition: 0.2s; border-radius: 4px; }
+        .os-btn:hover { background: var(--os-accent); color: #000; box-shadow: 0 0 15px rgba(0,243,255,0.4); }
         .os-btn-danger { border-color: var(--os-danger); color: var(--os-danger); }
-        .os-btn-danger:hover { background: var(--os-danger); color: #fff; }
-        .os-table { width: 100%; border-collapse: collapse; color: #94a3b8; font-size: 11px; }
-        .os-table th { text-align: right; padding: 6px; border-bottom: 1px solid var(--os-border); color: var(--os-accent); font-weight: normal; }
-        .os-table td { padding: 6px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .chat-box { height: 250px; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 10px; display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(255,255,255,0.05); }
-        .chat-msg { max-width: 85%; padding: 10px 12px; border-radius: 12px; font-size: 13px; line-height: 1.4; }
+        .os-btn-danger:hover { background: var(--os-danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,68,0.4); }
+        .os-table { width: 100%; border-collapse: collapse; color: #94a3b8; font-size: 13px; }
+        .os-table th { text-align: right; padding: 10px; border-bottom: 1px solid var(--os-border); color: var(--os-accent); font-weight: normal; }
+        .os-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); }
+        .os-table tr:hover td { background: rgba(0, 243, 255, 0.03); }
+        .chat-box { height: 300px; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
         .chat-msg.user { background: linear-gradient(135deg, rgba(247,147,26,0.15), rgba(247,147,26,0.05)); align-self: flex-start; border: 1px solid rgba(247,147,26,0.2); }
         .chat-msg.admin { background: linear-gradient(135deg, rgba(0,243,255,0.15), rgba(0,243,255,0.05)); align-self: flex-end; border: 1px solid rgba(0,243,255,0.2); color: #fff; }
-        .chat-msg .sender { font-size: 9px; opacity: 0.6; margin-bottom: 3px; display: block; font-weight: bold; }
-        
-        @media (min-width: 768px) {
-            .os-body { flex-direction: row; }
-            .os-sidebar { width: 220px; border-bottom: 0; flex-direction: column; overflow-x: visible; overflow-y: auto; }
-            .os-nav-item { font-size: 14px; padding: 14px 20px; }
-            .modal-content { padding: 30px; }
-        }
+        .chat-msg .sender { font-size: 10px; opacity: 0.6; margin-bottom: 5px; display: block; font-weight: bold; }
+        @media (max-width: 768px) { .os-sidebar { width: 60px; } .os-nav-item span { display: none; } .os-nav-item { justify-content: center; padding: 15px 0; } }
     </style>
 </head>
 <body>
 
-<div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div>
+<div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
 <canvas id="bgCanvas"></canvas>
 
 <div id="toast" class="toast" role="alert"></div>
 
 <!-- Modals -->
 <div id="authModal" class="modal-overlay">
-    <div class="modal-content">
-        <button onclick="closeModal('authModal')" class="absolute top-3 left-3 text-gray-500 hover:text-white z-10 p-2"><i class="fas fa-times text-lg"></i></button>
-        <div class="text-center mb-6">
-            <div class="w-14 h-14 mx-auto rounded-xl flex items-center justify-center mb-3" style="background: linear-gradient(135deg, var(--accent), #e8850f); box-shadow: 0 0 20px rgba(247,147,26,0.4)"><i class="fas fa-user-astronaut text-2xl text-black"></i></div>
-            <h2 class="font-orbitron text-xl font-bold mb-1">مرحباً بك</h2>
-            <p class="text-xs" style="color: var(--muted)">سجل دخولك أو أنشئ حساباً جديداً</p>
+    <div class="modal-content" style="max-width: 460px; padding-top: 50px;">
+        <button onclick="closeModal('authModal')" class="absolute top-5 left-5 text-gray-500 hover:text-white transition-colors"><i class="fas fa-times text-xl"></i></button>
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+            <div class="w-16 h-16 mx-auto rounded-2xl flex items-center justify-center mb-4" style="background: linear-gradient(135deg, var(--accent), #e8850f); box-shadow: 0 0 30px rgba(247,147,26,0.4)">
+                <i class="fas fa-user-astronaut text-3xl text-black"></i>
+            </div>
+            <h2 class="font-orbitron text-2xl font-bold mb-2">مرحباً بك</h2>
+            <p class="text-sm" style="color: var(--muted)">سجل دخولك إلى المنصة أو أنشئ حساباً جديداً</p>
         </div>
-        <div class="flex gap-2 mb-6 p-1 rounded-xl" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05)">
+
+        <!-- Tab Switcher -->
+        <div class="flex gap-2 mb-8 p-1.5 rounded-xl" style="background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05)">
             <div id="loginTab" onclick="switchAuthTab('login')" class="auth-tab active">تسجيل الدخول</div>
             <div id="registerTab" onclick="switchAuthTab('register')" class="auth-tab inactive">إنشاء حساب</div>
         </div>
-        <div id="loginForm" class="space-y-4">
-            <div class="input-group"><i class="fas fa-at input-icon"></i><input id="loginUser" type="text" class="input-field" placeholder="اسم المستخدم"></div>
-            <div class="input-group"><i class="fas fa-lock input-icon"></i><input id="loginPass" type="password" class="input-field" placeholder="كلمة المرور"></div>
-            <button onclick="login()" class="btn-primary mt-1">تسجيل الدخول</button>
+
+        <!-- Login Form -->
+        <div id="loginForm" class="space-y-5">
+            <div class="input-group">
+                <i class="fas fa-at input-icon"></i>
+                <input id="loginUser" type="text" class="input-field" placeholder="اسم المستخدم">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-lock input-icon"></i>
+                <input id="loginPass" type="password" class="input-field" placeholder="كلمة المرور">
+            </div>
+            <button onclick="login()" class="btn-primary mt-2">تسجيل الدخول</button>
         </div>
-        <div id="registerForm" class="space-y-4" style="display:none;">
-            <div class="input-group"><i class="fas fa-user-plus input-icon"></i><input id="regUser" type="text" class="input-field" placeholder="اختر اسم المستخدم"></div>
-            <div class="input-group"><i class="fas fa-key input-icon"></i><input id="regPass" type="password" class="input-field" placeholder="اختر كلمة المرور"></div>
-            <div class="input-group"><i class="fas fa-shield-halved input-icon"></i><input id="regPassConfirm" type="password" class="input-field" placeholder="تأكيد كلمة المرور"></div>
-            <button onclick="register()" class="btn-primary mt-1">إنشاء الحساب</button>
+
+        <!-- Register Form -->
+        <div id="registerForm" class="space-y-5" style="display:none;">
+            <div class="input-group">
+                <i class="fas fa-user-plus input-icon"></i>
+                <input id="regUser" type="text" class="input-field" placeholder="اختر اسم المستخدم">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-key input-icon"></i>
+                <input id="regPass" type="password" class="input-field" placeholder="اختر كلمة المرور">
+            </div>
+            <div class="input-group">
+                <i class="fas fa-shield-halved input-icon"></i>
+                <input id="regPassConfirm" type="password" class="input-field" placeholder="تأكيد كلمة المرور">
+            </div>
+            <button onclick="register()" class="btn-primary mt-2">إنشاء الحساب</button>
         </div>
     </div>
 </div>
 
-<div id="paymentModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('paymentModal')" class="absolute top-3 left-3 text-gray-500 hover:text-white p-2"><i class="fas fa-times"></i></button><h3 class="text-xl font-bold mb-4 text-center">دفع الاشتراك</h3><div class="space-y-4"><div><label class="block text-xs mb-1" style="color:var(--muted)">اختر شبكة المحفظة</label><select id="depositWalletSelect" class="input-field" onchange="updateDepositWallet()"></select></div><div class="p-4 rounded-xl text-center" style="background:rgba(247,147,26,0.05); border:1px dashed rgba(247,147,26,0.3);"><p class="text-[10px] mb-1" style="color:var(--muted)">عنوان المحفظة</p><p class="font-mono text-[11px] mt-1 break-all" id="depositWalletAddress" style="color:var(--accent)" dir="ltr">...</p><button onclick="copyText('depositWalletAddress')" class="mt-2 text-xs px-4 py-1 rounded-lg" style="background:var(--accent); color:#000;"><i class="fas fa-copy ml-1"></i> نسخ</button></div><div class="p-3 rounded-xl text-center" style="background:rgba(255,0,0,0.05); border:1px solid rgba(255,0,0,0.2);"><p class="text-base font-bold" style="color:var(--danger)">المبلغ: <span id="adminAmountDisplay">0</span> ل.س</p></div><input id="txIdInput" type="text" class="input-field" placeholder="رقم عملية التحويل"><input id="amountPaidInput" type="number" class="input-field" placeholder="المبلغ المحول"><button onclick="submitPaymentRequest()" class="btn-primary">إرسال طلب التفعيل</button></div></div></div>
-
-<div id="withdrawModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('withdrawModal')" class="absolute top-3 left-3 text-gray-500 hover:text-white p-2"><i class="fas fa-times"></i></button><h3 class="text-xl font-bold mb-4 text-center">سحب الأرباح</h3><div class="space-y-4"><div class="p-4 rounded-xl" style="background: linear-gradient(135deg, rgba(247,147,26,0.08), rgba(0,0,0,0.3)); border:1px solid rgba(247,147,26,0.2);"><div class="text-center mb-1"><span class="text-[10px] text-gray-400">رصيدك الحالي</span></div><div class="font-orbitron text-2xl font-bold text-center" style="color:var(--accent)"><span id="withdrawBalance">0</span> BTC</div><div class="grid grid-cols-2 gap-2 mt-3 text-center"><div class="p-2 rounded-lg" style="background:rgba(0,0,0,0.4);"><div class="text-[10px] text-gray-400">بالدولار</div><div class="text-sm font-bold text-green-400 font-mono">$<span id="withdrawBalanceUsd">0</span></div></div><div class="p-2 rounded-lg" style="background:rgba(0,0,0,0.4);"><div class="text-[10px] text-gray-400">بالليرة</div><div class="text-sm font-bold text-cyan-400 font-mono"><span id="withdrawBalanceSyp">0</span> ل.س</div></div></div></div><div><label class="block text-xs mb-1" style="color:var(--muted)">عملة السحب</label><select id="withdrawCurrency" class="input-field" onchange="calculateWithdraw()"><option value="USD">دولار (USD)</option><option value="SYP">ليرة (SYP)</option></select></div><div><label class="block text-xs mb-1" style="color:var(--muted)">المبلغ المطلوب</label><input id="withdrawAmountFiat" type="number" class="input-field" placeholder="مثال: 100" oninput="calculateWithdraw()"><p class="text-[10px] mt-2 text-center font-bold" style="color:var(--success)">سيتم خصم: <span id="withdrawDeductBtc">0</span> BTC (شامل العمولة)</p></div><div><label class="block text-xs mb-1" style="color:var(--muted)">شبكة السحب</label><select id="withdrawNetwork" class="input-field"></select></div><div><label class="block text-xs mb-1" style="color:var(--muted)">عنوان المحفظة</label><input id="withdrawWalletAddr" type="text" class="input-field" dir="ltr" placeholder="أدخل العنوان"></div><button onclick="processWithdraw()" class="btn-primary">تأكيد السحب</button></div></div></div>
-
-<div id="supportModal" class="modal-overlay">
-    <div class="modal-content" style="max-width: 600px;">
-        <button onclick="closeModal('supportModal')" class="absolute top-3 left-3 text-gray-500 hover:text-white p-2"><i class="fas fa-times"></i></button>
-        <div class="text-center mb-4"><h3 class="text-xl font-bold">الدعم الفني</h3></div>
-        <div id="userChatBox" class="chat-box"></div>
-        <div class="flex gap-2">
-            <input id="userMsgInput" type="text" class="input-field" placeholder="اكتب رسالتك..." onkeypress="if(event.key==='Enter')sendUserMsg()">
-            <button onclick="sendUserMsg()" class="btn-primary w-auto px-4"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-</div>
+<div id="paymentModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('paymentModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center">دفع الاشتراك</h3><div class="space-y-5"><div><label class="block text-sm mb-2" style="color:var(--muted)">اختر شبكة المحفظة</label><select id="depositWalletSelect" class="input-field" onchange="updateDepositWallet()"></select></div><div class="p-5 rounded-2xl text-center" style="background:rgba(247,147,26,0.05); border:1px dashed rgba(247,147,26,0.3);"><p class="text-xs mb-1" style="color:var(--muted)">عنوان المحفظة</p><p class="font-mono text-sm mt-2" id="depositWalletAddress" style="color:var(--accent); word-break: break-all;" dir="ltr">...</p><button onclick="copyText('depositWalletAddress')" class="mt-4 text-sm px-6 py-2 rounded-xl" style="background:var(--accent); color:#000;"><i class="fas fa-copy ml-1"></i> نسخ</button></div><div class="p-4 rounded-2xl text-center" style="background:rgba(255,0,0,0.05); border:1px solid rgba(255,0,0,0.2);"><p class="text-lg font-bold" style="color:var(--danger)">المبلغ: <span id="adminAmountDisplay">0</span> ل.س</p></div><input id="txIdInput" type="text" class="input-field" placeholder="رقم عملية التحويل"><input id="amountPaidInput" type="number" class="input-field" placeholder="المبلغ المحول"><button onclick="submitPaymentRequest()" class="btn-primary">إرسال طلب التفعيل</button></div></div></div>
+<div id="withdrawModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('withdrawModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center">سحب الأرباح</h3><div class="space-y-5"><div class="p-5 rounded-2xl" style="background: linear-gradient(135deg, rgba(247,147,26,0.08), rgba(0,0,0,0.3)); border:1px solid rgba(247,147,26,0.2);"><div class="text-center mb-2"><span class="text-xs text-gray-400">رصيدك الحالي</span></div><div class="font-orbitron text-3xl font-bold text-center" style="color:var(--accent)"><span id="withdrawBalance">0</span> BTC</div><div class="grid grid-cols-2 gap-3 mt-4 text-center"><div class="p-3 rounded-xl" style="background:rgba(0,0,0,0.4);"><div class="text-xs text-gray-400">بالدولار</div><div class="text-base font-bold text-green-400 font-mono">$<span id="withdrawBalanceUsd">0</span></div></div><div class="p-3 rounded-xl" style="background:rgba(0,0,0,0.4);"><div class="text-xs text-gray-400">بالليرة</div><div class="text-base font-bold text-cyan-400 font-mono"><span id="withdrawBalanceSyp">0</span> ل.س</div></div></div></div><div><label class="block text-sm mb-2" style="color:var(--muted)">عملة السحب</label><select id="withdrawCurrency" class="input-field" onchange="calculateWithdraw()"><option value="USD">دولار (USD)</option><option value="SYP">ليرة (SYP)</option></select></div><div><label class="block text-sm mb-2" style="color:var(--muted)">المبلغ المطلوب</label><input id="withdrawAmountFiat" type="number" class="input-field" placeholder="مثال: 100" oninput="calculateWithdraw()"><p class="text-xs mt-3 text-center font-bold" style="color:var(--success)">سيتم خصم: <span id="withdrawDeductBtc">0</span> BTC (شامل العمولة)</p></div><div><label class="block text-sm mb-2" style="color:var(--muted)">شبكة السحب</label><select id="withdrawNetwork" class="input-field"></select></div><div><label class="block text-sm mb-2" style="color:var(--muted)">عنوان المحفظة</label><input id="withdrawWalletAddr" type="text" class="input-field" dir="ltr" placeholder="أدخل العنوان"></div><button onclick="processWithdraw()" class="btn-primary">تأكيد السحب</button></div></div></div>
+<div id="supportModal" class="modal-overlay"><div class="modal-content" style="max-width: 600px;"><button onclick="closeModal('supportModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center"><i class="fas fa-headset ml-2" style="color: var(--accent);"></i> الدعم الفني</h3><div id="userChatBox" class="chat-box"></div><div class="flex gap-2"><input id="userMsgInput" type="text" class="input-field" placeholder="اكتب رسالتك هنا..." onkeypress="if(event.key==='Enter')sendUserMsg()"><button onclick="sendUserMsg()" class="btn-primary w-auto px-5"><i class="fas fa-paper-plane"></i></button></div></div></div>
 
 <!-- Admin OS -->
 <div id="adminOS" class="admin-os">
-    <div class="os-header"><div class="flex items-center gap-2"><i class="fas fa-shield-halved"></i><span class="font-orbitron text-[10px] md:text-sm">CRYPTOMINE OS</span></div><div class="flex items-center gap-3"><span id="osTime" class="hidden md:inline"></span><button onclick="closeAdminOS()" class="hover:text-red-400 transition text-xs"><i class="fas fa-power-off ml-1"></i> خروج</button></div></div>
+    <div class="os-header"><div class="flex items-center gap-3"><i class="fas fa-shield-halved text-xl"></i><span class="font-orbitron text-sm">CRYPTOMINE OS</span></div><div class="flex items-center gap-4 text-xs"><span id="osTime"></span><button onclick="closeAdminOS()" class="hover:text-red-400 transition"><i class="fas fa-power-off"></i> خروج</button></div></div>
     <div class="os-body">
-        <div class="os-sidebar"><div class="os-nav-item active" onclick="switchOsTab('users', this)"><i class="fas fa-users"></i><span>المستخدمين</span></div><div class="os-nav-item" onclick="switchOsTab('payments', this)"><i class="fas fa-money-bill-transfer"></i><span>الشحن</span></div><div class="os-nav-item" onclick="switchOsTab('withdrawals', this)"><i class="fas fa-money-bill-wave"></i><span>السحب</span></div><div class="os-nav-item" onclick="switchOsTab('wallets', this)"><i class="fas fa-wallet"></i><span>المحافظ</span></div><div class="os-nav-item" onclick="switchOsTab('support', this)"><i class="fas fa-headset"></i><span>الدعم</span></div><div class="os-nav-item" onclick="switchOsTab('settings', this)"><i class="fas fa-cogs"></i><span>إعدادات</span></div><div class="os-nav-item" onclick="switchOsTab('security', this)"><i class="fas fa-key"></i><span>الأمان</span></div></div>
+        <div class="os-sidebar"><div class="os-nav-item active" onclick="switchOsTab('users', this)"><i class="fas fa-users"></i><span>المستخدمين</span></div><div class="os-nav-item" onclick="switchOsTab('payments', this)"><i class="fas fa-money-bill-transfer"></i><span>طلبات الشحن</span></div><div class="os-nav-item" onclick="switchOsTab('withdrawals', this)"><i class="fas fa-money-bill-wave"></i><span>طلبات السحب</span></div><div class="os-nav-item" onclick="switchOsTab('wallets', this)"><i class="fas fa-wallet"></i><span>المحافظ</span></div><div class="os-nav-item" onclick="switchOsTab('support', this)"><i class="fas fa-headset"></i><span>الدعم الفني</span></div><div class="os-nav-item" onclick="switchOsTab('settings', this)"><i class="fas fa-cogs"></i><span>إعدادات المنصة</span></div><div class="os-nav-item" onclick="switchOsTab('security', this)"><i class="fas fa-key"></i><span>الأمان</span></div></div>
         <div class="os-content">
-            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>المستخدمين</span><span id="userCount">0</span></div><div class="overflow-x-auto"><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>الرصيد</th><th>إجراء</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div></div>
-            <div id="os-tab-payments" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات الشحن</span></div><div class="overflow-x-auto"><table class="os-table"><thead><tr><th>المستخدم</th><th>رقم العملية</th><th>المبلغ</th><th>إجراء</th></tr></thead><tbody id="adminPaymentsTable"></tbody></table></div></div></div>
-            <div id="os-tab-withdrawals" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات السحب</span></div><div class="overflow-x-auto"><table class="os-table"><thead><tr><th>المستخدم</th><th>المبلغ</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWithdrawalsTable"></tbody></table></div></div></div>
-            <div id="os-tab-wallets" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إضافة محفظة</span></div><div class="grid grid-cols-1 md:grid-cols-3 gap-2"><input id="newWalletName" type="text" class="os-input" placeholder="اسم المحفظة"><input id="newWalletAddress" type="text" class="os-input" dir="ltr" placeholder="عنوان المحفظة"><button onclick="addWallet()" class="os-btn h-auto">إضافة</button></div></div><div class="os-card mt-3"><div class="os-card-header"><span>المحافظ</span></div><div class="overflow-x-auto"><table class="os-table"><thead><tr><th>الاسم</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWalletsTable"></tbody></table></div></div></div>
-            <div id="os-tab-support" class="os-tab-content" style="display:none;"><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><div class="os-card col-span-1"><div class="os-card-header"><span>المستخدمون</span></div><div id="supportUserList" class="overflow-y-auto max-h-[300px]"></div></div><div class="os-card col-span-1 md:col-span-2 flex flex-col"><div class="os-card-header"><span>المحادثة</span><span id="chatUserName" class="text-gray-500"></span></div><div id="adminChatBox" class="chat-box flex-1"></div><div class="flex gap-2"><input id="adminMsgInput" type="text" class="os-input" placeholder="اكتب الرد..." onkeypress="if(event.key==='Enter')sendAdminReply()"><button onclick="sendAdminReply()" class="os-btn w-auto"><i class="fas fa-reply"></i></button></div></div></div></div>
-            <div id="os-tab-settings" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إعدادات المنصة</span></div><div class="grid grid-cols-1 md:grid-cols-2 gap-3"><div><label class="block text-[10px] mb-1 text-gray-500">مبلغ الاشتراك (ل.س)</label><input id="setAmount" type="number" class="os-input"></div><div><label class="block text-[10px] mb-1 text-gray-500">سعر 1 BTC بالدولار</label><input id="setBtcUsd" type="number" class="os-input"></div><div><label class="block text-[10px] mb-1 text-gray-500">سعر 1 دولار بالليرة</label><input id="setUsdSyp" type="number" class="os-input"></div><div><label class="block text-[10px] mb-1 text-gray-500">نسبة العمولة (%)</label><input id="setCommission" type="number" class="os-input"></div><div><label class="block text-[10px] mb-1 text-gray-500">الحد الأدنى للسحب بالدولار</label><input id="setMinWithdrawUsd" type="number" class="os-input"></div></div><button onclick="saveAdminSettings()" class="os-btn mt-3 w-full md:w-auto"><i class="fas fa-save ml-1"></i> حفظ</button></div><div class="os-card mt-3"><div class="os-card-header"><span>التحكم</span></div><button onclick="toggleMaintenance()" id="maintenanceBtn" class="os-btn-danger w-full md:w-auto"><i class="fas fa-tools ml-1"></i> تفعيل الصيانة</button></div></div>
-            <div id="os-tab-security" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>بيانات الدخول</span></div><div class="space-y-2 text-sm"><div class="flex items-center gap-2"><strong class="w-20 text-gray-400">المستخدم:</strong><span class="text-white">admin</span></div><div class="flex items-center gap-2"><strong class="w-20 text-gray-400">المرور:</strong><span id="passMask" class="text-white">********</span><button onclick="togglePassView()" class="os-btn text-[10px] py-0.5 px-1"><i class="fas fa-eye"></i></button></div></div></div><div class="os-card mt-3"><div class="os-card-header"><span>تغيير كلمة المرور</span></div><div class="space-y-2"><input id="currentPass" type="password" class="os-input" placeholder="كلمة المرور الحالية"><input id="newPass" type="password" class="os-input" placeholder="كلمة المرور الجديدة"><input id="confirmNewPass" type="password" class="os-input" placeholder="تأكيد كلمة المرور"><button onclick="changePassword()" class="os-btn w-full md:w-auto"><i class="fas fa-key ml-1"></i> تحديث</button></div></div></div>
+            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>سجلات المستخدمين</span><span id="userCount">0</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>الرصيد</th><th>الحالة</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div>
+            <div id="os-tab-payments" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات الاشتراك</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>رقم العملية</th><th>المبلغ</th><th>الشبكة</th><th>إجراء</th></tr></thead><tbody id="adminPaymentsTable"></tbody></table></div></div>
+            <div id="os-tab-withdrawals" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات السحب</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>المبلغ</th><th>الشبكة</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWithdrawalsTable"></tbody></table></div></div>
+            <div id="os-tab-wallets" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إضافة محفظة</span></div><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><input id="newWalletName" type="text" class="os-input" placeholder="اسم المحفظة"><input id="newWalletAddress" type="text" class="os-input" dir="ltr" placeholder="عنوان المحفظة"><button onclick="addWallet()" class="os-btn h-auto">إضافة</button></div></div><div class="os-card mt-4"><div class="os-card-header"><span>المحافظ المتاحة</span></div><table class="os-table"><thead><tr><th>الاسم</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWalletsTable"></tbody></table></div></div>
+            <div id="os-tab-support" class="os-tab-content" style="display:none;"><div class="grid grid-cols-1 md:grid-cols-3 gap-4 h-full"><div class="os-card col-span-1 flex flex-col"><div class="os-card-header"><span>المستخدمون</span></div><div id="supportUserList" class="flex-1 overflow-y-auto" style="max-height: 400px;"></div></div><div class="os-card col-span-1 md:col-span-2 flex flex-col"><div class="os-card-header"><span>المحادثة</span><span id="chatUserName" class="text-gray-500"></span></div><div id="adminChatBox" class="chat-box flex-1"></div><div class="flex gap-2"><input id="adminMsgInput" type="text" class="os-input" placeholder="اكتب الرد هنا..." onkeypress="if(event.key==='Enter')sendAdminReply()"><button onclick="sendAdminReply()" class="os-btn w-auto"><i class="fas fa-reply"></i></button></div></div></div></div>
+            <div id="os-tab-settings" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إعدادات المنصة</span></div><div class="grid grid-cols-1 md:grid-cols-2 gap-4"><div><label class="block text-xs mb-1 text-gray-500">مبلغ الاشتراك (ل.س)</label><input id="setAmount" type="number" class="os-input"></div><div><label class="block text-xs mb-1 text-gray-500">سعر 1 BTC بالدولار</label><input id="setBtcUsd" type="number" class="os-input"></div><div><label class="block text-xs mb-1 text-gray-500">سعر 1 دولار بالليرة</label><input id="setUsdSyp" type="number" class="os-input"></div><div><label class="block text-xs mb-1 text-gray-500">نسبة العمولة (%)</label><input id="setCommission" type="number" class="os-input"></div><div><label class="block text-xs mb-1 text-gray-500">الحد الأدنى للسحب بالدولار</label><input id="setMinWithdrawUsd" type="number" class="os-input"></div></div><button onclick="saveAdminSettings()" class="os-btn mt-4 w-full md:w-auto"><i class="fas fa-save ml-2"></i> حفظ</button></div><div class="os-card mt-4"><div class="os-card-header"><span>التحكم بالنظام</span></div><button onclick="toggleMaintenance()" id="maintenanceBtn" class="os-btn-danger w-full md:w-auto"><i class="fas fa-tools ml-2"></i> تفعيل وضع الصيانة</button></div></div>
+            <div id="os-tab-security" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>بيانات الدخول</span></div><div class="space-y-3"><div class="flex items-center gap-3"><strong class="w-24 text-gray-400">اسم المستخدم:</strong><span class="text-white">admin</span></div><div class="flex items-center gap-3"><strong class="w-24 text-gray-400">كلمة المرور:</strong><span id="passMask" class="text-white">********</span><button onclick="togglePassView()" class="os-btn text-xs py-1 px-2"><i class="fas fa-eye"></i> عرض</button></div></div></div><div class="os-card mt-4"><div class="os-card-header"><span>تغيير كلمة المرور</span></div><div class="space-y-3"><input id="currentPass" type="password" class="os-input" placeholder="كلمة المرور الحالية"><input id="newPass" type="password" class="os-input" placeholder="كلمة المرور الجديدة"><input id="confirmNewPass" type="password" class="os-input" placeholder="تأكيد كلمة المرور"><button onclick="changePassword()" class="os-btn w-full md:w-auto"><i class="fas fa-key ml-2"></i> تحديث</button></div></div></div>
         </div>
     </div>
 </div>
 
 <!-- Main UI -->
 <div class="relative z-10">
-    <nav class="fixed top-0 w-full z-50 border-b" style="background:rgba(5,5,8,0.85); backdrop-filter:blur(30px); border-color:rgba(255,255,255,0.05);">
-        <div class="max-w-7xl mx-auto px-3 py-2 flex items-center justify-between">
-            <div class="flex items-center gap-2"><div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background:var(--accent); box-shadow: 0 0 15px rgba(247,147,26,0.4)"><i class="fas fa-coins text-black text-xs"></i></div><span class="font-orbitron font-bold text-sm" style="color:var(--accent)">CryptoMine</span></div>
-            <div class="flex items-center gap-2">
-                <div id="statusBadge" class="hidden items-center gap-1 px-2 py-1 rounded-full text-[10px] font-semibold" style="background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.3); color:var(--success)"><span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span><span class="hidden md:inline">مسدد</span></div>
-                <div id="balanceNav" class="hidden items-center gap-1 px-2 py-1 rounded-lg text-[10px] font-bold glass-card" style="padding:6px 8px"><i class="fab fa-bitcoin" style="color:var(--accent)"></i><span id="navBalance" style="color:var(--accent2)">0</span></div>
-                <button onclick="openModal('authModal')" class="btn-secondary text-[10px] py-1.5 px-2" id="authBtn"><i class="fas fa-sign-in-alt ml-0.5"></i> الدخول</button>
-                <button onclick="openAdminOS()" class="hidden btn-secondary text-[10px] py-1.5 px-2 border-cyan-500 text-cyan-500" id="adminBtn"><i class="fas fa-terminal ml-0.5"></i> تحكم</button>
-                <button onclick="logout()" class="hidden btn-secondary text-[10px] py-1.5 px-2" id="logoutBtn" style="border-color:var(--danger); color:var(--danger);"><i class="fas fa-sign-out-alt"></i></button>
+    <nav class="fixed top-0 w-full z-50 border-b" style="background:rgba(5,5,8,0.8); backdrop-filter:blur(30px); border-color:rgba(255,255,255,0.05);">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-3"><div class="w-9 h-9 rounded-xl flex items-center justify-center" style="background:var(--accent); box-shadow: 0 0 20px rgba(247,147,26,0.5)"><i class="fas fa-coins text-black text-sm"></i></div><span class="font-orbitron font-bold text-lg tracking-wider" style="color:var(--accent)">CryptoMine</span></div>
+            <div class="flex items-center gap-3">
+                <div id="statusBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold" style="background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.3); color:var(--success)"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span><span class="hidden md:inline">مسدد</span></div>
+                <div id="balanceNav" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl text-xs font-bold glass-card" style="padding:8px 12px"><i class="fab fa-bitcoin" style="color:var(--accent)"></i><span id="navBalance" style="color:var(--accent2)">0</span></div>
+                <button onclick="openModal('authModal')" class="btn-secondary text-xs py-2 px-4" id="authBtn"><i class="fas fa-sign-in-alt ml-1"></i> الدخول</button>
+                <button onclick="openAdminOS()" class="hidden btn-secondary text-xs py-2 px-4 border-cyan-500 text-cyan-500 hover:bg-cyan-500/10" id="adminBtn"><i class="fas fa-terminal ml-1"></i> لوحة التحكم</button>
+                <button onclick="logout()" class="hidden btn-secondary text-xs py-2 px-4" id="logoutBtn" style="border-color:var(--danger); color:var(--danger);"><i class="fas fa-sign-out-alt ml-1"></i></button>
             </div>
         </div>
     </nav>
 
-    <main class="pt-20 pb-8">
-        <section class="min-h-[75vh] flex items-center justify-center relative px-4">
+    <main class="pt-24 pb-12">
+        <!-- Hero Section -->
+        <section class="min-h-[80vh] flex items-center justify-center relative px-4">
             <div class="text-center max-w-4xl mx-auto relative">
-                <div class="mb-6 relative inline-block"><div class="w-24 h-24 md:w-36 md:h-36 mx-auto rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f); box-shadow: 0 0 40px rgba(247,147,26,0.4)"><i class="fab fa-bitcoin text-4xl md:text-6xl text-black spin-slow"></i></div></div>
-                <h1 class="font-orbitron text-3xl sm:text-5xl md:text-6xl font-black mb-6 leading-tight"><span style="color:var(--fg)">تعدين</span> <span style="background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">البيتكوين</span></h1>
-                <button onclick="openModal('authModal')" class="btn-primary text-base px-8 py-4 w-auto mx-auto inline-flex" id="heroActionBtn"><i class="fas fa-rocket ml-2"></i> ابدأ الآن</button>
+                <div class="mb-8 relative inline-block"><div class="w-32 h-32 md:w-40 md:h-40 mx-auto rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f); box-shadow: 0 0 60px rgba(247,147,26,0.5)"><i class="fab fa-bitcoin text-6xl md:text-8xl text-black spin-slow"></i></div></div>
+                <h1 class="font-orbitron text-4xl sm:text-6xl md:text-7xl font-black mb-10 leading-tight"><span style="color:var(--fg)">تعدين</span> <span style="background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">البيتكوين</span></h1>
+                <button onclick="openModal('authModal')" class="btn-primary text-lg px-10 py-5 w-auto mx-auto inline-flex" id="heroActionBtn"><i class="fas fa-rocket ml-2"></i> ابدأ الآن</button>
             </div>
         </section>
 
-        <section id="miningSection" class="py-6 px-4 hidden">
+        <section id="miningSection" class="py-10 px-4 hidden">
             <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-6"><h2 class="font-orbitron text-2xl md:text-3xl font-black">لوحة التعدين</h2><div id="subWarning" class="mt-3 p-3 rounded-xl inline-block text-xs hidden" style="background:rgba(255,61,87,0.1); border:1px solid rgba(255,61,87,0.2); color:var(--danger);"><i class="fas fa-exclamation-triangle ml-1"></i> يجب دفع الاشتراك<button onclick="openModal('paymentModal')" class="mr-2 text-[10px] px-2 py-0.5 rounded" style="background:var(--danger); color:#fff;">ادفع</button></div></div>
+                <div class="text-center mb-10"><h2 class="font-orbitron text-3xl md:text-4xl font-black mb-3">لوحة التحكم بالتعدين</h2><div id="subWarning" class="mt-4 p-4 rounded-xl inline-block text-sm hidden" style="background:rgba(255,61,87,0.1); border:1px solid rgba(255,61,87,0.2); color:var(--danger);"><i class="fas fa-exclamation-triangle ml-2"></i> يجب دفع الاشتراك<button onclick="openModal('paymentModal')" class="mr-3 text-xs px-3 py-1 rounded-lg" style="background:var(--danger); color:#fff;">ادفع الآن</button></div></div>
                 
-                <div class="glass-card p-5 mb-6 max-w-xl mx-auto text-center">
-                    <div class="text-[10px] text-gray-400 mb-1 tracking-widest font-orbitron">رصيدك</div>
-                    <div class="font-orbitron text-3xl md:text-4xl font-bold mb-2" style="color:var(--accent2)"><span id="totalEarnings">0</span> BTC</div>
-                    <div class="flex justify-center gap-4 text-xs">
-                        <div class="flex items-center gap-1"><i class="fas fa-dollar-sign text-green-400 text-[10px]"></i><span class="font-bold text-green-400 font-mono">$<span id="balanceUsd">0</span></span></div>
-                        <div class="flex items-center gap-1"><i class="fas fa-lira-sign text-cyan-400 text-[10px]"></i><span class="font-bold text-cyan-400 font-mono"><span id="balanceSyp">0</span></span></div>
+                <!-- Enhanced Balance Display -->
+                <div class="glass-card p-8 mb-8 max-w-2xl mx-auto text-center">
+                    <div class="text-xs text-gray-400 mb-3 tracking-widest font-orbitron">رصيدك الحالي</div>
+                    <div class="font-orbitron text-4xl md:text-5xl font-bold mb-4" style="color:var(--accent2)"><span id="totalEarnings">0</span> BTC</div>
+                    <div class="flex justify-center gap-6 text-sm">
+                        <div class="flex items-center gap-2"><i class="fas fa-dollar-sign text-green-400"></i><span class="font-bold text-green-400 font-mono">$<span id="balanceUsd">0</span></span></div>
+                        <div class="flex items-center gap-2"><i class="fas fa-lira-sign text-cyan-400"></i><span class="font-bold text-cyan-400 font-mono"><span id="balanceSyp">0</span> ل.س</span></div>
                     </div>
                 </div>
 
-                <div class="text-center mb-6"><div onclick="toggleMining()"><div id="miningRing" class="w-28 h-28 md:w-40 md:h-40 rounded-full flex items-center justify-center mx-auto transition-all cursor-pointer" style="background:rgba(247,147,26,0.1); border:3px solid rgba(247,147,26,0.2)"><div class="w-20 h-20 md:w-32 md:h-32 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)"><i class="fas fa-play text-3xl md:text-5xl text-black" id="miningIcon"></i></div></div><div class="mt-3 font-orbitron text-sm font-bold" id="miningStatus" style="color:var(--muted)">اضغط للبدء</div></div></div>
-                
-                <div class="grid grid-cols-3 gap-2 mb-6 max-w-md mx-auto"><div class="glass-card p-3"><div class="text-[10px] mb-0.5" style="color:var(--muted)">الهاش</div><div class="font-orbitron text-sm font-bold" style="color:var(--accent)" id="hashRate">0.00</div></div><div class="glass-card p-3"><div class="text-[10px] mb-0.5" style="color:var(--muted)">الوقت</div><div class="font-orbitron text-sm font-bold" style="color:var(--success)" id="miningTime">00:00:00</div></div><div class="glass-card p-3"><div class="text-[10px] mb-0.5" style="color:var(--muted)">الكتل</div><div class="font-orbitron text-sm font-bold" id="blocksMined">0</div></div></div>
-                
-                <div class="flex flex-wrap gap-2 justify-center">
-                    <button onclick="openModal('withdrawModal')" class="btn-primary w-auto text-xs px-4 py-2.5"><i class="fas fa-wallet ml-1"></i> سحب</button>
-                    <button onclick="openModal('paymentModal')" class="btn-secondary text-xs px-3 py-2.5"><i class="fas fa-money-bill-wave ml-1"></i> اشتراك</button>
-                    <button onclick="openModal('supportModal')" class="btn-secondary text-xs px-3 py-2.5 text-cyan-400 border-cyan-400/20"><i class="fas fa-headset ml-1"></i> الدعم</button>
+                <div class="text-center mb-10"><div onclick="toggleMining()"><div id="miningRing" class="w-36 h-36 md:w-48 md:h-48 rounded-full flex items-center justify-center mx-auto transition-all duration-500 cursor-pointer" style="background:rgba(247,147,26,0.1); border:4px solid rgba(247,147,26,0.2)"><div class="w-28 h-28 md:w-36 md:h-36 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)"><i class="fas fa-play text-4xl md:text-6xl text-black" id="miningIcon"></i></div></div><div class="mt-6 font-orbitron text-lg font-bold" id="miningStatus" style="color:var(--muted)">اضغط للبدء</div></div></div>
+                <div class="grid grid-cols-3 gap-4 mb-8 max-w-xl mx-auto"><div class="glass-card p-5"><div class="text-xs mb-1" style="color:var(--muted)">الهاش</div><div class="font-orbitron text-xl font-bold" style="color:var(--accent)" id="hashRate">0.00</div></div><div class="glass-card p-5"><div class="text-xs mb-1" style="color:var(--muted)">الوقت</div><div class="font-orbitron text-xl font-bold" style="color:var(--success)" id="miningTime">00:00:00</div></div><div class="glass-card p-5"><div class="text-xs mb-1" style="color:var(--muted)">الكتل</div><div class="font-orbitron text-xl font-bold" id="blocksMined">0</div></div></div>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button onclick="openModal('withdrawModal')" class="btn-primary w-auto text-sm px-6 py-3"><i class="fas fa-wallet ml-1"></i> سحب</button>
+                    <button onclick="openModal('paymentModal')" class="btn-secondary text-sm px-6 py-3"><i class="fas fa-money-bill-wave ml-1"></i> اشتراك</button>
+                    <button onclick="openModal('supportModal')" class="btn-secondary text-sm px-6 py-3 text-cyan-400 border-cyan-400/20 hover:bg-cyan-400/10"><i class="fas fa-headset ml-1"></i> الدعم</button>
                 </div>
             </div>
         </section>
@@ -214,60 +232,216 @@
 </div>
 
 <script>
-    // PATCHED: Robust DB Initialization
-    function initDB() {
-        let db = JSON.parse(localStorage.getItem('cryptoDB'));
-        if (!db) {
-            db = {
-                users: [{ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }],
-                paymentRequests: [], withdrawalRequests: [], supportMessages: [],
-                settings: { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 },
-                wallets: [ { id: 1, name: 'USDT TRC20', address: 'TJxKfNewAddress' }, { id: 2, name: 'BTC Network', address: 'bc1qExampleAddress' } ]
-            };
-        } else {
-            // Critical Safety Patches
-            if (!db.supportMessages) db.supportMessages = [];
-            if (!db.wallets) db.wallets = [];
-            if (!db.paymentRequests) db.paymentRequests = [];
-            if (!db.withdrawalRequests) db.withdrawalRequests = [];
-            if (!db.settings) db.settings = { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 };
-            if(db.settings.btcToUsd === undefined) db.settings.btcToUsd = 65000;
-            if(db.settings.usdToSyp === undefined) db.settings.usdToSyp = 15000;
-            if(db.settings.commission === undefined) db.settings.commission = 5;
-            if(db.settings.minWithdrawUsd === undefined) db.settings.minWithdrawUsd = 10;
-            if (!db.users.find(u => u.role === 'admin')) db.users.push({ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 });
-        }
-        saveDB(db);
-    }
-    initDB(); 
+    function initDB() { if (!localStorage.getItem('cryptoDB')) { const defaultDB = { users: [{ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }], paymentRequests: [], withdrawalRequests: [], supportMessages: [], settings: { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 }, wallets: [ { id: 1, name: 'USDT TRC20', address: 'TJxKfNewExampleAddressTrc20' }, { id: 2, name: 'BTC Network', address: 'bc1qExampleAddressBtcNetwork' } ] }; localStorage.setItem('cryptoDB', JSON.stringify(defaultDB)); } } initDB(); function getDB() { return JSON.parse(localStorage.getItem('cryptoDB')); } function saveDB(db) { localStorage.setItem('cryptoDB', JSON.stringify(db)); }
+    let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningInterval: null, saveCounter: 0 }; let activeSupportUserId = null;
     
-    function getDB() { return JSON.parse(localStorage.getItem('cryptoDB')); }
-    function saveDB(db) { localStorage.setItem('cryptoDB', JSON.stringify(db)); }
+    window.onload = () => { 
+        const session = localStorage.getItem('cryptoSession'); 
+        if (session) { const db = getDB(); const user = db.users.find(u => u.id === parseInt(session)); if (user) loginSuccess(user, true); } 
+        updateOsTime(); setInterval(updateOsTime, 1000); 
+        // Removed duplicate animateParticles() to fix double speed and CPU drain
+    };
     
-    let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningInterval: null, timeInterval: null }; let activeSupportUserId = null;
-    window.onload = () => { const session = localStorage.getItem('cryptoSession'); if (session) { const db = getDB(); const user = db.users.find(u => u.id === parseInt(session)); if (user) loginSuccess(user, true); } animateParticles(); updateOsTime(); setInterval(updateOsTime, 1000); };
     function updateOsTime() { const d = new Date(); const el = document.getElementById('osTime'); if(el) el.innerText = d.toLocaleTimeString('en-US', {hour12:false}); }
-    function openModal(id) { if(id === 'paymentModal') populateDepositWallets(); if(id === 'withdrawModal') populateWithdrawWallets(); if(id === 'supportModal') renderUserChat(); document.getElementById(id).classList.add('active'); document.body.style.overflow = 'hidden'; }
-    function closeModal(id) { document.getElementById(id).classList.remove('active'); document.body.style.overflow = ''; }
-    function switchAuthTab(tab) { const loginTab = document.getElementById('loginTab'); const registerTab = document.getElementById('registerTab'); if (tab === 'login') { document.getElementById('loginForm').style.display = 'block'; document.getElementById('registerForm').style.display = 'none'; loginTab.className = 'auth-tab active'; registerTab.className = 'auth-tab inactive'; } else { document.getElementById('loginForm').style.display = 'none'; document.getElementById('registerForm').style.display = 'block'; registerTab.className = 'auth-tab active'; loginTab.className = 'auth-tab inactive'; } }
-    function register() { const user = document.getElementById('regUser').value.trim(); const pass = document.getElementById('regPass').value; const passC = document.getElementById('regPassConfirm').value; if (!user || !pass) return showToast('الرجاء ملء جميع الحقول', 'error'); if (pass !== passC) return showToast('كلمات المرور غير متطابقة', 'error'); const db = getDB(); if (db.users.find(u => u.username === user)) return showToast('اسم المستخدم محجوز', 'error'); db.users.push({ id: Date.now(), username: user, password: pass, role: 'user', isSubscribed: false, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }); saveDB(db); showToast('تم التسجيل! سجل دخولك', 'success'); switchAuthTab('login'); }
-    function login() { const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value; const db = getDB(); const foundUser = db.users.find(u => u.username === user && u.password === pass); if (!foundUser) return showToast('بيانات خاطئة', 'error'); if (foundUser.banned) return showToast('حساب موقوف', 'error'); if (db.settings.maintenance && foundUser.role !== 'admin') return showToast('الموقع تحت الصيانة', 'error'); localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser, false); closeModal('authModal'); }
+    function openModal(id) { if(id === 'paymentModal') populateDepositWallets(); if(id === 'withdrawModal') populateWithdrawWallets(); if(id === 'supportModal') renderUserChat(); document.getElementById(id).classList.add('active'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('active'); }
+    
+    function switchAuthTab(tab) {
+        const loginTab = document.getElementById('loginTab');
+        const registerTab = document.getElementById('registerTab');
+        if (tab === 'login') {
+            document.getElementById('loginForm').style.display = 'block'; 
+            document.getElementById('registerForm').style.display = 'none'; 
+            loginTab.className = 'auth-tab active';
+            registerTab.className = 'auth-tab inactive';
+        } else {
+            document.getElementById('loginForm').style.display = 'none'; 
+            document.getElementById('registerForm').style.display = 'block'; 
+            registerTab.className = 'auth-tab active';
+            loginTab.className = 'auth-tab inactive';
+        }
+    }
+    
+    function register() { 
+        const user = document.getElementById('regUser').value.trim(); 
+        const pass = document.getElementById('regPass').value; 
+        const passC = document.getElementById('regPassConfirm').value; 
+        if (!user || !pass) return showToast('الرجاء ملء جميع الحقول', 'error'); 
+        if (pass !== passC) return showToast('كلمات المرور غير متطابقة', 'error'); 
+        const db = getDB(); 
+        if (db.users.find(u => u.username === user)) return showToast('اسم المستخدم محجوز', 'error'); 
+        db.users.push({ id: Date.now(), username: user, password: pass, role: 'user', isSubscribed: false, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }); 
+        saveDB(db); 
+        showToast('تم التسجيل! سجل دخولك', 'success'); 
+        switchAuthTab('login');
+        document.getElementById('regUser').value = '';
+        document.getElementById('regPass').value = '';
+        document.getElementById('regPassConfirm').value = '';
+    }
+    
+    function login() { 
+        const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value; 
+        const db = getDB(); const foundUser = db.users.find(u => u.username === user && u.password === pass); 
+        if (!foundUser) return showToast('بيانات خاطئة', 'error'); 
+        if (foundUser.banned) return showToast('حساب موقوف', 'error'); 
+        if (db.settings.maintenance && foundUser.role !== 'admin') return showToast('الموقع حالياً تحت الصيانة، لا يمكن الدخول', 'error'); 
+        localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser, false); closeModal('authModal'); 
+        document.getElementById('loginUser').value = '';
+        document.getElementById('loginPass').value = '';
+    }
 
     function loginSuccess(user, isOnLoad = false) {
         appState.currentUser = user; appState.miningTimeSeconds = user.miningTimeSeconds || 0; 
         document.getElementById('authBtn').classList.add('hidden'); document.getElementById('logoutBtn').classList.remove('hidden'); document.getElementById('heroActionBtn').style.display = 'none';
+        
         if (user.role === 'admin') { document.getElementById('adminBtn').classList.remove('hidden'); document.getElementById('miningSection').classList.add('hidden'); document.getElementById('balanceNav').style.display = 'none'; document.getElementById('statusBadge').style.display = 'none'; } 
         else {
             document.getElementById('adminBtn').classList.add('hidden'); document.getElementById('miningSection').classList.remove('hidden'); document.getElementById('balanceNav').style.display = 'flex';
             document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
             if (user.isSubscribed) { document.getElementById('statusBadge').style.display = 'flex'; document.getElementById('subWarning').style.display = 'none'; } else { document.getElementById('statusBadge').style.display = 'none'; document.getElementById('subWarning').style.display = 'block'; }
+            
+            // Offline Mining Calculation - Fixed Math.floor to prevent float seconds bug
             if (user.isMining && user.lastMiningTimestamp) {
-                const now = Date.now(); const elapsedSeconds = (now - user.lastMiningTimestamp) / 1000;
-                if (elapsedSeconds > 0) { const offlineEarnings = elapsedSeconds * 0.000000015 * 0.5; user.balance += offlineEarnings; user.miningTimeSeconds += elapsedSeconds; appState.miningTimeSeconds = user.miningTimeSeconds; const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; udb.lastMiningTimestamp = Date.now(); saveDB(dbUpd); if(!isOnLoad) showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success'); }
+                const now = Date.now();
+                const elapsedSeconds = Math.floor((now - user.lastMiningTimestamp) / 1000);
+                if (elapsedSeconds > 0) {
+                    const powerFactor = 0.5; const baseRate = 0.000000015;
+                    const offlineEarnings = elapsedSeconds * baseRate * powerFactor;
+                    user.balance += offlineEarnings; user.miningTimeSeconds += elapsedSeconds; appState.miningTimeSeconds = user.miningTimeSeconds;
+                    const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; udb.lastMiningTimestamp = Date.now(); saveDB(dbUpd);
+                    // Fixed: Show toast always if there are earnings, even on page reload
+                    if(offlineEarnings > 0) showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success');
+                }
                 startMining(true);
             }
             updateUIBalance();
         }
     }
 
-    function logout() { if(app
+    function logout() { 
+        if(appState.isMining) { 
+            const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); 
+            user.lastMiningTimestamp = Date.now(); 
+            user.balance = appState.currentUser.balance;
+            user.miningTimeSeconds = appState.miningTimeSeconds;
+            saveDB(db); 
+            stopMiningVisuals(); 
+        } 
+        localStorage.removeItem('cryptoSession'); location.reload(); 
+    }
+    
+    function copyText(id) { navigator.clipboard.writeText(document.getElementById(id).textContent); showToast('تم النسخ', 'success'); }
+    
+    function formatFiat(num) { return num.toLocaleString('en-US', { maximumFractionDigits: 2 }); }
+    function updateUIBalance() { 
+        const btc = appState.currentUser.balance;
+        const db = getDB();
+        const usd = btc * (db.settings.btcToUsd || 65000);
+        const syp = usd * (db.settings.usdToSyp || 15000);
+        
+        document.getElementById('totalEarnings').textContent = btc.toFixed(8); 
+        document.getElementById('navBalance').textContent = btc.toFixed(8); 
+        document.getElementById('balanceUsd').textContent = formatFiat(usd);
+        document.getElementById('balanceSyp').textContent = formatFiat(syp);
+    }
+
+    function populateDepositWallets() { const db = getDB(); const sel = document.getElementById('depositWalletSelect'); sel.innerHTML = ''; db.wallets.forEach(w => sel.innerHTML += `<option value="${w.id}">${w.name}</option>`); updateDepositWallet(); document.getElementById('adminAmountDisplay').textContent = parseInt(db.settings.subscriptionAmount).toLocaleString(); }
+    function updateDepositWallet() { const db = getDB(); const sel = document.getElementById('depositWalletSelect'); const wallet = db.wallets.find(w => w.id === parseInt(sel.value)); document.getElementById('depositWalletAddress').textContent = wallet ? wallet.address : ''; }
+    function populateWithdrawWallets() { const db = getDB(); const sel = document.getElementById('withdrawNetwork'); sel.innerHTML = ''; db.wallets.forEach(w => sel.innerHTML += `<option value="${w.name}">${w.name}</option>`); const btcBal = appState.currentUser.balance; const usdBal = btcBal * (db.settings.btcToUsd || 65000); const sypBal = usdBal * (db.settings.usdToSyp || 15000); document.getElementById('withdrawBalance').textContent = btcBal.toFixed(8); document.getElementById('withdrawBalanceUsd').textContent = formatFiat(usdBal); document.getElementById('withdrawBalanceSyp').textContent = formatFiat(sypBal); calculateWithdraw(); }
+    function submitPaymentRequest() { const txId = document.getElementById('txIdInput').value.trim(); const amount = document.getElementById('amountPaidInput').value; const walletName = document.getElementById('depositWalletSelect').options[document.getElementById('depositWalletSelect').selectedIndex].text; if(!txId || !amount) return showToast('الرجاء إدخال كافة البيانات', 'error'); const db = getDB(); db.paymentRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, txId, amount: parseFloat(amount), walletName, status: 'pending' }); saveDB(db); closeModal('paymentModal'); showToast('تم إرسال الطلب', 'info'); document.getElementById('txIdInput').value = ''; document.getElementById('amountPaidInput').value = ''; }
+    
+    function toggleMining() { if (!appState.currentUser) return openModal('authModal'); const db = getDB(); const freshUser = db.users.find(u => u.id === appState.currentUser.id); if (!freshUser.isSubscribed) return openModal('paymentModal'); if (appState.isMining) { const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === appState.currentUser.id); udb.isMining = false; udb.lastMiningTimestamp = null; udb.balance = appState.currentUser.balance; udb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); stopMiningVisuals(); } else startMining(false); }
+    
+    function startMining(isResuming) { 
+        appState.isMining = true; appState.saveCounter = 0;
+        const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); 
+        document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; 
+        
+        // Performance Fix: Merged intervals and reduced localStorage saving to every 5 seconds
+        appState.miningInterval = setInterval(() => { 
+            if (!appState.isMining) return; 
+            const earnings = 0.000000015 * (0.9 + Math.random() * 0.2); 
+            appState.currentUser.balance += earnings; 
+            appState.miningTimeSeconds++;
+            
+            updateUIBalance(); 
+            document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
+            document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2); 
+            
+            if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } 
+            
+            appState.saveCounter++;
+            if (appState.saveCounter >= 5) {
+                const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); 
+                if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); }
+                appState.saveCounter = 0;
+            }
+        }, 1000); 
+        
+        if(!isResuming) showToast('تم بدء التعدين (يعمل حتى لو سجلت خروج)', 'success'); 
+    }
+
+    function stopMiningVisuals() { 
+        appState.isMining = false; clearInterval(appState.miningInterval); 
+        document.getElementById('miningIcon').className = 'fas fa-play text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'متوقف'; document.getElementById('miningStatus').style.color = 'var(--muted)'; document.getElementById('miningRing').classList.remove('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'rgba(247,147,26,0.2)'; document.getElementById('hashRate').textContent = '0.00'; 
+    }
+
+    function formatTime(s) { return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
+    
+    function calculateWithdraw() { 
+        const db = getDB(); 
+        const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value) || 0; 
+        const currency = document.getElementById('withdrawCurrency').value; 
+        const btcUsd = db.settings.btcToUsd || 65000;
+        const usdSyp = db.settings.usdToSyp || 15000;
+        let btcNeeded = 0; 
+        if (currency === 'USD') btcNeeded = amountFiat / btcUsd; 
+        else btcNeeded = (amountFiat / usdSyp) / btcUsd; 
+        const btcWithCommission = btcNeeded * (1 + ((db.settings.commission || 0) / 100)); 
+        document.getElementById('withdrawDeductBtc').textContent = btcWithCommission.toFixed(8); 
+    }
+
+    function processWithdraw() { 
+        const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value); 
+        const currency = document.getElementById('withdrawCurrency').value; 
+        const network = document.getElementById('withdrawNetwork').value; 
+        const walletAddr = document.getElementById('withdrawWalletAddr').value.trim(); 
+        if(!amountFiat || amountFiat <= 0 || !walletAddr) return showToast('أدخل بيانات صحيحة', 'error'); 
+        const db = getDB(); const settings = db.settings; 
+        const minUsd = settings.minWithdrawUsd || 10; const minSyp = minUsd * (settings.usdToSyp || 15000); 
+        if (currency === 'USD' && amountFiat < minUsd) return showToast(`الحد الأدنى $${minUsd}`, 'error'); 
+        if (currency === 'SYP' && amountFiat < minSyp) return showToast(`الحد الأدنى ${formatFiat(minSyp)} ل.س`, 'error'); 
+        
+        const btcUsd = settings.btcToUsd || 65000;
+        const usdSyp = settings.usdToSyp || 15000;
+        let btcNeeded = currency === 'USD' ? amountFiat / btcUsd : (amountFiat / usdSyp) / btcUsd; 
+        let btcWithCommission = btcNeeded * (1 + ((settings.commission || 0) / 100)); 
+        
+        if (btcWithCommission > appState.currentUser.balance) return showToast('رصيدك غير كافٍ', 'error'); 
+        appState.currentUser.balance -= btcWithCommission; 
+        const userInDb = db.users.find(u => u.id === appState.currentUser.id); userInDb.balance = appState.currentUser.balance; 
+        db.withdrawalRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, requestedCurrency: currency, requestedAmount: amountFiat, deductedBtc: btcWithCommission, network, walletAddr, status: 'pending' }); 
+        saveDB(db); updateUIBalance(); closeModal('withdrawModal'); showToast('تم تقديم طلب السحب', 'success'); 
+        document.getElementById('withdrawAmountFiat').value = '';
+        document.getElementById('withdrawWalletAddr').value = '';
+    }
+
+    // Admin Logic
+    function openAdminOS() { if(!appState.currentUser || appState.currentUser.role !== 'admin') return; document.getElementById('adminOS').classList.add('active'); renderAdminData(); }
+    function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; }
+    function switchOsTab(tab, el) { document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); document.getElementById(`os-tab-${tab}`).style.display = 'block'; el.classList.add('active'); renderAdminData(); }
+    function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); renderAdminSupport(); loadAdminSettings(); }
+    function renderAdminUsers() { const db = getDB(); const t = document.getElementById('adminUsersTable'); t.innerHTML = ''; const users = db.users.filter(u=>u.role!=='admin'); document.getElementById('userCount').innerText = `${users.length} Users`; users.forEach(u => { t.innerHTML += `<tr><td>${u.username}</td><td class="${u.isSubscribed?'text-green-400':'text-red-400'}">${u.isSubscribed?'مسدد':'لا'}</td><td class="font-mono text-xs">${(u.balance||0).toFixed(8)}</td><td><button onclick="toggleBan(${u.id}, ${!u.banned})" class="os-btn text-xs py-1 px-2 ${u.banned?'':'os-btn-danger'}">${u.banned?'فك الحظر':'حظر'}</button></td></tr>`; }); }
+    function toggleBan(id, ban) { const db = getDB(); const u = db.users.find(u=>u.id===id); if(u) { u.banned = ban; saveDB(db); renderAdminUsers(); } }
+    function renderAdminPayments() { const db = getDB(); const t = document.getElementById('adminPaymentsTable'); t.innerHTML = ''; db.paymentRequests.filter(p=>p.status==='pending').forEach(r => { t.innerHTML += `<tr><td>${r.username}</td><td class="font-mono text-xs" dir="ltr">${r.txId}</td><td>${parseInt(r.amount).toLocaleString()} ل.س</td><td class="text-xs">${r.walletName}</td><td class="flex gap-1"><button onclick="approvePayment(${r.id})" class="os-btn text-xs py-1 px-2">قبول</button><button onclick="rejectPayment(${r.id})" class="os-btn os-btn-danger text-xs py-1 px-2">رفض</button></td></tr>`; }); }
+    function approvePayment(id) { const db = getDB(); const r = db.paymentRequests.find(p=>p.id===id); if(!r) return; r.status='approved'; const u = db.users.find(u=>u.id===r.userId); if(u) u.isSubscribed=true; saveDB(db); renderAdminPayments(); }
+    function rejectPayment(id) { const db = getDB(); const r = db.paymentRequests.find(p=>p.id===id); if(!r) return; r.status='rejected'; saveDB(db); renderAdminPayments(); }
+    function renderAdminWithdrawals() { const db = getDB(); const t = document.getElementById('adminWithdrawalsTable'); t.innerHTML = ''; db.withdrawalRequests.filter(w=>w.status==='pending').forEach(r => { t.innerHTML += `<tr><td>${r.username}</td><td class="text-xs">${formatFiat(r.requestedAmount)} ${r.requestedCurrency}<br><span class="text-gray-500">(${r.deductedBtc.toFixed(8)} BTC)</span></td><td class="text-xs">${r.network}</td><td class="font-mono text-xs break-all" dir="ltr">${r.walletAddr}</td><td class="flex gap-1"><button onclick="approveWithdraw(${r.id})" class="os-btn text-xs py-1 px-2">تم</button><button onclick="rejectWithdraw(${r.id})" class="os-btn os-btn-danger text-xs py-1 px-2">رفض</button></td></tr>`; }); }
+    function approveWithdraw(id) { const db = getDB(); const w = db.withdrawalRequests.find(w=>w.id===id); if(!w) return; w.status='approved'; saveDB(db); renderAdminWithdrawals(); }
+    function rejectWithdraw(id) { const db = getDB(); const r = db.withdrawalRequests.find(w=>w.id===id); if(!r) return; r.status='rejected'; const u = db.users.find(u=>u.id===r.userId); if(u) u.balance+=r.deductedBtc; saveDB(db); renderAdminWithdrawals(); }
+    function renderAdminWallets() { const db = getDB(); const t = document.getElementById('adminWalletsTable'); t.innerHTML = ''; db.wallets.forEach(w => { t.innerHTML += `<tr><td>${w.name}</td><td class="font-mono text-xs break-all" dir="ltr">${w.address}</td><td><button onclick="deleteWallet(${w.id})" class="os-btn os-btn-danger text-xs py-1 px-2">حذف</button></td></tr>`; }); }
+    function addWallet() { const n = document.getElementById('newWalletName').value.trim(); const a = document.getElementById('newWalletAddress').value.trim(); if(!n||!a) return showToast('أدخل الاسم والعنوان', 'error'); const db = getDB(); db.wallets.push({id: Date.now(), name: n, address: a}); saveDB(db); document.getElementById('newWalletName').value=''; document.getElementById('newWalletAddress').value=''; renderAdminWallets(); }
+    function deleteWallet(id) { const db = getDB(); db.wallets = db.wallets.filter(w=>w.id!==id); saveDB(db); renderAdminWallets(); }
+    function loadAdminSettings() { const db = getDB(); document.getElementById('setAmount').value = db.settings.subscriptionAmount; document.getElementById('setBtcUsd').value = db.settings.btcToUsd; document.getElementById('setUsdSyp').value = db.settings.usdToSyp; document.getElementById('setCommission').value = db.settings.commission; document.getElementById('setMinWithdrawUsd').value = db.settings.minWithdrawUsd; const mBtn = document.getElementById('maintenanceBtn'); if(db.settings.maintenance) { mBtn.innerHTML = '<i class="fas fa-check-circle ml-2"></i> تعطيل وضع الصيانة'; mBtn.style.borderColor = "#00e676"; mBtn.style.color = "#00e676"; } else { mBtn.innerHTML = '<i class="fas fa-tools ml-2"></i> تفعيل وضع الصيانة'; mBtn.style.borderColor = "#ff0044"; mBtn.style.color = "#ff0044"; } }
+    function saveAdminSettings() { const db = getDB(); db.settings.subscriptionAmount = parseFloat(document.getElementById('setAmount').value); db.settings.btcToUsd = parseFloat(document.getElementById('setBtcUsd').value); db.settings.usdToSyp = parseFloat(document.getElementById('setUsdSyp').value); db.settings.commission = parseFloat(document.getElementById('setCommission').value); db.settings.minWithdrawUsd = parseFloat(document.getElementById('setMinWithdrawUsd').value); saveDB(db); showToast('تم الحفظ', 'success'); }
+    function toggleMaintenance() { const db = getDB(); db.settings.maintenance = !db.settings.maintenance; saveDB(db); loadAdminSettings(); showToast(db.settings.maintenance ? 'تم تفعيل وضع الصيانة
