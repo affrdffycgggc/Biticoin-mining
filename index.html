@@ -18,42 +18,56 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; min-height: 100vh; }
         
+        /* Custom Modern Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: rgba(247, 147, 26, 0.4); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(247, 147, 26, 0.8); }
+
         #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-        .bg-orb { position: fixed; border-radius: 50%; filter: blur(140px); z-index: 0; pointer-events: none; opacity: 0.15; animation: float 20s infinite ease-in-out; }
+        .bg-orb { position: fixed; border-radius: 50%; filter: blur(150px); z-index: 0; pointer-events: none; opacity: 0.15; animation: float 20s infinite ease-in-out; }
         .orb-1 { width: 800px; height: 800px; background: var(--accent); top: -300px; right: -300px; }
         .orb-2 { width: 600px; height: 600px; background: var(--neon-cyan); bottom: -200px; left: -200px; animation-delay: 7s; }
         .orb-3 { width: 400px; height: 400px; background: var(--neon-purple); top: 40%; left: 40%; animation-delay: 3s; }
-        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(30px, -40px); } }
+        @keyframes float { 0%, 100% { transform: translate(0, 0); } 50% { transform: translate(40px, -40px); } }
         
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'Share Tech Mono', monospace; }
         
-        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.3)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
+        /* Modern Glass Cards with Hover Glow */
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.4)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
         .glass-card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
-        .glass-card:hover { transform: translateY(-4px); box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px rgba(247,147,26,0.05); border-color: rgba(247,147,26,0.2); }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px rgba(247,147,26,0.1); border-color: rgba(247,147,26,0.3); }
         
-        .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 800; padding: 16px 32px; border-radius: 16px; border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif; transition: 0.3s; width: 100%; position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(247,147,26,0.3); }
+        /* Advanced Buttons with Active Press Gesture */
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 800; padding: 16px 32px; border-radius: 16px; border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif; transition: all 0.2s ease; width: 100%; position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(247,147,26,0.3); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(247,147,26,0.6); }
-        .btn-secondary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--fg); font-weight: 600; padding: 14px 28px; border-radius: 14px; cursor: pointer; font-size: 14px; font-family: 'Cairo', sans-serif; transition: 0.3s; backdrop-filter: blur(5px); }
+        .btn-primary:active { transform: scale(0.95) translateY(0); box-shadow: 0 0 10px rgba(247,147,26,0.2); }
+        
+        .btn-secondary { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); color: var(--fg); font-weight: 600; padding: 14px 28px; border-radius: 14px; cursor: pointer; font-size: 14px; font-family: 'Cairo', sans-serif; transition: all 0.2s ease; backdrop-filter: blur(5px); }
         .btn-secondary:hover { background: rgba(255,255,255,0.08); border-color: var(--accent); color: var(--accent); }
+        .btn-secondary:active { transform: scale(0.95); }
+
         .input-field { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 20px; color: var(--fg); font-size: 15px; font-family: 'Cairo', sans-serif; width: 100%; outline: none; transition: 0.3s; }
-        .input-field:focus { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,243,255,0.15); background: rgba(0,0,0,0.8); }
+        .input-field:focus { border-color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,243,255,0.2); background: rgba(0,0,0,0.8); }
         
         .mining-pulse { animation: miningPulse 2s ease-in-out infinite; }
         @keyframes miningPulse { 0%, 100% { box-shadow: 0 0 40px rgba(247,147,26,0.5); } 50% { box-shadow: 0 0 100px rgba(247,147,26,0.9), 0 0 20px var(--neon-cyan); } }
         .spin-slow { animation: spin 10s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
+        /* Toast Animation */
         .toast { position: fixed; top: 20px; left: 20px; transform: translateX(-150%); z-index: 10001; padding: 16px 24px; border-radius: 12px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 350px; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; }
         .toast.show { transform: translateX(0); }
         .toast.success { background: rgba(0,230,118,0.1); border-color: rgba(0,230,118,0.3); color: var(--success); }
         .toast.error { background: rgba(255,61,87,0.1); border-color: rgba(255,61,87,0.3); color: var(--danger); }
         .toast.info { background: rgba(0,243,255,0.1); border-color: rgba(0,243,255,0.3); color: var(--neon-cyan); }
         
+        /* Modal Fade-in Up Animation */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
         .modal-overlay.active { display: flex; }
-        .modal-content { background: linear-gradient(160deg, rgba(15,15,30,0.95), rgba(5,5,15,0.98)); border: 1px solid var(--border); border-radius: 24px; padding: 40px; max-width: 500px; width: 100%; position: relative; animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 80px rgba(0,0,0,0.5); }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .modal-content { background: linear-gradient(160deg, rgba(15,15,30,0.95), rgba(5,5,15,0.98)); border: 1px solid var(--border); border-radius: 24px; padding: 40px; max-width: 500px; width: 100%; position: relative; animation: modalIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 80px rgba(0,0,0,0.5); }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9) translateY(40px); } to { opacity: 1; transform: scale(1) translateY(0); } }
 
         .auth-tab { flex: 1; padding: 12px 0; border-radius: 12px; cursor: pointer; font-weight: 700; font-size: 14px; transition: all 0.3s; text-align: center; font-family: 'Cairo', sans-serif; }
         .auth-tab.active { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; box-shadow: 0 0 20px rgba(247,147,26,0.3); }
@@ -64,6 +78,7 @@
         .input-group .input-field { padding-right: 48px; }
         .input-group:focus-within .input-icon { color: var(--neon-cyan); }
 
+        /* Admin OS */
         .admin-os { position: fixed; inset: 0; background: var(--os-bg); z-index: 10000; display: none; flex-direction: column; font-family: 'Share Tech Mono', monospace; border: 1px solid var(--os-border); }
         .admin-os.active { display: flex; }
         .os-header { background: linear-gradient(90deg, rgba(0, 243, 255, 0.05), transparent); border-bottom: 1px solid var(--os-border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--os-accent); }
@@ -75,21 +90,26 @@
         .os-nav-item.active { background: rgba(0, 243, 255, 0.1); color: var(--os-accent); border-right-color: var(--os-accent); text-shadow: 0 0 8px rgba(0,243,255,0.6); }
         .os-card { background: rgba(10, 15, 25, 0.6); border: 1px solid var(--os-border); border-radius: 8px; padding: 20px; margin-bottom: 20px; box-shadow: 0 0 20px rgba(0,0,0,0.4); backdrop-filter: blur(10px); }
         .os-card-header { border-bottom: 1px solid var(--os-border); padding-bottom: 10px; margin-bottom: 15px; color: var(--os-accent); font-size: 12px; letter-spacing: 2px; text-transform: uppercase; display: flex; justify-content: space-between; }
-        .os-input { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,243,255,0.2); color: var(--os-accent); padding: 10px 14px; font-family: 'Share Tech Mono', monospace; width: 100%; outline: none; font-size: 14px; border-radius: 4px; }
-        .os-input:focus { border-color: var(--os-accent); box-shadow: 0 0 15px rgba(0,243,255,0.2); }
+        .os-input { background: rgba(0,0,0,0.6); border: 1px solid rgba(0,243,255,0.2); color: var(--os-accent); padding: 10px 14px; font-family: 'Share Tech Mono', monospace; width: 100%; outline: none; font-size: 14px; border-radius: 4px; transition: 0.3s; }
+        .os-input:focus { border-color: var(--os-accent); box-shadow: 0 0 15px rgba(0,243,255,0.3); }
         .os-btn { background: transparent; border: 1px solid var(--os-accent); color: var(--os-accent); padding: 8px 16px; cursor: pointer; font-family: 'Share Tech Mono', monospace; transition: 0.2s; border-radius: 4px; }
         .os-btn:hover { background: var(--os-accent); color: #000; box-shadow: 0 0 15px rgba(0,243,255,0.4); }
+        .os-btn:active { transform: scale(0.95); }
         .os-btn-danger { border-color: var(--os-danger); color: var(--os-danger); }
         .os-btn-danger:hover { background: var(--os-danger); color: #fff; box-shadow: 0 0 15px rgba(255,0,68,0.4); }
         .os-table { width: 100%; border-collapse: collapse; color: #94a3b8; font-size: 13px; }
         .os-table th { text-align: right; padding: 10px; border-bottom: 1px solid var(--os-border); color: var(--os-accent); font-weight: normal; }
-        .os-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); }
-        .os-table tr:hover td { background: rgba(0, 243, 255, 0.03); }
+        .os-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.2s; }
+        .os-table tr:hover td { background: rgba(0, 243, 255, 0.05); }
+        
+        /* Modern Chat Bubbles */
         .chat-box { height: 300px; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
-        .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 16px; font-size: 14px; line-height: 1.5; }
-        .chat-msg.user { background: linear-gradient(135deg, rgba(247,147,26,0.15), rgba(247,147,26,0.05)); align-self: flex-start; border: 1px solid rgba(247,147,26,0.2); }
-        .chat-msg.admin { background: linear-gradient(135deg, rgba(0,243,255,0.15), rgba(0,243,255,0.05)); align-self: flex-end; border: 1px solid rgba(0,243,255,0.2); color: #fff; }
+        .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 16px 16px 4px 16px; font-size: 14px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
+        .chat-msg.user { background: linear-gradient(135deg, rgba(247,147,26,0.2), rgba(247,147,26,0.05)); align-self: flex-start; border: 1px solid rgba(247,147,26,0.2); border-radius: 16px 16px 16px 4px; }
+        .chat-msg.admin { background: linear-gradient(135deg, rgba(0,243,255,0.2), rgba(0,243,255,0.05)); align-self: flex-end; border: 1px solid rgba(0,243,255,0.2); color: #fff; border-radius: 16px 16px 4px 16px; }
         .chat-msg .sender { font-size: 10px; opacity: 0.6; margin-bottom: 5px; display: block; font-weight: bold; }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+
         @media (max-width: 768px) { .os-sidebar { width: 60px; } .os-nav-item span { display: none; } .os-nav-item { justify-content: center; padding: 15px 0; } }
     </style>
 </head>
@@ -129,7 +149,7 @@
     </div>
 </div>
 
-<div id="paymentModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('paymentModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center">دفع الاشتراك</h3><div class="space-y-5"><div><label class="block text-sm mb-2" style="color:var(--muted)">اختر شبكة المحفظة</label><select id="depositWalletSelect" class="input-field" onchange="updateDepositWallet()"></select></div><div class="p-5 rounded-2xl text-center" style="background:rgba(247,147,26,0.05); border:1px dashed rgba(247,147,26,0.3);"><p class="text-xs mb-1" style="color:var(--muted)">عنوان المحفظة</p><p class="font-mono text-sm mt-2" id="depositWalletAddress" style="color:var(--accent); word-break: break-all;" dir="ltr">...</p><button onclick="copyText('depositWalletAddress')" class="mt-4 text-sm px-6 py-2 rounded-xl" style="background:var(--accent); color:#000;"><i class="fas fa-copy ml-1"></i> نسخ</button></div><div class="p-4 rounded-2xl text-center" style="background:rgba(255,0,0,0.05); border:1px solid rgba(255,0,0,0.2);"><p class="text-lg font-bold" style="color:var(--danger)">المبلغ: <span id="adminAmountDisplay">0</span> ل.س</p></div><input id="txIdInput" type="text" class="input-field" placeholder="رقم عملية التحويل"><input id="amountPaidInput" type="number" class="input-field" placeholder="المبلغ المحول"><button onclick="submitPaymentRequest()" class="btn-primary">إرسال طلب التفعيل</button></div></div></div>
+<div id="paymentModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('paymentModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center">دفع الاشتراك</h3><div class="space-y-5"><div><label class="block text-sm mb-2" style="color:var(--muted)">اختر شبكة المحفظة</label><select id="depositWalletSelect" class="input-field" onchange="updateDepositWallet()"></select></div><div class="p-5 rounded-2xl text-center" style="background:rgba(247,147,26,0.05); border:1px dashed rgba(247,147,26,0.3);"><p class="text-xs mb-1" style="color:var(--muted)">عنوان المحفظة</p><p class="font-mono text-sm mt-2" id="depositWalletAddress" style="color:var(--accent); word-break: break-all;" dir="ltr">...</p><button onclick="copyText('depositWalletAddress')" class="mt-4 text-sm px-6 py-2 rounded-xl btn-primary w-auto"><i class="fas fa-copy ml-1"></i> نسخ</button></div><div class="p-4 rounded-2xl text-center" style="background:rgba(255,0,0,0.05); border:1px solid rgba(255,0,0,0.2);"><p class="text-lg font-bold" style="color:var(--danger)">المبلغ: <span id="adminAmountDisplay">0</span> ل.س</p></div><input id="txIdInput" type="text" class="input-field" placeholder="رقم عملية التحويل"><input id="amountPaidInput" type="number" class="input-field" placeholder="المبلغ المحول"><button onclick="submitPaymentRequest()" class="btn-primary">إرسال طلب التفعيل</button></div></div></div>
 
 <div id="withdrawModal" class="modal-overlay"><div class="modal-content"><button onclick="closeModal('withdrawModal')" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button><h3 class="text-2xl font-bold mb-6 text-center">سحب الأرباح</h3><div class="space-y-5"><div class="p-5 rounded-2xl" style="background: linear-gradient(135deg, rgba(247,147,26,0.08), rgba(0,0,0,0.3)); border:1px solid rgba(247,147,26,0.2);"><div class="text-center mb-2"><span class="text-xs text-gray-400">رصيدك الحالي</span></div><div class="font-orbitron text-3xl font-bold text-center" style="color:var(--accent)"><span id="withdrawBalance">0</span> BTC</div><div class="grid grid-cols-2 gap-3 mt-4 text-center"><div class="p-3 rounded-xl" style="background:rgba(0,0,0,0.4);"><div class="text-xs text-gray-400">بالدولار</div><div class="text-base font-bold text-green-400 font-mono">$<span id="withdrawBalanceUsd">0</span></div></div><div class="p-3 rounded-xl" style="background:rgba(0,0,0,0.4);"><div class="text-xs text-gray-400">بالليرة</div><div class="text-base font-bold text-cyan-400 font-mono"><span id="withdrawBalanceSyp">0</span> ل.س</div></div></div></div><div><label class="block text-sm mb-2" style="color:var(--muted)">عملة السحب</label><select id="withdrawCurrency" class="input-field" onchange="calculateWithdraw()"><option value="USD">دولار (USD)</option><option value="SYP">ليرة (SYP)</option></select></div><div><label class="block text-sm mb-2" style="color:var(--muted)">المبلغ المطلوب</label><input id="withdrawAmountFiat" type="number" class="input-field" placeholder="مثال: 100" oninput="calculateWithdraw()"><p class="text-xs mt-3 text-center font-bold" style="color:var(--success)">سيتم خصم: <span id="withdrawDeductBtc">0</span> BTC (شامل العمولة)</p></div><div><label class="block text-sm mb-2" style="color:var(--muted)">شبكة السحب</label><select id="withdrawNetwork" class="input-field"></select></div><div><label class="block text-sm mb-2" style="color:var(--muted)">عنوان المحفظة</label><input id="withdrawWalletAddr" type="text" class="input-field" dir="ltr" placeholder="أدخل العنوان"></div><button onclick="processWithdraw()" class="btn-primary">تأكيد السحب</button></div></div></div>
 
@@ -141,7 +161,8 @@
     <div class="os-body">
         <div class="os-sidebar"><div class="os-nav-item active" onclick="switchOsTab('users', this)"><i class="fas fa-users"></i><span>المستخدمين</span></div><div class="os-nav-item" onclick="switchOsTab('payments', this)"><i class="fas fa-money-bill-transfer"></i><span>طلبات الشحن</span></div><div class="os-nav-item" onclick="switchOsTab('withdrawals', this)"><i class="fas fa-money-bill-wave"></i><span>طلبات السحب</span></div><div class="os-nav-item" onclick="switchOsTab('wallets', this)"><i class="fas fa-wallet"></i><span>المحافظ</span></div><div class="os-nav-item" onclick="switchOsTab('support', this)"><i class="fas fa-headset"></i><span>الدعم الفني</span></div><div class="os-nav-item" onclick="switchOsTab('settings', this)"><i class="fas fa-cogs"></i><span>إعدادات المنصة</span></div><div class="os-nav-item" onclick="switchOsTab('security', this)"><i class="fas fa-key"></i><span>الأمان</span></div></div>
         <div class="os-content">
-            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>سجلات المستخدمين</span><span id="userCount">0</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>الرصيد</th><th>الحالة</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div>
+            <!-- Updated Users Table to include Multi-Currency -->
+            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>سجلات المستخدمين</span><span id="userCount">0</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>رصيد BTC</th><th>رصيد USD</th><th>رصيد SYP</th><th>الحالة</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div>
             <div id="os-tab-payments" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات الاشتراك</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>رقم العملية</th><th>المبلغ</th><th>الشبكة</th><th>إجراء</th></tr></thead><tbody id="adminPaymentsTable"></tbody></table></div></div>
             <div id="os-tab-withdrawals" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات السحب</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>المبلغ</th><th>الشبكة</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWithdrawalsTable"></tbody></table></div></div>
             <div id="os-tab-wallets" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إضافة محفظة</span></div><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><input id="newWalletName" type="text" class="os-input" placeholder="اسم المحفظة"><input id="newWalletAddress" type="text" class="os-input" dir="ltr" placeholder="عنوان المحفظة"><button onclick="addWallet()" class="os-btn h-auto">إضافة</button></div></div><div class="os-card mt-4"><div class="os-card-header"><span>المحافظ المتاحة</span></div><table class="os-table"><thead><tr><th>الاسم</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWalletsTable"></tbody></table></div></div>
@@ -178,7 +199,7 @@
 
         <section id="miningSection" class="py-10 px-4 hidden">
             <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-10"><h2 class="font-orbitron text-3xl md:text-4xl font-black mb-3">لوحة التحكم بالتعدين</h2><div id="subWarning" class="mt-4 p-4 rounded-xl inline-block text-sm hidden" style="background:rgba(255,61,87,0.1); border:1px solid rgba(255,61,87,0.2); color:var(--danger);"><i class="fas fa-exclamation-triangle ml-2"></i> يجب دفع الاشتراك<button onclick="openModal('paymentModal')" class="mr-3 text-xs px-3 py-1 rounded-lg" style="background:var(--danger); color:#fff;">ادفع الآن</button></div></div>
+                <div class="text-center mb-10"><h2 class="font-orbitron text-3xl md:text-4xl font-black mb-3">لوحة التحكم بالتعدين</h2><div id="subWarning" class="mt-4 p-4 rounded-xl inline-block text-sm hidden" style="background:rgba(255,61,87,0.1); border:1px solid rgba(255,61,87,0.2); color:var(--danger);"><i class="fas fa-exclamation-triangle ml-2"></i> يجب دفع الاشتراك<button onclick="openModal('paymentModal')" class="mr-3 text-xs px-3 py-1 rounded-lg btn-primary w-auto" style="background:var(--danger);">ادفع الآن</button></div></div>
                 
                 <div class="glass-card p-8 mb-8 max-w-2xl mx-auto text-center">
                     <div class="text-xs text-gray-400 mb-3 tracking-widest font-orbitron">رصيدك الحالي</div>
@@ -219,10 +240,8 @@
     window.addEventListener('beforeunload', () => {
         if(appState.isMining && appState.currentUser) {
             const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id);
-            user.balance = appState.currentUser.balance;
-            user.miningTimeSeconds = appState.miningTimeSeconds;
-            user.lastMiningTimestamp = Date.now();
-            saveDB(db);
+            user.balance = appState.currentUser.balance; user.miningTimeSeconds = appState.miningTimeSeconds;
+            user.lastMiningTimestamp = Date.now(); saveDB(db);
         }
     });
     
@@ -231,167 +250,84 @@
     function closeModal(id) { document.getElementById(id).classList.remove('active'); if(id === 'supportModal') stopUserChatPolling(); }
     
     function switchAuthTab(tab) {
-        const loginTab = document.getElementById('loginTab');
-        const registerTab = document.getElementById('registerTab');
-        if (tab === 'login') {
-            document.getElementById('loginForm').style.display = 'block'; 
-            document.getElementById('registerForm').style.display = 'none'; 
-            loginTab.className = 'auth-tab active'; registerTab.className = 'auth-tab inactive';
-        } else {
-            document.getElementById('loginForm').style.display = 'none'; 
-            document.getElementById('registerForm').style.display = 'block'; 
-            registerTab.className = 'auth-tab active'; loginTab.className = 'auth-tab inactive';
-        }
+        const loginTab = document.getElementById('loginTab'); const registerTab = document.getElementById('registerTab');
+        if (tab === 'login') { document.getElementById('loginForm').style.display = 'block'; document.getElementById('registerForm').style.display = 'none'; loginTab.className = 'auth-tab active'; registerTab.className = 'auth-tab inactive'; } 
+        else { document.getElementById('loginForm').style.display = 'none'; document.getElementById('registerForm').style.display = 'block'; registerTab.className = 'auth-tab active'; loginTab.className = 'auth-tab inactive'; }
     }
     
     function register() { 
-        const user = document.getElementById('regUser').value.trim(); 
-        const pass = document.getElementById('regPass').value; 
-        const passC = document.getElementById('regPassConfirm').value; 
-        if (!user || !pass) return showToast('الرجاء ملء جميع الحقول', 'error'); 
-        if (pass !== passC) return showToast('كلمات المرور غير متطابقة', 'error'); 
-        const db = getDB(); 
-        if (db.users.find(u => u.username === user)) return showToast('اسم المستخدم محجوز', 'error'); 
+        const user = document.getElementById('regUser').value.trim(); const pass = document.getElementById('regPass').value; const passC = document.getElementById('regPassConfirm').value; 
+        if (!user || !pass) return showToast('الرجاء ملء جميع الحقول', 'error'); if (pass !== passC) return showToast('كلمات المرور غير متطابقة', 'error'); 
+        const db = getDB(); if (db.users.find(u => u.username === user)) return showToast('اسم المستخدم محجوز', 'error'); 
         db.users.push({ id: Date.now(), username: user, password: pass, role: 'user', isSubscribed: false, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }); 
-        saveDB(db); showToast('تم التسجيل! سجل دخولك', 'success'); switchAuthTab('login');
-        document.getElementById('regUser').value = ''; document.getElementById('regPass').value = ''; document.getElementById('regPassConfirm').value = '';
+        saveDB(db); showToast('تم التسجيل! سجل دخولك', 'success'); switchAuthTab('login'); document.getElementById('regUser').value = ''; document.getElementById('regPass').value = ''; document.getElementById('regPassConfirm').value = '';
     }
     
     function login() { 
         const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value; 
         const db = getDB(); const foundUser = db.users.find(u => u.username === user && u.password === pass); 
-        if (!foundUser) return showToast('بيانات خاطئة', 'error'); 
-        if (foundUser.banned) return showToast('حساب موقوف', 'error'); 
+        if (!foundUser) return showToast('بيانات خاطئة', 'error'); if (foundUser.banned) return showToast('حساب موقوف', 'error'); 
         if (db.settings.maintenance && foundUser.role !== 'admin') return showToast('الموقع حالياً تحت الصيانة', 'error'); 
-        localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser, false); closeModal('authModal'); 
-        document.getElementById('loginUser').value = ''; document.getElementById('loginPass').value = '';
+        localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser, false); closeModal('authModal'); document.getElementById('loginUser').value = ''; document.getElementById('loginPass').value = '';
     }
 
     function loginSuccess(user, isOnLoad = false) {
         appState.currentUser = user; appState.miningTimeSeconds = user.miningTimeSeconds || 0; 
         document.getElementById('authBtn').classList.add('hidden'); document.getElementById('logoutBtn').classList.remove('hidden'); document.getElementById('heroActionBtn').style.display = 'none';
-        
         if (user.role === 'admin') { document.getElementById('adminBtn').classList.remove('hidden'); document.getElementById('miningSection').classList.add('hidden'); document.getElementById('balanceNav').style.display = 'none'; document.getElementById('statusBadge').style.display = 'none'; } 
         else {
             document.getElementById('adminBtn').classList.add('hidden'); document.getElementById('miningSection').classList.remove('hidden'); document.getElementById('balanceNav').style.display = 'flex';
             document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
             if (user.isSubscribed) { document.getElementById('statusBadge').style.display = 'flex'; document.getElementById('subWarning').style.display = 'none'; } else { document.getElementById('statusBadge').style.display = 'none'; document.getElementById('subWarning').style.display = 'block'; }
-            
             if (user.isMining && user.lastMiningTimestamp) {
-                const now = Date.now();
-                const elapsedSeconds = Math.floor((now - user.lastMiningTimestamp) / 1000);
-                if (elapsedSeconds > 0) {
-                    const offlineEarnings = elapsedSeconds * 0.000000015 * 0.5;
-                    user.balance += offlineEarnings; user.miningTimeSeconds += elapsedSeconds; appState.miningTimeSeconds = user.miningTimeSeconds;
-                    const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; udb.lastMiningTimestamp = Date.now(); saveDB(dbUpd);
-                    showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success');
-                }
+                const now = Date.now(); const elapsedSeconds = Math.floor((now - user.lastMiningTimestamp) / 1000);
+                if (elapsedSeconds > 0) { const offlineEarnings = elapsedSeconds * 0.000000015 * 0.5; user.balance += offlineEarnings; user.miningTimeSeconds += elapsedSeconds; appState.miningTimeSeconds = user.miningTimeSeconds; const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; udb.lastMiningTimestamp = Date.now(); saveDB(dbUpd); showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success'); }
                 startMining(true);
             }
             updateUIBalance();
         }
     }
 
-    function logout() { 
-        if(appState.isMining) { 
-            const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); 
-            user.lastMiningTimestamp = Date.now(); user.balance = appState.currentUser.balance; user.miningTimeSeconds = appState.miningTimeSeconds;
-            saveDB(db); stopMiningVisuals(); 
-        } 
-        localStorage.removeItem('cryptoSession'); location.reload(); 
-    }
-    
+    function logout() { if(appState.isMining) { const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.lastMiningTimestamp = Date.now(); user.balance = appState.currentUser.balance; user.miningTimeSeconds = appState.miningTimeSeconds; saveDB(db); stopMiningVisuals(); } localStorage.removeItem('cryptoSession'); location.reload(); }
     function copyText(id) { navigator.clipboard.writeText(document.getElementById(id).textContent); showToast('تم النسخ', 'success'); }
     function formatFiat(num) { return num.toLocaleString('en-US', { maximumFractionDigits: 2 }); }
-    
-    function updateUIBalance() { 
-        const btc = appState.currentUser.balance;
-        const db = getDB();
-        const usd = btc * (db.settings.btcToUsd || 65000);
-        const syp = usd * (db.settings.usdToSyp || 15000);
-        document.getElementById('totalEarnings').textContent = btc.toFixed(8); 
-        document.getElementById('navBalance').textContent = btc.toFixed(8); 
-        document.getElementById('balanceUsd').textContent = formatFiat(usd);
-        document.getElementById('balanceSyp').textContent = formatFiat(syp);
-    }
+    function updateUIBalance() { const btc = appState.currentUser.balance; const db = getDB(); const usd = btc * (db.settings.btcToUsd || 65000); const syp = usd * (db.settings.usdToSyp || 15000); document.getElementById('totalEarnings').textContent = btc.toFixed(8); document.getElementById('navBalance').textContent = btc.toFixed(8); document.getElementById('balanceUsd').textContent = formatFiat(usd); document.getElementById('balanceSyp').textContent = formatFiat(syp); }
 
     function populateDepositWallets() { const db = getDB(); const sel = document.getElementById('depositWalletSelect'); sel.innerHTML = ''; db.wallets.forEach(w => sel.innerHTML += `<option value="${w.id}">${w.name}</option>`); updateDepositWallet(); document.getElementById('adminAmountDisplay').textContent = parseInt(db.settings.subscriptionAmount).toLocaleString(); }
     function updateDepositWallet() { const db = getDB(); const wallet = db.wallets.find(w => w.id === parseInt(document.getElementById('depositWalletSelect').value)); document.getElementById('depositWalletAddress').textContent = wallet ? wallet.address : ''; }
     function populateWithdrawWallets() { const db = getDB(); const sel = document.getElementById('withdrawNetwork'); sel.innerHTML = ''; db.wallets.forEach(w => sel.innerHTML += `<option value="${w.name}">${w.name}</option>`); const usdBal = appState.currentUser.balance * (db.settings.btcToUsd || 65000); const sypBal = usdBal * (db.settings.usdToSyp || 15000); document.getElementById('withdrawBalance').textContent = appState.currentUser.balance.toFixed(8); document.getElementById('withdrawBalanceUsd').textContent = formatFiat(usdBal); document.getElementById('withdrawBalanceSyp').textContent = formatFiat(sypBal); calculateWithdraw(); }
     function submitPaymentRequest() { const txId = document.getElementById('txIdInput').value.trim(); const amount = document.getElementById('amountPaidInput').value; const walletName = document.getElementById('depositWalletSelect').options[document.getElementById('depositWalletSelect').selectedIndex].text; if(!txId || !amount) return showToast('الرجاء إدخال كافة البيانات', 'error'); const db = getDB(); db.paymentRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, txId, amount: parseFloat(amount), walletName, status: 'pending' }); saveDB(db); closeModal('paymentModal'); showToast('تم إرسال الطلب', 'info'); document.getElementById('txIdInput').value = ''; document.getElementById('amountPaidInput').value = ''; }
-    
     function toggleMining() { if (!appState.currentUser) return openModal('authModal'); const db = getDB(); const freshUser = db.users.find(u => u.id === appState.currentUser.id); if (!freshUser.isSubscribed) return openModal('paymentModal'); if (appState.isMining) { const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === appState.currentUser.id); udb.isMining = false; udb.lastMiningTimestamp = null; udb.balance = appState.currentUser.balance; udb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); stopMiningVisuals(); } else startMining(false); }
-    
-    function startMining(isResuming) { 
-        appState.isMining = true; appState.saveCounter = 0;
-        const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); 
-        document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; 
-        
-        appState.miningInterval = setInterval(() => { 
-            if (!appState.isMining) return; 
-            appState.currentUser.balance += 0.000000015 * (0.9 + Math.random() * 0.2); 
-            appState.miningTimeSeconds++;
-            updateUIBalance(); 
-            document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
-            document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2); 
-            
-            if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } 
-            
-            appState.saveCounter++;
-            if (appState.saveCounter >= 10) {
-                const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); 
-                if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); }
-                appState.saveCounter = 0;
-            }
-        }, 1000); 
-        
-        if(!isResuming) showToast('تم بدء التعدين (يعمل حتى لو سجلت خروج)', 'success'); 
-    }
-
-    function stopMiningVisuals() { 
-        appState.isMining = false; clearInterval(appState.miningInterval); 
-        document.getElementById('miningIcon').className = 'fas fa-play text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'متوقف'; document.getElementById('miningStatus').style.color = 'var(--muted)'; document.getElementById('miningRing').classList.remove('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'rgba(247,147,26,0.2)'; document.getElementById('hashRate').textContent = '0.00'; 
-    }
-
+    function startMining(isResuming) { appState.isMining = true; appState.saveCounter = 0; const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; appState.miningInterval = setInterval(() => { if (!appState.isMining) return; appState.currentUser.balance += 0.000000015 * (0.9 + Math.random() * 0.2); appState.miningTimeSeconds++; updateUIBalance(); document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds); document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2); if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } appState.saveCounter++; if (appState.saveCounter >= 10) { const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); } appState.saveCounter = 0; } }, 1000); if(!isResuming) showToast('تم بدء التعدين (يعمل حتى لو سجلت خروج)', 'success'); }
+    function stopMiningVisuals() { appState.isMining = false; clearInterval(appState.miningInterval); document.getElementById('miningIcon').className = 'fas fa-play text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'متوقف'; document.getElementById('miningStatus').style.color = 'var(--muted)'; document.getElementById('miningRing').classList.remove('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'rgba(247,147,26,0.2)'; document.getElementById('hashRate').textContent = '0.00'; }
     function formatTime(s) { return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
-    
-    function calculateWithdraw() { 
-        const db = getDB(); const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value) || 0; const currency = document.getElementById('withdrawCurrency').value; 
-        let btcNeeded = currency === 'USD' ? amountFiat / (db.settings.btcToUsd||65000) : (amountFiat / (db.settings.usdToSyp||15000)) / (db.settings.btcToUsd||65000); 
-        document.getElementById('withdrawDeductBtc').textContent = (btcNeeded * (1 + ((db.settings.commission || 0) / 100))).toFixed(8); 
-    }
-
-    function processWithdraw() { 
-        const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value); const currency = document.getElementById('withdrawCurrency').value; const network = document.getElementById('withdrawNetwork').value; const walletAddr = document.getElementById('withdrawWalletAddr').value.trim(); 
-        if(!amountFiat || amountFiat <= 0 || !walletAddr) return showToast('أدخل بيانات صحيحة', 'error'); 
-        const db = getDB(); const settings = db.settings; const minUsd = settings.minWithdrawUsd || 10; const minSyp = minUsd * (settings.usdToSyp || 15000); 
-        if (currency === 'USD' && amountFiat < minUsd) return showToast(`الحد الأدنى $${minUsd}`, 'error'); 
-        if (currency === 'SYP' && amountFiat < minSyp) return showToast(`الحد الأدنى ${formatFiat(minSyp)} ل.س`, 'error'); 
-        let btcNeeded = currency === 'USD' ? amountFiat / (settings.btcToUsd||65000) : (amountFiat / (settings.usdToSyp||15000)) / (settings.btcToUsd||65000); 
-        let btcWithCommission = btcNeeded * (1 + ((settings.commission || 0) / 100)); 
-        if (btcWithCommission > appState.currentUser.balance) return showToast('رصيدك غير كافٍ', 'error'); 
-        appState.currentUser.balance -= btcWithCommission; 
-        const userInDb = db.users.find(u => u.id === appState.currentUser.id); userInDb.balance = appState.currentUser.balance; 
-        db.withdrawalRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, requestedCurrency: currency, requestedAmount: amountFiat, deductedBtc: btcWithCommission, network, walletAddr, status: 'pending' }); 
-        saveDB(db); updateUIBalance(); closeModal('withdrawModal'); showToast('تم تقديم طلب السحب', 'success'); 
-        document.getElementById('withdrawAmountFiat').value = ''; document.getElementById('withdrawWalletAddr').value = '';
-    }
+    function calculateWithdraw() { const db = getDB(); const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value) || 0; const currency = document.getElementById('withdrawCurrency').value; let btcNeeded = currency === 'USD' ? amountFiat / (db.settings.btcToUsd||65000) : (amountFiat / (db.settings.usdToSyp||15000)) / (db.settings.btcToUsd||65000); document.getElementById('withdrawDeductBtc').textContent = (btcNeeded * (1 + ((db.settings.commission || 0) / 100))).toFixed(8); }
+    function processWithdraw() { const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value); const currency = document.getElementById('withdrawCurrency').value; const network = document.getElementById('withdrawNetwork').value; const walletAddr = document.getElementById('withdrawWalletAddr').value.trim(); if(!amountFiat || amountFiat <= 0 || !walletAddr) return showToast('أدخل بيانات صحيحة', 'error'); const db = getDB(); const settings = db.settings; const minUsd = settings.minWithdrawUsd || 10; const minSyp = minUsd * (settings.usdToSyp || 15000); if (currency === 'USD' && amountFiat < minUsd) return showToast(`الحد الأدنى $${minUsd}`, 'error'); if (currency === 'SYP' && amountFiat < minSyp) return showToast(`الحد الأدنى ${formatFiat(minSyp)} ل.س`, 'error'); let btcNeeded = currency === 'USD' ? amountFiat / (settings.btcToUsd||65000) : (amountFiat / (settings.usdToSyp||15000)) / (settings.btcToUsd||65000); let btcWithCommission = btcNeeded * (1 + ((settings.commission || 0) / 100)); if (btcWithCommission > appState.currentUser.balance) return showToast('رصيدك غير كافٍ', 'error'); appState.currentUser.balance -= btcWithCommission; const userInDb = db.users.find(u => u.id === appState.currentUser.id); userInDb.balance = appState.currentUser.balance; db.withdrawalRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, requestedCurrency: currency, requestedAmount: amountFiat, deductedBtc: btcWithCommission, network, walletAddr, status: 'pending' }); saveDB(db); updateUIBalance(); closeModal('withdrawModal'); showToast('تم تقديم طلب السحب', 'success'); document.getElementById('withdrawAmountFiat').value = ''; document.getElementById('withdrawWalletAddr').value = ''; }
 
     // Admin Logic
     function openAdminOS() { if(!appState.currentUser || appState.currentUser.role !== 'admin') return; document.getElementById('adminOS').classList.add('active'); renderAdminData(); }
     function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; stopAdminChatPolling(); }
-    function switchOsTab(tab, el) { 
-        document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); 
-        document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); 
-        document.getElementById(`os-tab-${tab}`).style.display = 'block'; 
-        el.classList.add('active'); 
-        renderAdminData();
-        // Handle Chat Polling for Admin
-        if(tab === 'support') startAdminChatPolling();
-        else stopAdminChatPolling();
-    }
+    function switchOsTab(tab, el) { document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); document.getElementById(`os-tab-${tab}`).style.display = 'block'; el.classList.add('active'); renderAdminData(); if(tab === 'support') startAdminChatPolling(); else stopAdminChatPolling(); }
     function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); if(document.getElementById('os-tab-support').style.display === 'block') renderAdminSupport(); loadAdminSettings(); }
-    function renderAdminUsers() { const db = getDB(); const t = document.getElementById('adminUsersTable'); t.innerHTML = ''; const users = db.users.filter(u=>u.role!=='admin'); document.getElementById('userCount').innerText = `${users.length} Users`; users.forEach(u => { t.innerHTML += `<tr><td>${u.username}</td><td class="${u.isSubscribed?'text-green-400':'text-red-400'}">${u.isSubscribed?'مسدد':'لا'}</td><td class="font-mono text-xs">${(u.balance||0).toFixed(8)}</td><td><button onclick="toggleBan(${u.id}, ${!u.banned})" class="os-btn text-xs py-1 px-2 ${u.banned?'':'os-btn-danger'}">${u.banned?'فك الحظر':'حظر'}</button></td></tr>`; }); }
+    
+    // Updated Admin Users Table with Multi-Currency
+    function renderAdminUsers() { 
+        const db = getDB(); const t = document.getElementById('adminUsersTable'); t.innerHTML = ''; 
+        const users = db.users.filter(u=>u.role!=='admin'); 
+        document.getElementById('userCount').innerText = `${users.length} مستخدم`; 
+        const btcUsd = db.settings.btcToUsd || 65000; const usdSyp = db.settings.usdToSyp || 15000;
+        users.forEach(u => { 
+            const btc = u.balance || 0; const usd = btc * btcUsd; const syp = usd * usdSyp;
+            t.innerHTML += `<tr>
+                <td class="font-bold">${u.username}</td>
+                <td class="${u.isSubscribed?'text-green-400':'text-red-400'} font-semibold">${u.isSubscribed?'مسدد':'لا'}</td>
+                <td class="font-mono text-xs text-amber-400">${btc.toFixed(8)}</td>
+                <td class="font-mono text-xs text-green-400">$${formatFiat(usd)}</td>
+                <td class="font-mono text-xs text-cyan-400">${formatFiat(syp)} ل.س</td>
+                <td><button onclick="toggleBan(${u.id}, ${!u.banned})" class="os-btn text-xs py-1 px-2 ${u.banned?'':'os-btn-danger'}">${u.banned?'فك الحظر':'حظر'}</button></td>
+            </tr>`; 
+        }); 
+    }
     function toggleBan(id, ban) { const db = getDB(); const u = db.users.find(u=>u.id===id); if(u) { u.banned = ban; saveDB(db); renderAdminUsers(); } }
     function renderAdminPayments() { const db = getDB(); const t = document.getElementById('adminPaymentsTable'); t.innerHTML = ''; db.paymentRequests.filter(p=>p.status==='pending').forEach(r => { t.innerHTML += `<tr><td>${r.username}</td><td class="font-mono text-xs" dir="ltr">${r.txId}</td><td>${parseInt(r.amount).toLocaleString()} ل.س</td><td class="text-xs">${r.walletName}</td><td class="flex gap-1"><button onclick="approvePayment(${r.id})" class="os-btn text-xs py-1 px-2">قبول</button><button onclick="rejectPayment(${r.id})" class="os-btn os-btn-danger text-xs py-1 px-2">رفض</button></td></tr>`; }); }
     function approvePayment(id) { const db = getDB(); const r = db.paymentRequests.find(p=>p.id===id); if(!r) return; r.status='approved'; const u = db.users.find(u=>u.id===r.userId); if(u) u.isSubscribed=true; saveDB(db); renderAdminPayments(); }
@@ -408,105 +344,44 @@
     function togglePassView() { const el = document.getElementById('passMask'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); el.innerText = el.innerText === '********' ? admin.password : '********'; }
     function changePassword() { const curr = document.getElementById('currentPass').value; const newP = document.getElementById('newPass').value; const confP = document.getElementById('confirmNewPass').value; if(!curr || !newP || !confP) return showToast('املأ جميع الحقول', 'error'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); if(curr !== admin.password) return showToast('كلمة المرور الحالية خاطئة', 'error'); if(newP !== confP) return showToast('كلمة المرور الجديدة غير متطابقة', 'error'); admin.password = newP; saveDB(db); showToast('تم تغيير كلمة المرور بنجاح', 'success'); document.getElementById('currentPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confirmNewPass').value=''; document.getElementById('passMask').innerText = '********'; }
 
-    // Support Logic - FIXED & OPTIMIZED
-    function startUserChatPolling() { stopUserChatPolling(); userChatInterval = setInterval(renderUserChat, 2000); }
+    // Support Logic - Advanced Polling & Modern UI
+    function startUserChatPolling() { stopUserChatPolling(); userChatInterval = setInterval(renderUserChat, 1500); }
     function stopUserChatPolling() { if(userChatInterval) clearInterval(userChatInterval); userChatInterval = null; }
-    
-    function startAdminChatPolling() { stopAdminChatPolling(); adminChatInterval = setInterval(renderAdminSupport, 2000); }
+    function startAdminChatPolling() { stopAdminChatPolling(); adminChatInterval = setInterval(renderAdminSupport, 1500); }
     function stopAdminChatPolling() { if(adminChatInterval) clearInterval(adminChatInterval); adminChatInterval = null; }
 
     function renderUserChat() { 
         if(!appState.currentUser) return; 
-        const db = getDB(); 
-        let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
-        const box = document.getElementById('userChatBox'); 
-        let html = '';
-        if(thread && thread.messages.length > 0) { 
-            thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); 
-        } else { 
-            html = '<div class="text-center text-gray-500 text-sm mt-10">لا توجد رسائل بعد</div>'; 
-        }
-        // Prevent scroll jump and input focus loss by only updating if content changed
-        if(box.innerHTML !== html) {
-            box.innerHTML = html;
-            box.scrollTop = box.scrollHeight;
-        }
+        const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
+        const box = document.getElementById('userChatBox'); let html = '';
+        if(thread && thread.messages.length > 0) { thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); } 
+        else { html = '<div class="text-center text-gray-500 text-sm mt-10"><i class="fas fa-comments text-4xl mb-4 block text-gray-700"></i>لا توجد رسائل بعد<br><span class="text-xs">كتب رسالتك وسنرد عليك فوراً</span></div>'; }
+        if(box.innerHTML !== html) { box.innerHTML = html; box.scrollTop = box.scrollHeight; }
     }
-    
-    function sendUserMsg() { 
-        const input = document.getElementById('userMsgInput'); 
-        const text = input.value.trim(); 
-        if(!text) return; 
-        const db = getDB(); 
-        let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
-        if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } 
-        thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); 
-        saveDB(db); input.value = ''; renderUserChat(); // Instant render for sender
-    } 
+    function sendUserMsg() { const input = document.getElementById('userMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderUserChat(); } 
     
     function renderAdminSupport() { 
-        const db = getDB(); 
-        const list = document.getElementById('supportUserList'); 
-        let listHtml = '';
-        if(db.supportMessages.length === 0) { 
-            listHtml = '<div class="p-4 text-center text-gray-600 text-xs">لا توجد تذاكر دعم</div>'; 
-        } else { 
-            db.supportMessages.forEach(t => { 
-                const lastMsg = t.messages[t.messages.length - 1]; 
-                const isActive = activeSupportUserId === t.userId; 
-                listHtml += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg ? lastMsg.text : ''}</div></div>`; 
-            }); 
-        }
+        const db = getDB(); const list = document.getElementById('supportUserList'); let listHtml = '';
+        if(db.supportMessages.length === 0) { listHtml = '<div class="p-4 text-center text-gray-600 text-xs">لا توجد تذاكر دعم</div>'; } 
+        else { db.supportMessages.forEach(t => { const lastMsg = t.messages[t.messages.length - 1]; const isActive = activeSupportUserId === t.userId; listHtml += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg ? lastMsg.text : ''}</div></div>`; }); }
         if(list.innerHTML !== listHtml) list.innerHTML = listHtml;
         if(activeSupportUserId) renderAdminChat(); 
     }
-    
     function viewChat(userId) { activeSupportUserId = userId; renderAdminSupport(); }
-    
     function renderAdminChat() { 
-        const db = getDB(); 
-        const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); 
-        const box = document.getElementById('adminChatBox'); 
-        const nameEl = document.getElementById('chatUserName'); 
-        let html = '';
-        if(thread) { 
-            nameEl.innerText = thread.username; 
-            thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); 
-        } else {
-            nameEl.innerText = '';
-            html = '<div class="text-center text-gray-500 text-sm mt-10">اختر مستخدمًا للمحادثة</div>';
-        }
-        if(box.innerHTML !== html) {
-            box.innerHTML = html;
-            box.scrollTop = box.scrollHeight;
-        }
+        const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); const box = document.getElementById('adminChatBox'); const nameEl = document.getElementById('chatUserName'); let html = '';
+        if(thread) { nameEl.innerText = thread.username; thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); } 
+        else { nameEl.innerText = ''; html = '<div class="text-center text-gray-500 text-sm mt-10">اختر مستخدمًا للمحادثة</div>'; }
+        if(box.innerHTML !== html) { box.innerHTML = html; box.scrollTop = box.scrollHeight; }
     } 
-    
-    function sendAdminReply() { 
-        if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); 
-        const input = document.getElementById('adminMsgInput'); 
-        const text = input.value.trim(); 
-        if(!text) return; 
-        const db = getDB(); 
-        const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); 
-        if(thread) { 
-            thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); 
-            saveDB(db); input.value = ''; renderAdminChat(); // Instant render for sender
-        } 
-    }
+    function sendAdminReply() { if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); const input = document.getElementById('adminMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); if(thread) { thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderAdminChat(); } }
 
     // Background Animation
     const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; initParticles(); } 
-    function initParticles() { particles = []; for (let i = 0; i < 40; i++) { particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4, size: Math.random() * 1.5 + 0.5 }); } }
+    function initParticles() { particles = []; for (let i = 0; i < 50; i++) { particles.push({ x: Math.random() * canvas.width, y: Math.random() * canvas.height, vx: (Math.random() - 0.5) * 0.5, vy: (Math.random() - 0.5) * 0.5, size: Math.random() * 1.5 + 0.5 }); } }
     resizeCanvas(); window.addEventListener('resize', resizeCanvas);
-    function animateParticles() { 
-        ctx.clearRect(0, 0, canvas.width, canvas.height); 
-        particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = 'rgba(247, 147, 26, 0.3)'; ctx.fill(); }); 
-        for(let i = 0; i < particles.length; i++) { for(let j = i + 1; j < particles.length; j++) { const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y; const dist = Math.sqrt(dx * dx + dy * dy); if(dist < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/120})`; ctx.lineWidth = 0.3; ctx.stroke(); } } }
-        requestAnimationFrame(animateParticles); 
-    }
-    
+    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.x += p.vx; p.y += p.vy; if(p.x < 0 || p.x > canvas.width) p.vx *= -1; if(p.y < 0 || p.y > canvas.height) p.vy *= -1; ctx.beginPath(); ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2); ctx.fillStyle = 'rgba(247, 147, 26, 0.3)'; ctx.fill(); }); for(let i = 0; i < particles.length; i++) { for(let j = i + 1; j < particles.length; j++) { const dx = particles[i].x - particles[j].x; const dy = particles[i].y - particles[j].y; const dist = Math.sqrt(dx * dx + dy * dy); if(dist < 120) { ctx.beginPath(); ctx.moveTo(particles[i].x, particles[i].y); ctx.lineTo(particles[j].x, particles[j].y); ctx.strokeStyle = `rgba(0, 243, 255, ${1 - dist/120})`; ctx.lineWidth = 0.3; ctx.stroke(); } } } requestAnimationFrame(animateParticles); }
     function showToast(message, type = 'info') { const toast = document.getElementById('toast'); toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'error' ? 'times-circle' : 'info-circle'}"></i> ${message}`; toast.className = `toast ${type}`; setTimeout(() => toast.classList.add('show'), 10); setTimeout(() => toast.classList.remove('show'), 4000); }
 </script>
 </body>
