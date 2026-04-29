@@ -9,208 +9,72 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <style>
         :root {
-            --bg: #06060e;
-            --bg2: #0c0c1a;
-            --card: rgba(15, 15, 30, 0.85);
-            --border: rgba(247, 147, 26, 0.15);
-            --accent: #f7931a;
-            --accent2: #ffd700;
-            --accent-glow: rgba(247, 147, 26, 0.3);
-            --fg: #e8e8f0;
-            --muted: #6b6b8a;
-            --success: #00e676;
-            --danger: #ff3d57;
-            /* ألوان لوحة التحكم المخيفة */
-            --scary-bg: #0a0000;
-            --scary-card: rgba(30, 0, 0, 0.9);
-            --scary-border: rgba(255, 0, 0, 0.3);
-            --scary-accent: #ff1a1a;
-            --scary-glow: rgba(255, 0, 0, 0.4);
+            --bg: #06060e; --bg2: #0c0c1a; --card: rgba(15, 15, 30, 0.85);
+            --border: rgba(247, 147, 26, 0.15); --accent: #f7931a; --accent2: #ffd700;
+            --accent-glow: rgba(247, 147, 26, 0.3); --fg: #e8e8f0; --muted: #6b6b8a;
+            --success: #00e676; --danger: #ff3d57;
+            --scary-bg: #0a0000; --scary-card: rgba(30, 0, 0, 0.9);
+            --scary-border: rgba(255, 0, 0, 0.3); --scary-accent: #ff1a1a; --scary-glow: rgba(255, 0, 0, 0.4);
         }
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: var(--bg);
-            color: var(--fg);
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-
+        body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; min-height: 100vh; }
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-creepster { font-family: 'Creepster', cursive; }
-
-        #bgCanvas {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        .btc-glow {
-            filter: drop-shadow(0 0 30px var(--accent-glow)) drop-shadow(0 0 60px rgba(247,147,26,0.15));
-        }
-
-        .glass-card {
-            background: var(--card);
-            border: 1px solid var(--border);
-            backdrop-filter: blur(20px);
-            border-radius: 16px;
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover {
-            border-color: rgba(247,147,26,0.35);
-            box-shadow: 0 0 30px rgba(247,147,26,0.08);
-        }
-
-        /* بطاقات لوحة التحكم المخيفة */
-        .scary-card {
-            background: var(--scary-card);
-            border: 1px solid var(--scary-border);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            box-shadow: 0 0 20px var(--scary-glow);
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--accent), #e8850f);
-            color: #000; font-weight: 700; padding: 14px 36px; border-radius: 12px;
-            border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif;
-            transition: all 0.3s ease; position: relative; overflow: hidden;
-        }
+        #bgCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+        .glass-card { background: var(--card); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 16px; transition: all 0.3s ease; }
+        .glass-card:hover { border-color: rgba(247,147,26,0.35); box-shadow: 0 0 30px rgba(247,147,26,0.08); }
+        .scary-card { background: var(--scary-card); border: 1px solid var(--scary-border); backdrop-filter: blur(10px); border-radius: 12px; box-shadow: 0 0 20px var(--scary-glow); }
+        .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 700; padding: 14px 36px; border-radius: 12px; border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(247,147,26,0.4); }
-        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
-        .btn-danger {
-            background: linear-gradient(135deg, #d32f2f, #b71c1c);
-            color: #fff; font-weight: 700; padding: 10px 20px; border-radius: 8px;
-            border: none; cursor: pointer; font-size: 14px; font-family: 'Cairo', sans-serif;
-            transition: all 0.3s ease;
-        }
+        .btn-danger { background: linear-gradient(135deg, #d32f2f, #b71c1c); color: #fff; font-weight: 700; padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 14px; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
         .btn-danger:hover { box-shadow: 0 0 20px rgba(255, 0, 0, 0.5); }
-
-        .btn-secondary {
-            background: transparent; border: 1.5px solid var(--accent); color: var(--accent);
-            font-weight: 600; padding: 12px 30px; border-radius: 12px; cursor: pointer;
-            font-size: 15px; font-family: 'Cairo', sans-serif; transition: all 0.3s ease;
-        }
-        .btn-secondary:hover { background: rgba(247,147,26,0.1); box-shadow: 0 0 20px rgba(247,147,26,0.15); }
-
-        .input-field {
-            background: rgba(10,10,20,0.8); border: 1.5px solid var(--border); border-radius: 12px;
-            padding: 14px 18px; color: var(--fg); font-size: 15px; font-family: 'Cairo', sans-serif;
-            width: 100%; transition: border-color 0.3s; outline: none;
-        }
+        .btn-secondary { background: transparent; border: 1.5px solid var(--accent); color: var(--accent); font-weight: 600; padding: 12px 30px; border-radius: 12px; cursor: pointer; font-size: 15px; font-family: 'Cairo', sans-serif; transition: all 0.3s ease; }
+        .btn-secondary:hover { background: rgba(247,147,26,0.1); }
+        .input-field { background: rgba(10,10,20,0.8); border: 1.5px solid var(--border); border-radius: 12px; padding: 14px 18px; color: var(--fg); font-size: 15px; font-family: 'Cairo', sans-serif; width: 100%; outline: none; }
         .input-field:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(247,147,26,0.15); }
-        
-        .scary-input {
-            background: rgba(20,0,0,0.8); border: 1.5px solid var(--scary-border); border-radius: 8px;
-            padding: 10px 14px; color: #ffcccc; font-size: 14px; font-family: 'Cairo', sans-serif;
-            width: 100%; outline: none;
-        }
+        .scary-input { background: rgba(20,0,0,0.8); border: 1.5px solid var(--scary-border); border-radius: 8px; padding: 10px 14px; color: #ffcccc; font-size: 14px; font-family: 'Cairo', sans-serif; width: 100%; outline: none; }
         .scary-input:focus { border-color: #ff1a1a; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
-
         .mining-pulse { animation: miningPulse 2s ease-in-out infinite; }
-        @keyframes miningPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(247,147,26,0.2); }
-            50% { box-shadow: 0 0 50px rgba(247,147,26,0.5), 0 0 80px rgba(247,147,26,0.2); }
-        }
-
+        @keyframes miningPulse { 0%, 100% { box-shadow: 0 0 20px rgba(247,147,26,0.2); } 50% { box-shadow: 0 0 50px rgba(247,147,26,0.5); } }
         .spin-slow { animation: spin 8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-
-        .toast {
-            position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px);
-            z-index: 9999; padding: 16px 28px; border-radius: 12px; font-weight: 600;
-            font-family: 'Cairo', sans-serif; backdrop-filter: blur(15px);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center;
-        }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); z-index: 9999; padding: 16px 28px; border-radius: 12px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { background: rgba(0,230,118,0.15); border: 1px solid rgba(0,230,118,0.4); color: var(--success); }
         .toast.error { background: rgba(255,61,87,0.15); border: 1px solid rgba(255,61,87,0.4); color: var(--danger); }
         .toast.info { background: rgba(247,147,26,0.15); border: 1px solid rgba(247,147,26,0.4); color: var(--accent); }
-
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px);
-            z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px;
-        }
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(8px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .modal-overlay.active { display: flex; }
-        .modal-content {
-            background: var(--bg2); border: 1px solid var(--border); border-radius: 20px;
-            padding: 40px; max-width: 500px; width: 100%; position: relative;
-            animation: modalIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        
-        .modal-scary {
-            background: var(--scary-bg); border: 2px solid var(--scary-border);
-            max-width: 900px; width: 100%; position: relative;
-            box-shadow: 0 0 50px var(--scary-glow); border-radius: 12px;
-            animation: scaryIn 0.5s ease;
-        }
-        @keyframes scaryIn {
-            0% { transform: scale(0.9); opacity: 0; filter: hue-rotate(180deg); }
-            100% { transform: scale(1); opacity: 1; filter: hue-rotate(0deg); }
-        }
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.85) translateY(20px); }
-            to { opacity: 1; transform: scale(1) translateY(0); }
-        }
-
-        .hash-scroll {
-            font-family: 'Orbitron', monospace; font-size: 11px; color: var(--muted);
-            overflow: hidden; white-space: nowrap; direction: ltr; text-align: left;
-        }
-
-        .glow-divider { height: 1px; background: linear-gradient(90deg, transparent, var(--accent), transparent); opacity: 0.3; }
-        .grid-bg {
-            background-image: linear-gradient(rgba(247,147,26,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(247,147,26,0.03) 1px, transparent 1px); background-size: 60px 60px;
-        }
-
-        .fade-in { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
-        .fade-in.visible { opacity: 1; transform: translateY(0); }
-
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: var(--bg); }
-        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
-
-        .maintenance-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9998;
-            display: none; flex-direction: column; align-items: center; justify-content: center; color: white;
-        }
+        .modal-content { background: var(--bg2); border: 1px solid var(--border); border-radius: 20px; padding: 40px; max-width: 500px; width: 100%; position: relative; animation: modalIn 0.4s ease; }
+        .modal-scary { background: var(--scary-bg); border: 2px solid var(--scary-border); max-width: 900px; width: 100%; position: relative; box-shadow: 0 0 50px var(--scary-glow); border-radius: 12px; animation: scaryIn 0.5s ease; }
+        @keyframes scaryIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+        .maintenance-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: center; color: white; }
         .maintenance-overlay.active { display: flex; }
-
         .tab-btn { padding: 10px 20px; cursor: pointer; border-bottom: 2px solid transparent; color: #ffcccc; transition: 0.3s; }
         .tab-btn.active { color: #ff1a1a; border-bottom-color: #ff1a1a; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-
-        @media (max-width: 768px) {
-            .modal-content, .modal-scary { padding: 24px; }
-            .hero-title { font-size: 28px !important; }
-        }
+        @media (max-width: 768px) { .modal-content, .modal-scary { padding: 24px; } }
     </style>
 </head>
-<body class="grid-bg">
+<body>
 
 <canvas id="bgCanvas"></canvas>
 
 <!-- شاشة الصيانة -->
 <div id="maintenanceOverlay" class="maintenance-overlay">
     <i class="fas fa-skull-crossbones text-6xl mb-6" style="color:#ff1a1a; text-shadow: 0 0 20px #ff0000;"></i>
-    <h1 class="font-creepster text-5xl mb-4" style="color:#ff1a1a; text-shadow: 0 0 10px #ff0000;">الموقع مغلق مؤقتاً</h1>
+    <h1 class="font-creepster text-5xl mb-4" style="color:#ff1a1a;">الموقع مغلق مؤقتاً</h1>
     <p class="text-xl" style="color:#ffcccc;">نحن نقوم بإجراء تحديثات وصيانة خلفية. سنعود قريباً!</p>
 </div>
 
-<!-- إشعار -->
 <div id="toast" class="toast" role="alert" aria-live="polite"></div>
 
 <!-- مودال تسجيل/دخول -->
-<div id="authModal" class="modal-overlay" role="dialog" aria-modal="true">
+<div id="authModal" class="modal-overlay">
     <div class="modal-content">
-        <button onclick="closeAuthModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white transition" aria-label="إغلاق"><i class="fas fa-times text-xl"></i></button>
+        <button onclick="closeAuthModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button>
         <div class="text-center mb-6">
             <div class="w-20 h-20 mx-auto rounded-full bg-gradient-to-br from-orange-500/20 to-yellow-500/20 flex items-center justify-center mb-4">
                 <i class="fas fa-user-shield text-4xl" style="color:var(--accent)"></i>
@@ -220,15 +84,11 @@
             <div class="flex-1 text-center py-2 cursor-pointer font-bold" id="loginTab" onclick="switchAuthTab('login')" style="color:var(--accent); border-bottom: 2px solid var(--accent);">تسجيل الدخول</div>
             <div class="flex-1 text-center py-2 cursor-pointer font-bold" id="registerTab" onclick="switchAuthTab('register')" style="color:var(--muted); border-bottom: 2px solid transparent;">حساب جديد</div>
         </div>
-        
-        <!-- تسجيل الدخول -->
         <div id="loginForm" class="space-y-4">
             <input id="loginUser" type="text" class="input-field" placeholder="اسم المستخدم">
             <input id="loginPass" type="password" class="input-field" placeholder="كلمة المرور">
             <button onclick="login()" class="btn-primary w-full">دخول</button>
         </div>
-
-        <!-- حساب جديد -->
         <div id="registerForm" class="space-y-4" style="display:none;">
             <input id="regUser" type="text" class="input-field" placeholder="اختر اسم المستخدم">
             <input id="regPass" type="password" class="input-field" placeholder="اختر كلمة المرور">
@@ -238,10 +98,10 @@
     </div>
 </div>
 
-<!-- مودال الشحن (دفع الاشتراك) -->
-<div id="paymentModal" class="modal-overlay" role="dialog">
+<!-- مودال الشحن -->
+<div id="paymentModal" class="modal-overlay">
     <div class="modal-content">
-        <button onclick="closePaymentModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white transition"><i class="fas fa-times text-xl"></i></button>
+        <button onclick="closePaymentModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button>
         <div class="text-center mb-6">
             <h3 class="text-2xl font-bold mb-2">دفع الاشتراك</h3>
             <p class="text-sm" style="color:var(--muted)">قم بتحويل المبلغ المطلوب ثم املأ النموذج</p>
@@ -268,108 +128,104 @@
     </div>
 </div>
 
-<!-- مودال السحب -->
-<div id="withdrawModal" class="modal-overlay" role="dialog">
+<!-- مودال السحب المعدل -->
+<div id="withdrawModal" class="modal-overlay">
     <div class="modal-content">
-        <button onclick="closeWithdrawModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white transition"><i class="fas fa-times text-xl"></i></button>
+        <button onclick="closeWithdrawModal()" class="absolute top-4 left-4 text-gray-500 hover:text-white"><i class="fas fa-times text-xl"></i></button>
         <div class="text-center mb-6">
             <h3 class="text-2xl font-bold mb-2">سحب الأرباح</h3>
-            <p class="text-sm" style="color:var(--muted)">الحد الأدنى للسحب: <span id="minWithdrawDisplay">0.0005</span> BTC | العمولة: <span id="commissionDisplay">5</span>%</p>
+            <p class="text-sm" style="color:var(--muted)">اختر العملة وسيتم تحويل المبلغ بناءً على أسعار الصرف</p>
         </div>
         <div class="space-y-4">
-            <div>
-                <label class="block text-sm mb-2" style="color:var(--muted)">عنوان محفظة BTC</label>
-                <input id="walletAddress" type="text" class="input-field" placeholder="bc1q..." dir="ltr">
+            <div class="p-3 rounded-xl" style="background:rgba(247,147,26,0.05); border:1px solid var(--border);">
+                <p class="text-xs mb-1" style="color:var(--muted)">أسعار الصرف الحالية (يحددها المدير)</p>
+                <div class="flex justify-between text-sm font-bold">
+                    <span>1 BTC = <span id="rateUsd" style="color:var(--accent)">0</span> $</span>
+                    <span>1 $ = <span id="rateSyp" style="color:var(--accent)">0</span> ل.س</span>
+                </div>
             </div>
             <div>
-                <label class="block text-sm mb-2" style="color:var(--muted)">المبلغ (BTC)</label>
-                <input id="withdrawAmount" type="number" step="0.00000001" class="input-field" placeholder="0.00000000" dir="ltr">
+                <label class="block text-sm mb-2" style="color:var(--muted)">عملة السحب</label>
+                <select id="withdrawCurrency" class="input-field" onchange="calculateWithdrawConversion()">
+                    <option value="BTC">بيتكوين (BTC)</option>
+                    <option value="USD">دولار أمريكي (USD)</option>
+                    <option value="SYP">ليرة سورية (SYP)</option>
+                </select>
+            </div>
+            <div>
+                <label class="block text-sm mb-2" style="color:var(--muted)">المبلغ المطلوب سحبه (في البيتكوين)</label>
+                <input id="withdrawAmount" type="number" step="0.00000001" class="input-field" placeholder="0.00000000" dir="ltr" oninput="calculateWithdrawConversion()">
+                <p class="text-xs mt-2 text-center font-bold" style="color:var(--success)">المبلغ الذي ستستلمه: <span id="withdrawConverted">0</span></p>
+            </div>
+            <div>
+                <label class="block text-sm mb-2" style="color:var(--muted)">عنوان المحفظة / معرف الاستلام</label>
+                <input id="walletAddress" type="text" class="input-field" placeholder="عنوان BTC أو معرف حساب USD/SYP" dir="ltr">
             </div>
             <button onclick="processWithdraw()" class="btn-primary w-full">تأكيد السحب</button>
         </div>
     </div>
 </div>
 
-<!-- مودال لوحة التحكم المخيفة -->
-<div id="adminModal" class="modal-overlay" role="dialog">
-    <div class="modal-scary p-6 max-h-[90vh] overflow-y-auto">
-        <button onclick="closeAdminModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 transition text-2xl"><i class="fas fa-skull"></i></button>
-        
+<!-- لوحة التحكم المخيفة -->
+<div id="adminModal" class="modal-overlay">
+    <div class="modal-scary p-6 max-h-[90vh] overflow-y-auto relative">
+        <button onclick="closeAdminModal()" class="absolute top-4 left-4 text-gray-500 hover:text-red-500 text-2xl"><i class="fas fa-skull"></i></button>
         <div class="text-center mb-8">
             <h2 class="font-creepster text-5xl" style="color:#ff1a1a; text-shadow: 0 0 10px #ff0000;">لوحة التحكم المظلمة</h2>
-            <p class="text-red-300 text-sm mt-2">تحكم كامل بمصير المنصة والمستخدمين</p>
+        </div>
+        <div class="flex flex-wrap border-b mb-6" style="border-color: var(--scary-border);">
+            <div class="tab-btn active" onclick="switchAdminTab('users', this)">المستخدمين</div>
+            <div class="tab-btn" onclick="switchAdminTab('payments', this)">طلبات الشحن</div>
+            <div class="tab-btn" onclick="switchAdminTab('withdrawals', this)">طلبات السحب</div>
+            <div class="tab-btn" onclick="switchAdminTab('settings', this)">الإعدادات</div>
         </div>
 
-        <div class="flex border-b mb-6" style="border-color: var(--scary-border);">
-            <div class="tab-btn active" onclick="switchAdminTab('users')">المستخدمين</div>
-            <div class="tab-btn" onclick="switchAdminTab('payments')">طلبات الشحن</div>
-            <div class="tab-btn" onclick="switchAdminTab('withdrawals')">طلبات السحب</div>
-            <div class="tab-btn" onclick="switchAdminTab('settings')">الإعدادات</div>
-        </div>
-
-        <!-- تبويب المستخدمين -->
         <div id="tab-users" class="tab-content active space-y-4">
-            <div class="scary-card p-4">
+            <div class="scary-card p-4 overflow-x-auto">
                 <table class="w-full text-sm text-red-200">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--scary-border)">
-                            <th class="text-right pb-2">المستخدم</th>
-                            <th class="text-right pb-2">الحالة</th>
-                            <th class="text-right pb-2">الرصيد</th>
-                            <th class="text-right pb-2">إجراء</th>
-                        </tr>
-                    </thead>
+                    <thead><tr style="border-bottom:1px solid var(--scary-border)"><th class="text-right pb-2">المستخدم</th><th class="text-right pb-2">الاشتراك</th><th class="text-right pb-2">الرصيد</th><th class="text-right pb-2">إجراء</th></tr></thead>
                     <tbody id="adminUsersTable"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- تبويب طلبات الشحن -->
         <div id="tab-payments" class="tab-content space-y-4">
-            <div class="scary-card p-4">
+            <div class="scary-card p-4 overflow-x-auto">
                 <table class="w-full text-sm text-red-200">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--scary-border)">
-                            <th class="text-right pb-2">المستخدم</th>
-                            <th class="text-right pb-2">رقم العملية</th>
-                            <th class="text-right pb-2">المبلغ</th>
-                            <th class="text-right pb-2">إجراء</th>
-                        </tr>
-                    </thead>
+                    <thead><tr style="border-bottom:1px solid var(--scary-border)"><th class="text-right pb-2">المستخدم</th><th class="text-right pb-2">رقم العملية</th><th class="text-right pb-2">المبلغ المدفوع</th><th class="text-right pb-2">إجراء</th></tr></thead>
                     <tbody id="adminPaymentsTable"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- تبويب طلبات السحب -->
         <div id="tab-withdrawals" class="tab-content space-y-4">
-            <div class="scary-card p-4">
+            <div class="scary-card p-4 overflow-x-auto">
                 <table class="w-full text-sm text-red-200">
-                    <thead>
-                        <tr style="border-bottom:1px solid var(--scary-border)">
-                            <th class="text-right pb-2">المستخدم</th>
-                            <th class="text-right pb-2">المبلغ</th>
-                            <th class="text-right pb-2">المحفظة</th>
-                            <th class="text-right pb-2">إجراء</th>
-                        </tr>
-                    </thead>
+                    <thead><tr style="border-bottom:1px solid var(--scary-border)"><th class="text-right pb-2">المستخدم</th><th class="text-right pb-2">المبلغ المطلوب</th><th class="text-right pb-2">العملة</th><th class="text-right pb-2">المحفظة/المعرف</th><th class="text-right pb-2">إجراء</th></tr></thead>
                     <tbody id="adminWithdrawalsTable"></tbody>
                 </table>
             </div>
         </div>
 
-        <!-- تبويب الإعدادات -->
         <div id="tab-settings" class="tab-content space-y-6">
             <div class="scary-card p-6">
-                <h3 class="font-bold text-red-400 mb-4 flex items-center gap-2"><i class="fas fa-cog"></i> إعدادات عامة</h3>
-                <div class="space-y-4">
+                <h3 class="font-bold text-red-400 mb-4 flex items-center gap-2"><i class="fas fa-cog"></i> إعدادات المنصة</h3>
+                <div class="grid md:grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm mb-1 text-red-300">عنوان محفظة الاستقبال (لدفع الاشتراكات)</label>
+                        <label class="block text-sm mb-1 text-red-300">عنوان محفظة الاستقبال</label>
                         <input id="setWallet" type="text" class="scary-input" dir="ltr">
                     </div>
                     <div>
                         <label class="block text-sm mb-1 text-red-300">مبلغ الاشتراك (ل.س)</label>
                         <input id="setAmount" type="number" class="scary-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1 text-red-300">سعر 1 BTC بالدولار (USD)</label>
+                        <input id="setBtcUsd" type="number" class="scary-input">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-1 text-red-300">سعر 1 دولار بالليرة (SYP)</label>
+                        <input id="setUsdSyp" type="number" class="scary-input">
                     </div>
                     <div>
                         <label class="block text-sm mb-1 text-red-300">الحد الأدنى للسحب (BTC)</label>
@@ -379,13 +235,13 @@
                         <label class="block text-sm mb-1 text-red-300">نسبة العمولة (%)</label>
                         <input id="setCommission" type="number" class="scary-input">
                     </div>
-                    <button onclick="saveAdminSettings()" class="btn-danger w-full mt-4"><i class="fas fa-save ml-2"></i> حفظ الإعدادات</button>
                 </div>
+                <button onclick="saveAdminSettings()" class="btn-danger w-full mt-6"><i class="fas fa-save ml-2"></i> حفظ الإعدادات</button>
             </div>
             <div class="scary-card p-6">
                 <h3 class="font-bold text-red-400 mb-4 flex items-center gap-2"><i class="fas fa-power-off"></i> التحكم بالموقع</h3>
                 <button onclick="toggleMaintenance()" id="maintenanceBtn" class="w-full py-3 rounded-lg font-bold text-lg transition" style="background: #330000; border: 2px solid #ff0000; color: #ff1a1a;">
-                    <i class="fas fa-skull-crossbones ml-2"></i> تفعيل وضع الصيانة (إغلاق الموقع)
+                    <i class="fas fa-skull-crossbones ml-2"></i> تفعيل وضع الصيانة
                 </button>
             </div>
         </div>
@@ -395,114 +251,50 @@
 
 <!-- المحتوى الرئيسي -->
 <div class="relative z-10">
-
-    <!-- شريط التنقل -->
     <nav class="fixed top-0 w-full z-50 border-b" style="background:rgba(6,6,14,0.9); backdrop-filter:blur(20px); border-color:var(--border)">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between">
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)">
-                    <i class="fas fa-coins text-black text-lg"></i>
-                </div>
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)"><i class="fas fa-coins text-black text-lg"></i></div>
                 <span class="font-orbitron font-bold text-lg tracking-wide" style="color:var(--accent)">CryptoMine</span>
             </div>
             <div class="flex items-center gap-4">
-                <div id="statusBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold" style="background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.3); color:var(--success)">
-                    <span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
-                    مسدد
-                </div>
-                <div id="balanceNav" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-bold" style="background:rgba(247,147,26,0.1); border:1px solid var(--border)">
-                    <i class="fab fa-bitcoin" style="color:var(--accent)"></i>
-                    <span id="navBalance" style="color:var(--accent2)">0.00000000</span>
-                </div>
-                
-                <button onclick="openAuthModal()" class="btn-secondary text-sm py-2 px-4" id="authBtn">
-                    <i class="fas fa-sign-in-alt ml-1"></i> الدخول
-                </button>
-                <button onclick="openAdminModal()" class="hidden btn-secondary text-sm py-2 px-4" id="adminBtn" style="border-color:#ff1a1a; color:#ff1a1a;">
-                    <i class="fas fa-skull ml-1"></i> إدارة
-                </button>
-                <button onclick="logout()" class="hidden btn-secondary text-sm py-2 px-4" id="logoutBtn" style="border-color:var(--danger); color:var(--danger);">
-                    <i class="fas fa-sign-out-alt ml-1"></i> خروج
-                </button>
+                <div id="statusBadge" class="hidden items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold" style="background:rgba(0,230,118,0.1); border:1px solid rgba(0,230,118,0.3); color:var(--success)"><span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span> مسدد</div>
+                <div id="balanceNav" class="hidden items-center gap-2 px-3 py-1.5 rounded-xl text-sm font-bold" style="background:rgba(247,147,26,0.1); border:1px solid var(--border)"><i class="fab fa-bitcoin" style="color:var(--accent)"></i><span id="navBalance" style="color:var(--accent2)">0.00000000</span></div>
+                <button onclick="openAuthModal()" class="btn-secondary text-sm py-2 px-4" id="authBtn"><i class="fas fa-sign-in-alt ml-1"></i> الدخول</button>
+                <button onclick="logout()" class="hidden btn-secondary text-sm py-2 px-4" id="logoutBtn" style="border-color:var(--danger); color:var(--danger);"><i class="fas fa-sign-out-alt ml-1"></i> خروج</button>
             </div>
         </div>
     </nav>
 
-    <!-- القسم الرئيسي -->
     <main class="pt-20">
-
-        <!-- الهيرو -->
         <section class="min-h-screen flex items-center justify-center relative px-4">
-            <div class="absolute inset-0 overflow-hidden pointer-events-none">
-                <div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-10" style="background:radial-gradient(circle, var(--accent), transparent 70%)"></div>
-            </div>
+            <div class="absolute inset-0 overflow-hidden pointer-events-none"><div class="absolute top-1/4 right-1/4 w-96 h-96 rounded-full opacity-10" style="background:radial-gradient(circle, var(--accent), transparent 70%)"></div></div>
             <div class="text-center max-w-4xl mx-auto relative">
-                <div class="mb-8 relative inline-block">
-                    <div class="w-36 h-36 mx-auto rounded-full flex items-center justify-center btc-glow" style="background:linear-gradient(135deg, var(--accent), #e8850f)">
-                        <i class="fab fa-bitcoin text-7xl text-black spin-slow"></i>
-                    </div>
-                </div>
-                <h1 class="hero-title font-orbitron text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight">
-                    <span style="color:var(--fg)">ادخل عالم</span><br>
-                    <span style="background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">تعدين البيتكوين</span>
-                </h1>
-                <p class="text-lg sm:text-xl mb-10 max-w-2xl mx-auto leading-relaxed" style="color:var(--muted)">
-                    ابدأ تعدين البيتكوين بسهولة. سجل حسابك، ادفع الاشتراك وابدأ بجمع الأرباح فوراً
-                </p>
-                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
-                    <button onclick="openAuthModal()" class="btn-primary text-lg px-10 py-4 flex items-center gap-2" id="heroActionBtn">
-                        <i class="fas fa-rocket"></i> ابدأ الآن
-                    </button>
-                </div>
+                <div class="mb-8 relative inline-block"><div class="w-36 h-36 mx-auto rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f); filter: drop-shadow(0 0 30px rgba(247,147,26,0.5))"><i class="fab fa-bitcoin text-7xl text-black spin-slow"></i></div></div>
+                <h1 class="font-orbitron text-5xl sm:text-6xl md:text-7xl font-black mb-6 leading-tight"><span style="color:var(--fg)">ادخل عالم</span><br><span style="background:linear-gradient(135deg, var(--accent), var(--accent2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent;">تعدين البيتكوين</span></h1>
+                <p class="text-lg sm:text-xl mb-10 max-w-2xl mx-auto leading-relaxed" style="color:var(--muted)">ابدأ تعدين البيتكوين بسهولة. سجل حسابك، ادفع الاشتراك واجمع الأرباح التي تستمر حتى أثناء غيابك!</p>
+                <button onclick="openAuthModal()" class="btn-primary text-lg px-10 py-4 flex items-center gap-2 mx-auto" id="heroActionBtn"><i class="fas fa-rocket"></i> ابدأ الآن</button>
             </div>
         </section>
 
-        <!-- لوحة التعدين -->
         <section id="miningSection" class="py-16 px-4 hidden">
             <div class="max-w-7xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="font-orbitron text-4xl font-black mb-2">منصة التعدين</h2>
-                    <div id="subWarning" class="mt-4 p-4 rounded-xl inline-block" style="background:rgba(255,61,87,0.1); border:1px solid var(--danger); color:var(--danger);">
-                        <i class="fas fa-exclamation-triangle ml-2"></i> يجب دفع الاشتراك لبدء التعدين
-                        <button onclick="openPaymentModal()" class="mr-4 text-sm px-3 py-1 rounded-lg" style="background:var(--danger); color:#fff;">ادفع الآن</button>
-                    </div>
+                    <div id="subWarning" class="mt-4 p-4 rounded-xl inline-block hidden" style="background:rgba(255,61,87,0.1); border:1px solid var(--danger); color:var(--danger);"><i class="fas fa-exclamation-triangle ml-2"></i> يجب دفع الاشتراك لبدء التعدين<button onclick="openPaymentModal()" class="mr-4 text-sm px-3 py-1 rounded-lg" style="background:var(--danger); color:#fff;">ادفع الآن</button></div>
                 </div>
-
-                <!-- زر التعدين -->
                 <div class="text-center mb-12">
                     <div id="miningButton" class="relative inline-block cursor-pointer" onclick="toggleMining()">
-                        <div id="miningRing" class="w-48 h-48 rounded-full flex items-center justify-center mx-auto transition-all duration-500" style="background:linear-gradient(135deg, rgba(247,147,26,0.15), rgba(247,147,26,0.05)); border:3px solid var(--border)">
-                            <div class="w-36 h-36 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)">
-                                <i class="fas fa-play text-5xl text-black" id="miningIcon"></i>
-                            </div>
-                        </div>
+                        <div id="miningRing" class="w-48 h-48 rounded-full flex items-center justify-center mx-auto transition-all duration-500" style="background:linear-gradient(135deg, rgba(247,147,26,0.15), rgba(247,147,26,0.05)); border:3px solid var(--border)"><div class="w-36 h-36 rounded-full flex items-center justify-center" style="background:linear-gradient(135deg, var(--accent), #e8850f)"><i class="fas fa-play text-5xl text-black" id="miningIcon"></i></div></div>
                         <div class="mt-4 font-orbitron text-lg font-bold" id="miningStatus" style="color:var(--muted)">اضغط لبدء التعدين</div>
                     </div>
                 </div>
-
-                <!-- إحصائيات -->
                 <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-                    <div class="glass-card p-5">
-                        <div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">سرعة الهاش</span><i class="fas fa-bolt" style="color:var(--accent)"></i></div>
-                        <div class="font-orbitron text-2xl font-bold" style="color:var(--accent)" id="hashRate">0.00</div>
-                        <div class="text-xs" style="color:var(--muted)">MH/s</div>
-                    </div>
-                    <div class="glass-card p-5">
-                        <div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">الأرباح</span><i class="fab fa-bitcoin" style="color:var(--accent2)"></i></div>
-                        <div class="font-orbitron text-2xl font-bold" style="color:var(--accent2)" id="totalEarnings">0.00000000</div>
-                        <div class="text-xs" style="color:var(--muted)">BTC</div>
-                    </div>
-                    <div class="glass-card p-5">
-                        <div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">وقت التعدين</span><i class="fas fa-clock" style="color:var(--success)"></i></div>
-                        <div class="font-orbitron text-2xl font-bold" style="color:var(--success)" id="miningTime">00:00:00</div>
-                    </div>
-                    <div class="glass-card p-5">
-                        <div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">الكتل</span><i class="fas fa-cubes" style="color:var(--accent)"></i></div>
-                        <div class="font-orbitron text-2xl font-bold" id="blocksMined">0</div>
-                    </div>
+                    <div class="glass-card p-5"><div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">سرعة الهاش</span><i class="fas fa-bolt" style="color:var(--accent)"></i></div><div class="font-orbitron text-2xl font-bold" style="color:var(--accent)" id="hashRate">0.00</div><div class="text-xs" style="color:var(--muted)">MH/s</div></div>
+                    <div class="glass-card p-5"><div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">الأرباح</span><i class="fab fa-bitcoin" style="color:var(--accent2)"></i></div><div class="font-orbitron text-2xl font-bold" style="color:var(--accent2)" id="totalEarnings">0.00000000</div><div class="text-xs" style="color:var(--muted)">BTC</div></div>
+                    <div class="glass-card p-5"><div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">وقت التعدين</span><i class="fas fa-clock" style="color:var(--success)"></i></div><div class="font-orbitron text-2xl font-bold" style="color:var(--success)" id="miningTime">00:00:00</div></div>
+                    <div class="glass-card p-5"><div class="flex items-center justify-between mb-3"><span class="text-sm" style="color:var(--muted)">الكتل</span><i class="fas fa-cubes" style="color:var(--accent)"></i></div><div class="font-orbitron text-2xl font-bold" id="blocksMined">0</div></div>
                 </div>
-
-                <!-- أزرار الإجراءات -->
                 <div class="flex flex-wrap gap-3 justify-center">
                     <button onclick="openWithdrawModal()" class="btn-primary flex items-center gap-2"><i class="fas fa-wallet"></i> سحب الأرباح</button>
                     <button onclick="openPaymentModal()" class="btn-secondary flex items-center gap-2"><i class="fas fa-money-bill-wave"></i> تجديد الاشتراك</button>
@@ -510,13 +302,7 @@
             </div>
         </section>
 
-        <!-- تذييل -->
-        <footer class="py-12 px-4 border-t" style="border-color:var(--border)">
-            <div class="max-w-6xl mx-auto text-center">
-                <span class="font-orbitron font-bold" style="color:var(--accent)">CryptoMine Pro</span>
-                <p class="text-xs mt-2" style="color:var(--muted)">جميع الحقوق محفوظة 2025</p>
-            </div>
-        </footer>
+        <footer class="py-12 px-4 border-t" style="border-color:var(--border)"><div class="max-w-6xl mx-auto text-center"><span class="font-orbitron font-bold" style="color:var(--accent)">CryptoMine Pro</span><p class="text-xs mt-2" style="color:var(--muted)">جميع الحقوق محفوظة 2025</p></div></footer>
     </main>
 </div>
 
@@ -527,9 +313,7 @@
     function initDB() {
         if (!localStorage.getItem('cryptoDB')) {
             const defaultDB = {
-                users: [
-                    { id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false }
-                ],
+                users: [{ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0, miningPower: 50 }],
                 paymentRequests: [],
                 withdrawalRequests: [],
                 settings: {
@@ -537,113 +321,66 @@
                     receivingWallet: 'bc1qxy2kgdygjrsqtzq2n0yrf2493p83kkfjhx0wlh',
                     subscriptionAmount: 100000,
                     minWithdraw: 0.0005,
-                    commission: 5
+                    commission: 5,
+                    btcToUsd: 65000,   // سعر البيتكوين بالدولار
+                    usdToSyp: 15000    // سعر الدولار بالليرة
                 }
             };
             localStorage.setItem('cryptoDB', JSON.stringify(defaultDB));
         }
     }
     initDB();
-
     function getDB() { return JSON.parse(localStorage.getItem('cryptoDB')); }
     function saveDB(db) { localStorage.setItem('cryptoDB', JSON.stringify(db)); }
 
-    // ========================
-    // حالة التطبيق
-    // ========================
-    let appState = {
-        currentUser: null,
-        isMining: false,
-        miningTimeSeconds: 0,
-        blocksMined: 0,
-        miningPower: 50,
-        miningInterval: null,
-        timeInterval: null,
-        logInterval: null
-    };
+    let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningPower: 50, miningInterval: null, timeInterval: null };
 
-    // ========================
-    // التهيئة عند التحميل
-    // ========================
     window.onload = () => {
         const db = getDB();
-        // فحص الصيانة
-        if(db.settings.maintenance) {
-            document.getElementById('maintenanceOverlay').classList.add('active');
-        }
-        
-        // فحص الجلسة
+        if(db.settings.maintenance) document.getElementById('maintenanceOverlay').classList.add('active');
         const session = localStorage.getItem('cryptoSession');
         if (session) {
             const user = db.users.find(u => u.id === parseInt(session));
-            if (user) {
-                loginSuccess(user);
-            }
+            if (user) loginSuccess(user);
         }
         animateParticles();
     };
 
     // ========================
-    // نظام المصادقة (تسجيل/دخول)
+    // نظام المصادقة
     // ========================
     function openAuthModal() { document.getElementById('authModal').classList.add('active'); }
     function closeAuthModal() { document.getElementById('authModal').classList.remove('active'); }
-
     function switchAuthTab(tab) {
-        if(tab === 'login') {
-            document.getElementById('loginForm').style.display = 'block';
-            document.getElementById('registerForm').style.display = 'none';
-            document.getElementById('loginTab').style.color = 'var(--accent)';
-            document.getElementById('loginTab').style.borderBottomColor = 'var(--accent)';
-            document.getElementById('registerTab').style.color = 'var(--muted)';
-            document.getElementById('registerTab').style.borderBottomColor = 'transparent';
-        } else {
-            document.getElementById('loginForm').style.display = 'none';
-            document.getElementById('registerForm').style.display = 'block';
-            document.getElementById('registerTab').style.color = 'var(--accent)';
-            document.getElementById('registerTab').style.borderBottomColor = 'var(--accent)';
-            document.getElementById('loginForm').style.color = 'var(--muted)';
-            document.getElementById('loginTab').style.borderBottomColor = 'transparent';
-        }
+        document.getElementById('loginForm').style.display = tab === 'login' ? 'block' : 'none';
+        document.getElementById('registerForm').style.display = tab === 'register' ? 'block' : 'none';
+        document.getElementById('loginTab').style.color = tab === 'login' ? 'var(--accent)' : 'var(--muted)';
+        document.getElementById('loginTab').style.borderBottomColor = tab === 'login' ? 'var(--accent)' : 'transparent';
+        document.getElementById('registerTab').style.color = tab === 'register' ? 'var(--accent)' : 'var(--muted)';
+        document.getElementById('registerTab').style.borderBottomColor = tab === 'register' ? 'var(--accent)' : 'transparent';
     }
 
     function register() {
         const user = document.getElementById('regUser').value.trim();
         const pass = document.getElementById('regPass').value;
         const passC = document.getElementById('regPassConfirm').value;
-
         if (!user || !pass) return showToast('الرجاء ملء جميع الحقول', 'error');
         if (pass !== passC) return showToast('كلمات المرور غير متطابقة', 'error');
-        if (pass.length < 4) return showToast('كلمة المرور قصيرة جداً', 'error');
-
         const db = getDB();
         if (db.users.find(u => u.username === user)) return showToast('اسم المستخدم محجوز', 'error');
-
-        const newUser = {
-            id: Date.now(),
-            username: user,
-            password: pass,
-            role: 'user',
-            isSubscribed: false,
-            balance: 0,
-            banned: false
-        };
-        db.users.push(newUser);
+        db.users.push({ id: Date.now(), username: user, password: pass, role: 'user', isSubscribed: false, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0, miningPower: 50 });
         saveDB(db);
-        showToast('تم التسجيل بنجاح! يمكنك تسجيل الدخول الآن', 'success');
+        showToast('تم التسجيل بنجاح! سجل دخولك الآن', 'success');
         switchAuthTab('login');
     }
 
     function login() {
         const user = document.getElementById('loginUser').value.trim();
         const pass = document.getElementById('loginPass').value;
-
         const db = getDB();
         const foundUser = db.users.find(u => u.username === user && u.password === pass);
-
         if (!foundUser) return showToast('بيانات الدخول خاطئة', 'error');
         if (foundUser.banned) return showToast('هذا الحساب موقوف من الإدارة', 'error');
-
         localStorage.setItem('cryptoSession', foundUser.id);
         loginSuccess(foundUser);
         closeAuthModal();
@@ -651,42 +388,65 @@
 
     function loginSuccess(user) {
         appState.currentUser = user;
+        appState.miningPower = user.miningPower || 50;
+        appState.miningTimeSeconds = user.miningTimeSeconds || 0;
+        
+        // حساب الأرباح المتراكمة أثناء الغياب (التعدين في الخلفية)
+        if (user.isMining && user.lastMiningTimestamp) {
+            const now = Date.now();
+            const elapsedSeconds = (now - user.lastMiningTimestamp) / 1000;
+            if (elapsedSeconds > 0) {
+                const powerFactor = (user.miningPower || 50) / 100;
+                const baseRate = 0.000000015; // المعدل البطيء
+                const offlineEarnings = elapsedSeconds * baseRate * powerFactor;
+                user.balance += offlineEarnings;
+                user.miningTimeSeconds += elapsedSeconds;
+                appState.miningTimeSeconds = user.miningTimeSeconds;
+                
+                const db = getDB();
+                const userInDb = db.users.find(u => u.id === user.id);
+                userInDb.balance = user.balance;
+                userInDb.miningTimeSeconds = user.miningTimeSeconds;
+                saveDB(db);
+                
+                showToast(`مرحباً بعودتك! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success');
+            }
+            // استئناف التعدين المرئي
+            startMining(true);
+        }
+
         document.getElementById('authBtn').classList.add('hidden');
         document.getElementById('logoutBtn').classList.remove('hidden');
         document.getElementById('miningSection').classList.remove('hidden');
-        document.getElementById('heroActionBtn').classList.add('hidden');
-
-        document.getElementById('navBalance').textContent = user.balance.toFixed(8);
+        document.getElementById('heroActionBtn').style.display = 'none';
         document.getElementById('balanceNav').style.display = 'flex';
-
-        if (user.role === 'admin') {
-            document.getElementById('adminBtn').classList.remove('hidden');
-        }
+        
+        updateUIBalance();
+        document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
 
         if (user.isSubscribed) {
             document.getElementById('statusBadge').style.display = 'flex';
             document.getElementById('subWarning').style.display = 'none';
         } else {
             document.getElementById('statusBadge').style.display = 'none';
-            document.getElementById('subWarning').style.display = 'inline-block';
+            document.getElementById('subWarning').style.display = 'block';
+        }
+
+        // فتح لوحة التحكم تلقائياً للأدمن
+        if (user.role === 'admin') {
+            setTimeout(() => openAdminModal(), 500);
         }
     }
 
     function logout() {
-        localStorage.removeItem('cryptoSession');
-        if(appState.isMining) stopMining();
+        if(appState.isMining) stopMining(); // إيقاف المرئي فقط (الخلفية تستمر بالفعل لحالة isMining=true)
         appState.currentUser = null;
-        document.getElementById('authBtn').classList.remove('hidden');
-        document.getElementById('logoutBtn').classList.add('hidden');
-        document.getElementById('adminBtn').classList.add('hidden');
-        document.getElementById('miningSection').classList.add('hidden');
-        document.getElementById('balanceNav').style.display = 'none';
-        document.getElementById('statusBadge').style.display = 'none';
-        document.getElementById('heroActionBtn').classList.remove('hidden');
+        localStorage.removeItem('cryptoSession');
+        location.reload();
     }
 
     // ========================
-    // نظام الشحن والدفع
+    // نظام الشحن
     // ========================
     function openPaymentModal() {
         const db = getDB();
@@ -695,49 +455,40 @@
         document.getElementById('paymentModal').classList.add('active');
     }
     function closePaymentModal() { document.getElementById('paymentModal').classList.remove('active'); }
-    
-    function copyWallet() {
-        const walletText = document.getElementById('adminWalletDisplay').textContent;
-        navigator.clipboard.writeText(walletText);
-        showToast('تم نسخ العنوان', 'success');
-    }
+    function copyWallet() { navigator.clipboard.writeText(document.getElementById('adminWalletDisplay').textContent); showToast('تم نسخ العنوان', 'success'); }
 
     function submitPaymentRequest() {
         const txId = document.getElementById('txIdInput').value.trim();
         const amount = document.getElementById('amountPaidInput').value;
         if(!txId || !amount) return showToast('الرجاء إدخال رقم العملية والمبلغ', 'error');
-
         const db = getDB();
-        db.paymentRequests.push({
-            id: Date.now(),
-            userId: appState.currentUser.id,
-            username: appState.currentUser.username,
-            txId: txId,
-            amount: parseFloat(amount),
-            status: 'pending' // pending, approved, rejected
-        });
+        db.paymentRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, txId, amount: parseFloat(amount), status: 'pending' });
         saveDB(db);
         closePaymentModal();
         showToast('تم إرسال الطلب، انتظر موافقة الإدارة', 'info');
     }
 
     // ========================
-    // التعدين
+    // التعدين البطيء والمستمر
     // ========================
     function toggleMining() {
         if (!appState.currentUser) return openAuthModal();
-        
-        // تحديث بيانات المستخدم من DB
         const db = getDB();
         const freshUser = db.users.find(u => u.id === appState.currentUser.id);
         if (!freshUser.isSubscribed) return openPaymentModal();
 
         if (appState.isMining) stopMining();
-        else startMining();
+        else startMining(false);
     }
 
-    function startMining() {
+    function startMining(isResuming) {
         appState.isMining = true;
+        const db = getDB();
+        const user = db.users.find(u => u.id === appState.currentUser.id);
+        user.isMining = true;
+        user.lastMiningTimestamp = Date.now();
+        saveDB(db);
+
         document.getElementById('miningIcon').className = 'fas fa-pause text-5xl text-black';
         document.getElementById('miningStatus').textContent = 'التعدين جارٍ...';
         document.getElementById('miningStatus').style.color = 'var(--success)';
@@ -751,34 +502,38 @@
         appState.miningInterval = setInterval(() => {
             if (!appState.isMining) return;
             const powerFactor = appState.miningPower / 100;
-            const earnings = 0.00000012 * powerFactor * (0.8 + Math.random() * 0.4);
+            const baseRate = 0.000000015; // معدل بطيء جداً
+            const earnings = baseRate * powerFactor * (0.9 + Math.random() * 0.2);
             
-            // إضافة للأرباح في الواجهة وفي قاعدة البيانات
             appState.currentUser.balance += earnings;
             const db = getDB();
             const userInDb = db.users.find(u => u.id === appState.currentUser.id);
             if(userInDb) {
                 userInDb.balance = appState.currentUser.balance;
+                userInDb.lastMiningTimestamp = Date.now(); // تحديث وقت آخر تعدين
+                userInDb.miningTimeSeconds = appState.miningTimeSeconds;
                 saveDB(db);
             }
-
-            document.getElementById('totalEarnings').textContent = appState.currentUser.balance.toFixed(8);
-            document.getElementById('navBalance').textContent = appState.currentUser.balance.toFixed(8);
-            
+            updateUIBalance();
             const hashRate = (25 + (appState.miningPower * 1.75)) * (0.9 + Math.random() * 0.2);
             document.getElementById('hashRate').textContent = hashRate.toFixed(2);
 
-            if (Math.random() < 0.003 * powerFactor) {
+            if (Math.random() < 0.001 * powerFactor) {
                 appState.blocksMined++;
                 document.getElementById('blocksMined').textContent = appState.blocksMined;
             }
         }, 1000);
 
-        showToast('تم بدء التعدين بنجاح!', 'success');
+        if(!isResuming) showToast('تم بدء التعدين، سيستمر حتى لو أغلقت المتصفح!', 'success');
     }
 
     function stopMining() {
         appState.isMining = false;
+        const db = getDB();
+        const user = db.users.find(u => u.id === appState.currentUser.id);
+        user.isMining = false;
+        saveDB(db);
+
         clearInterval(appState.miningInterval);
         clearInterval(appState.timeInterval);
         document.getElementById('miningIcon').className = 'fas fa-play text-5xl text-black';
@@ -789,210 +544,145 @@
         showToast('تم إيقاف التعدين', 'info');
     }
 
+    function updateUIBalance() {
+        document.getElementById('totalEarnings').textContent = appState.currentUser.balance.toFixed(8);
+        document.getElementById('navBalance').textContent = appState.currentUser.balance.toFixed(8);
+    }
+
     function formatTime(seconds) {
         const h = Math.floor(seconds / 3600).toString().padStart(2, '0');
         const m = Math.floor((seconds % 3600) / 60).toString().padStart(2, '0');
-        const s = (seconds % 60).toString().padStart(2, '0');
+        const s = Math.floor(seconds % 60).toString().padStart(2, '0');
         return `${h}:${m}:${s}`;
     }
 
     // ========================
-    // السحب
+    // السحب متعدد العملات
     // ========================
     function openWithdrawModal() {
         const db = getDB();
-        document.getElementById('minWithdrawDisplay').textContent = db.settings.minWithdraw;
-        document.getElementById('commissionDisplay').textContent = db.settings.commission;
+        document.getElementById('rateUsd').textContent = db.settings.btcToUsd.toLocaleString();
+        document.getElementById('rateSyp').textContent = db.settings.usdToSyp.toLocaleString();
+        calculateWithdrawConversion();
         document.getElementById('withdrawModal').classList.add('active');
     }
     function closeWithdrawModal() { document.getElementById('withdrawModal').classList.remove('active'); }
 
+    function calculateWithdrawConversion() {
+        const amount = parseFloat(document.getElementById('withdrawAmount').value) || 0;
+        const currency = document.getElementById('withdrawCurrency').value;
+        const db = getDB();
+        let converted = 0;
+        if (currency === 'BTC') converted = amount;
+        else if (currency === 'USD') converted = amount * db.settings.btcToUsd;
+        else if (currency === 'SYP') converted = amount * db.settings.btcToUsd * db.settings.usdToSyp;
+        document.getElementById('withdrawConverted').textContent = `${converted.toFixed(2)} ${currency}`;
+    }
+
     function processWithdraw() {
         const wallet = document.getElementById('walletAddress').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        const currency = document.getElementById('withdrawCurrency').value;
         const db = getDB();
         const settings = db.settings;
 
-        if (!wallet || wallet.length < 26) return showToast('عنوان المحفظة غير صالح', 'error');
+        if (!wallet) return showToast('الرجاء إدخال المحفظة أو المعرف', 'error');
         if (!amount || amount <= 0) return showToast('أدخل مبلغاً صحيحاً', 'error');
-        if (amount < settings.minWithdraw) return showToast(`الحد الأدنى للسحب هو ${settings.minWithdraw}`, 'error');
+        if (amount < settings.minWithdraw) return showToast(`الحد الأدنى للسحب هو ${settings.minWithdraw} BTC`, 'error');
         if (amount > appState.currentUser.balance) return showToast('رصيدك غير كافٍ', 'error');
 
-        // إنشاء طلب سحب (يخصم الرصيد فوراً كعهدة حتى يوافق الأدمن)
         appState.currentUser.balance -= amount;
         const userInDb = db.users.find(u => u.id === appState.currentUser.id);
         userInDb.balance = appState.currentUser.balance;
         
+        let convertedAmount = amount;
+        if (currency === 'USD') convertedAmount = amount * settings.btcToUsd;
+        else if (currency === 'SYP') convertedAmount = amount * settings.btcToUsd * settings.usdToSyp;
+
         db.withdrawalRequests.push({
-            id: Date.now(),
-            userId: appState.currentUser.id,
-            username: appState.currentUser.username,
-            amount: amount,
-            wallet: wallet,
-            commission: settings.commission,
-            status: 'pending'
+            id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username,
+            amountInBtc: amount, requestedCurrency: currency, convertedAmount: convertedAmount,
+            wallet: wallet, commission: settings.commission, status: 'pending'
         });
         
         saveDB(db);
-        document.getElementById('totalEarnings').textContent = appState.currentUser.balance.toFixed(8);
-        document.getElementById('navBalance').textContent = appState.currentUser.balance.toFixed(8);
+        updateUIBalance();
         closeWithdrawModal();
-        showToast('تم تقديم طلب السحب، سيتم مراجعته من الإدارة', 'success');
+        showToast('تم تقديم طلب السحب', 'success');
     }
 
     // ========================
-    // لوحة التحكم الإدارية (المخيفة)
+    // لوحة التحكم المخيفة
     // ========================
     function openAdminModal() {
         if(!appState.currentUser || appState.currentUser.role !== 'admin') return;
-        renderAdminUsers();
-        renderAdminPayments();
-        renderAdminWithdrawals();
-        loadAdminSettings();
+        renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); loadAdminSettings();
         document.getElementById('adminModal').classList.add('active');
     }
     function closeAdminModal() { document.getElementById('adminModal').classList.remove('active'); }
 
-    function switchAdminTab(tab) {
-        document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-        document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+    function switchAdminTab(tab, el) {
+        document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active'));
+        document.querySelectorAll('.tab-btn').forEach(e => e.classList.remove('active'));
         document.getElementById(`tab-${tab}`).classList.add('active');
-        event.target.classList.add('active');
+        el.classList.add('active');
     }
 
-    // إدارة المستخدمين
     function renderAdminUsers() {
-        const db = getDB();
-        const tbody = document.getElementById('adminUsersTable');
-        tbody.innerHTML = '';
+        const db = getDB(); const tbody = document.getElementById('adminUsersTable'); tbody.innerHTML = '';
         db.users.filter(u => u.role !== 'admin').forEach(user => {
             const subStatus = user.isSubscribed ? '<span style="color:#00e676">مسدد</span>' : '<span style="color:#ff3d57">غير مسدد</span>';
-            const banBtn = user.banned ? 
-                `<button onclick="toggleBan(${user.id}, false)" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">فك الحظر</button>` :
-                `<button onclick="toggleBan(${user.id}, true)" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">حظر</button>`;
-            
-            tbody.innerHTML += `
-                <tr style="border-bottom:1px solid var(--scary-border)">
-                    <td class="py-2">${user.username}</td>
-                    <td class="py-2">${subStatus}</td>
-                    <td class="py-2 font-orbitron text-xs">${user.balance.toFixed(8)}</td>
-                    <td class="py-2">${banBtn}</td>
-                </tr>
-            `;
+            const banBtn = user.banned ? `<button onclick="toggleBan(${user.id}, false)" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">فك الحظر</button>` : `<button onclick="toggleBan(${user.id}, true)" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">حظر</button>`;
+            tbody.innerHTML += `<tr style="border-bottom:1px solid var(--scary-border)"><td class="py-2">${user.username}</td><td class="py-2">${subStatus}</td><td class="py-2 font-orbitron text-xs">${user.balance.toFixed(8)}</td><td class="py-2">${banBtn}</td></tr>`;
         });
     }
 
     function toggleBan(userId, banStatus) {
-        const db = getDB();
-        const user = db.users.find(u => u.id === userId);
-        user.banned = banStatus;
-        saveDB(db);
-        renderAdminUsers();
-        showToast(banStatus ? 'تم حظر المستخدم' : 'تم فك الحظر عن المستخدم', 'error');
+        const db = getDB(); const user = db.users.find(u => u.id === userId); user.banned = banStatus; saveDB(db); renderAdminUsers();
     }
 
-    // طلبات الشحن
     function renderAdminPayments() {
-        const db = getDB();
-        const tbody = document.getElementById('adminPaymentsTable');
-        tbody.innerHTML = '';
+        const db = getDB(); const tbody = document.getElementById('adminPaymentsTable'); tbody.innerHTML = '';
         db.paymentRequests.filter(p => p.status === 'pending').forEach(req => {
-            tbody.innerHTML += `
-                <tr style="border-bottom:1px solid var(--scary-border)">
-                    <td class="py-2">${req.username}</td>
-                    <td class="py-2 font-orbitron text-xs" dir="ltr">${req.txId}</td>
-                    <td class="py-2">${req.amount} ل.س</td>
-                    <td class="py-2 flex gap-2">
-                        <button onclick="approvePayment(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">موافقة</button>
-                        <button onclick="rejectPayment(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">رفض</button>
-                    </td>
-                </tr>
-            `;
+            tbody.innerHTML += `<tr style="border-bottom:1px solid var(--scary-border)"><td class="py-2">${req.username}</td><td class="py-2 font-orbitron text-xs" dir="ltr">${req.txId}</td><td class="py-2">${req.amount} ل.س</td><td class="py-2 flex gap-2"><button onclick="approvePayment(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">موافقة</button><button onclick="rejectPayment(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">رفض</button></td></tr>`;
         });
     }
 
     function approvePayment(reqId) {
-        const db = getDB();
-        const req = db.paymentRequests.find(p => p.id === reqId);
-        req.status = 'approved';
-        const user = db.users.find(u => u.id === req.userId);
-        if(user) user.isSubscribed = true;
-        saveDB(db);
-        renderAdminPayments();
-        showToast('تم تفعيل اشتراك المستخدم بنجاح', 'success');
+        const db = getDB(); const req = db.paymentRequests.find(p => p.id === reqId); req.status = 'approved';
+        const user = db.users.find(u => u.id === req.userId); if(user) user.isSubscribed = true; saveDB(db); renderAdminPayments(); showToast('تم تفعيل الاشتراك', 'success');
     }
-
     function rejectPayment(reqId) {
-        const db = getDB();
-        const req = db.paymentRequests.find(p => p.id === reqId);
-        req.status = 'rejected';
-        saveDB(db);
-        renderAdminPayments();
-        showToast('تم رفض طلب الشحن', 'error');
+        const db = getDB(); const req = db.paymentRequests.find(p => p.id === reqId); req.status = 'rejected'; saveDB(db); renderAdminPayments();
     }
 
-    // طلبات السحب
     function renderAdminWithdrawals() {
-        const db = getDB();
-        const tbody = document.getElementById('adminWithdrawalsTable');
-        tbody.innerHTML = '';
+        const db = getDB(); const tbody = document.getElementById('adminWithdrawalsTable'); tbody.innerHTML = '';
         db.withdrawalRequests.filter(w => w.status === 'pending').forEach(req => {
-            const netAmount = req.amount - (req.amount * (req.commission / 100));
-            tbody.innerHTML += `
-                <tr style="border-bottom:1px solid var(--scary-border)">
-                    <td class="py-2">${req.username}</td>
-                    <td class="py-2 font-orbitron text-xs">${req.amount.toFixed(8)}<br><small style="color:#ff1a1a">بعد العمولة: ${netAmount.toFixed(8)}</small></td>
-                    <td class="py-2 font-orbitron text-xs break-all" dir="ltr">${req.wallet}</td>
-                    <td class="py-2 flex gap-2">
-                        <button onclick="approveWithdraw(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">تم الإرسال</button>
-                        <button onclick="rejectWithdraw(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">رفض/استرداد</button>
-                    </td>
-                </tr>
-            `;
+            const netAmount = req.convertedAmount - (req.convertedAmount * (req.commission / 100));
+            tbody.innerHTML += `<tr style="border-bottom:1px solid var(--scary-border)"><td class="py-2">${req.username}</td><td class="py-2 font-orbitron text-xs">${req.amountInBtc.toFixed(8)} BTC</td><td class="py-2 text-xs">${netAmount.toFixed(2)} ${req.requestedCurrency}<br><small style="color:#ff1a1a">بعد العمولة ${req.commission}%</small></td><td class="py-2 font-orbitron text-xs break-all" dir="ltr">${req.wallet}</td><td class="py-2 flex gap-2"><button onclick="approveWithdraw(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#00e676; color:#000;">تم</button><button onclick="rejectWithdraw(${req.id})" class="text-xs px-2 py-1 rounded" style="background:#ff1a1a; color:#fff;">رفض</button></td></tr>`;
         });
     }
 
     function approveWithdraw(reqId) {
-        const db = getDB();
-        const req = db.withdrawalRequests.find(w => w.id === reqId);
-        req.status = 'approved';
-        saveDB(db);
-        renderAdminWithdrawals();
-        showToast('تم تأكيد إرسال المبلغ للمستخدم', 'success');
+        const db = getDB(); const req = db.withdrawalRequests.find(w => w.id === reqId); req.status = 'approved'; saveDB(db); renderAdminWithdrawals(); showToast('تم التأكيد', 'success');
     }
-
     function rejectWithdraw(reqId) {
-        const db = getDB();
-        const req = db.withdrawalRequests.find(w => w.id === reqId);
-        req.status = 'rejected';
-        // استرداد المبلغ للمستخدم
-        const user = db.users.find(u => u.id === req.userId);
-        if(user) user.balance += req.amount;
-        saveDB(db);
-        renderAdminWithdrawals();
-        showToast('تم رفض السحب واسترداد المبلغ للمستخدم', 'error');
+        const db = getDB(); const req = db.withdrawalRequests.find(w => w.id === reqId); req.status = 'rejected';
+        const user = db.users.find(u => u.id === req.userId); if(user) user.balance += req.amountInBtc; saveDB(db); renderAdminWithdrawals(); showToast('تم الرفض واسترداد الرصيد', 'error');
     }
 
-    // إعدادات الأدمن
     function loadAdminSettings() {
         const db = getDB();
         document.getElementById('setWallet').value = db.settings.receivingWallet;
         document.getElementById('setAmount').value = db.settings.subscriptionAmount;
         document.getElementById('setMinWithdraw').value = db.settings.minWithdraw;
         document.getElementById('setCommission').value = db.settings.commission;
-        
+        document.getElementById('setBtcUsd').value = db.settings.btcToUsd;
+        document.getElementById('setUsdSyp').value = db.settings.usdToSyp;
         const mBtn = document.getElementById('maintenanceBtn');
-        if(db.settings.maintenance) {
-            mBtn.textContent = 'تعطيل وضع الصيانة (فتح الموقع)';
-            mBtn.style.background = '#003300';
-            mBtn.style.borderColor = '#00e676';
-            mBtn.style.color = '#00e676';
-        } else {
-            mBtn.innerHTML = '<i class="fas fa-skull-crossbones ml-2"></i> تفعيل وضع الصيانة (إغلاق الموقع)';
-            mBtn.style.background = '#330000';
-            mBtn.style.borderColor = '#ff0000';
-            mBtn.style.color = '#ff1a1a';
-        }
+        if(db.settings.maintenance) { mBtn.textContent = 'تعطيل وضع الصيانة (فتح الموقع)'; mBtn.style.background = '#003300'; mBtn.style.borderColor = '#00e676'; mBtn.style.color = '#00e676'; }
+        else { mBtn.innerHTML = '<i class="fas fa-skull-crossbones ml-2"></i> تفعيل وضع الصيانة'; mBtn.style.background = '#330000'; mBtn.style.borderColor = '#ff0000'; mBtn.style.color = '#ff1a1a'; }
     }
 
     function saveAdminSettings() {
@@ -1001,106 +691,26 @@
         db.settings.subscriptionAmount = parseFloat(document.getElementById('setAmount').value);
         db.settings.minWithdraw = parseFloat(document.getElementById('setMinWithdraw').value);
         db.settings.commission = parseFloat(document.getElementById('setCommission').value);
-        saveDB(db);
-        showToast('تم حفظ الإعدادات بنجاح', 'success');
+        db.settings.btcToUsd = parseFloat(document.getElementById('setBtcUsd').value);
+        db.settings.usdToSyp = parseFloat(document.getElementById('setUsdSyp').value);
+        saveDB(db); showToast('تم حفظ الإعدادات', 'success');
     }
 
     function toggleMaintenance() {
-        const db = getDB();
-        db.settings.maintenance = !db.settings.maintenance;
-        saveDB(db);
-        loadAdminSettings();
-        
-        if(db.settings.maintenance) {
-            document.getElementById('maintenanceOverlay').classList.add('active');
-            showToast('تم تفعيل وضع الصيانة، الموقع مغلق الآن أمام المستخدمين', 'error');
-        } else {
-            document.getElementById('maintenanceOverlay').classList.remove('active');
-            showToast('تم تعطيل وضع الصيانة، الموقع يعمل', 'success');
-        }
+        const db = getDB(); db.settings.maintenance = !db.settings.maintenance; saveDB(db); loadAdminSettings();
+        if(db.settings.maintenance) { document.getElementById('maintenanceOverlay').classList.add('active'); showToast('الموقع مغلق للصيانة', 'error'); }
+        else { document.getElementById('maintenanceOverlay').classList.remove('active'); showToast('الموقع يعمل', 'success'); }
     }
 
     // ========================
-    // مساعدات المصادقة والجلسات
+    // خلفية الجسيمات
     // ========================
-    function loginSuccess(user) {
-        appState.currentUser = user;
-        localStorage.setItem('cryptoSession', user.id);
-        
-        document.getElementById('authBtn').classList.add('hidden');
-        document.getElementById('logoutBtn').classList.remove('hidden');
-        document.getElementById('miningSection').classList.remove('hidden');
-        document.getElementById('heroActionBtn').style.display = 'none';
-        
-        document.getElementById('balanceNav').style.display = 'flex';
-        document.getElementById('totalEarnings').textContent = user.balance.toFixed(8);
-        document.getElementById('navBalance').textContent = user.balance.toFixed(8);
-
-        if(user.isSubscribed) {
-            document.getElementById('statusBadge').style.display = 'flex';
-            document.getElementById('subWarning').style.display = 'none';
-        } else {
-            document.getElementById('statusBadge').style.display = 'none';
-            document.getElementById('subWarning').style.display = 'block';
-        }
-
-        if(user.role === 'admin') {
-            document.getElementById('adminBtn').classList.remove('hidden');
-        }
-
-        closeAuthModal();
-    }
-
-    function logout() {
-        if(appState.isMining) stopMining();
-        appState.currentUser = null;
-        localStorage.removeItem('cryptoSession');
-        location.reload();
-    }
-
-    // ========================
-    // الواجهة والخلفية
-    // ========================
-    const canvas = document.getElementById('bgCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
-
-    class Particle {
-        constructor() { this.reset(); }
-        reset() {
-            this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height;
-            this.size = Math.random() * 2 + 0.5; this.speedY = Math.random() * 0.3 + 0.1;
-            this.speedX = (Math.random() - 0.5) * 0.2; this.opacity = Math.random() * 0.5 + 0.1;
-            this.color = Math.random() > 0.7 ? '#f7931a' : '#ffffff';
-        }
-        update() {
-            this.y -= this.speedY; this.x += this.speedX;
-            if (this.y < -10) { this.reset(); this.y = canvas.height + 10; }
-        }
-        draw() {
-            ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-            ctx.fillStyle = this.color === '#f7931a' ? `rgba(247,147,26,${this.opacity})` : `rgba(255,255,255,${this.opacity * 0.3})`;
-            ctx.fill();
-        }
-    }
+    const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } resizeCanvas(); window.addEventListener('resize', resizeCanvas);
+    class Particle { constructor() { this.reset(); } reset() { this.x = Math.random() * canvas.width; this.y = Math.random() * canvas.height; this.size = Math.random() * 2 + 0.5; this.speedY = Math.random() * 0.3 + 0.1; this.speedX = (Math.random() - 0.5) * 0.2; this.opacity = Math.random() * 0.5 + 0.1; this.color = Math.random() > 0.7 ? '#f7931a' : '#ffffff'; } update() { this.y -= this.speedY; this.x += this.speedX; if (this.y < -10) { this.reset(); this.y = canvas.height + 10; } } draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fillStyle = this.color === '#f7931a' ? `rgba(247,147,26,${this.opacity})` : `rgba(255,255,255,${this.opacity * 0.3})`; ctx.fill(); } }
     for (let i = 0; i < 80; i++) particles.push(new Particle());
-
-    function animateParticles() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        particles.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animateParticles);
-    }
-
-    function showToast(message, type = 'info') {
-        const toast = document.getElementById('toast');
-        toast.textContent = message; toast.className = `toast ${type}`;
-        setTimeout(() => toast.classList.add('show'), 10);
-        setTimeout(() => toast.classList.remove('show'), 4000);
-    }
+    function animateParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animateParticles); }
+    function showToast(message, type = 'info') { const toast = document.getElementById('toast'); toast.textContent = message; toast.className = `toast ${type}`; setTimeout(() => toast.classList.add('show'), 10); setTimeout(() => toast.classList.remove('show'), 4000); }
 </script>
 </body>
 </html>
