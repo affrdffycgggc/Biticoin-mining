@@ -16,9 +16,9 @@
             --os-bg: #01010a; --os-border: rgba(0, 243, 255, 0.2); --os-accent: #00f3ff; --os-danger: #ff0044;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; min-height: 100vh; }
         
-        /* Custom Modern Scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: rgba(247, 147, 26, 0.4); border-radius: 10px; }
@@ -34,12 +34,10 @@
         .font-orbitron { font-family: 'Orbitron', sans-serif; }
         .font-mono { font-family: 'Share Tech Mono', monospace; }
         
-        /* Modern Glass Cards with Hover Glow */
         .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03), rgba(0,0,0,0.4)); border: 1px solid var(--border); backdrop-filter: blur(20px); border-radius: 24px; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); position: relative; overflow: hidden; }
         .glass-card::before { content: ''; position: absolute; inset: 0; border-radius: 24px; padding: 1px; background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05)); -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude; pointer-events: none; }
         .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.5), 0 0 30px rgba(247,147,26,0.1); border-color: rgba(247,147,26,0.3); }
         
-        /* Advanced Buttons with Active Press Gesture */
         .btn-primary { background: linear-gradient(135deg, var(--accent), #e8850f); color: #000; font-weight: 800; padding: 16px 32px; border-radius: 16px; border: none; cursor: pointer; font-size: 16px; font-family: 'Cairo', sans-serif; transition: all 0.2s ease; width: 100%; position: relative; overflow: hidden; box-shadow: 0 0 15px rgba(247,147,26,0.3); }
         .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 30px rgba(247,147,26,0.6); }
         .btn-primary:active { transform: scale(0.95) translateY(0); box-shadow: 0 0 10px rgba(247,147,26,0.2); }
@@ -56,14 +54,12 @@
         .spin-slow { animation: spin 10s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
         
-        /* Toast Animation */
         .toast { position: fixed; top: 20px; left: 20px; transform: translateX(-150%); z-index: 10001; padding: 16px 24px; border-radius: 12px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 350px; font-size: 14px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); display: flex; align-items: center; gap: 10px; }
         .toast.show { transform: translateX(0); }
         .toast.success { background: rgba(0,230,118,0.1); border-color: rgba(0,230,118,0.3); color: var(--success); }
         .toast.error { background: rgba(255,61,87,0.1); border-color: rgba(255,61,87,0.3); color: var(--danger); }
         .toast.info { background: rgba(0,243,255,0.1); border-color: rgba(0,243,255,0.3); color: var(--neon-cyan); }
         
-        /* Modal Fade-in Up Animation */
         .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 15px; }
         .modal-overlay.active { display: flex; }
         .modal-content { background: linear-gradient(160deg, rgba(15,15,30,0.95), rgba(5,5,15,0.98)); border: 1px solid var(--border); border-radius: 24px; padding: 40px; max-width: 500px; width: 100%; position: relative; animation: modalIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 0 80px rgba(0,0,0,0.5); }
@@ -78,7 +74,6 @@
         .input-group .input-field { padding-right: 48px; }
         .input-group:focus-within .input-icon { color: var(--neon-cyan); }
 
-        /* Admin OS */
         .admin-os { position: fixed; inset: 0; background: var(--os-bg); z-index: 10000; display: none; flex-direction: column; font-family: 'Share Tech Mono', monospace; border: 1px solid var(--os-border); }
         .admin-os.active { display: flex; }
         .os-header { background: linear-gradient(90deg, rgba(0, 243, 255, 0.05), transparent); border-bottom: 1px solid var(--os-border); padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; color: var(--os-accent); }
@@ -102,8 +97,7 @@
         .os-table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.03); transition: 0.2s; }
         .os-table tr:hover td { background: rgba(0, 243, 255, 0.05); }
         
-        /* Modern Chat Bubbles */
-        .chat-box { height: 300px; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .chat-box { height: 300px; overflow-y: auto; background: rgba(0,0,0,0.4); padding: 20px; border-radius: 16px; margin-bottom: 15px; display: flex; flex-direction: column; gap: 15px; border: 1px solid rgba(255,255,255,0.05); scroll-behavior: smooth; }
         .chat-msg { max-width: 80%; padding: 12px 16px; border-radius: 16px 16px 4px 16px; font-size: 14px; line-height: 1.5; animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); box-shadow: 0 4px 15px rgba(0,0,0,0.2); }
         .chat-msg.user { background: linear-gradient(135deg, rgba(247,147,26,0.2), rgba(247,147,26,0.05)); align-self: flex-start; border: 1px solid rgba(247,147,26,0.2); border-radius: 16px 16px 16px 4px; }
         .chat-msg.admin { background: linear-gradient(135deg, rgba(0,243,255,0.2), rgba(0,243,255,0.05)); align-self: flex-end; border: 1px solid rgba(0,243,255,0.2); color: #fff; border-radius: 16px 16px 4px 16px; }
@@ -161,8 +155,7 @@
     <div class="os-body">
         <div class="os-sidebar"><div class="os-nav-item active" onclick="switchOsTab('users', this)"><i class="fas fa-users"></i><span>المستخدمين</span></div><div class="os-nav-item" onclick="switchOsTab('payments', this)"><i class="fas fa-money-bill-transfer"></i><span>طلبات الشحن</span></div><div class="os-nav-item" onclick="switchOsTab('withdrawals', this)"><i class="fas fa-money-bill-wave"></i><span>طلبات السحب</span></div><div class="os-nav-item" onclick="switchOsTab('wallets', this)"><i class="fas fa-wallet"></i><span>المحافظ</span></div><div class="os-nav-item" onclick="switchOsTab('support', this)"><i class="fas fa-headset"></i><span>الدعم الفني</span></div><div class="os-nav-item" onclick="switchOsTab('settings', this)"><i class="fas fa-cogs"></i><span>إعدادات المنصة</span></div><div class="os-nav-item" onclick="switchOsTab('security', this)"><i class="fas fa-key"></i><span>الأمان</span></div></div>
         <div class="os-content">
-            <!-- Updated Users Table to include Multi-Currency -->
-            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>سجلات المستخدمين</span><span id="userCount">0</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>رصيد BTC</th><th>رصيد USD</th><th>رصيد SYP</th><th>الحالة</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div>
+            <div id="os-tab-users" class="os-tab-content"><div class="os-card"><div class="os-card-header"><span>سجلات المستخدمين (مباشر)</span><span id="userCount">0</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>الاشتراك</th><th>رصيد BTC</th><th>رصيد USD</th><th>رصيد SYP</th><th>الحالة</th></tr></thead><tbody id="adminUsersTable"></tbody></table></div></div>
             <div id="os-tab-payments" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات الاشتراك</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>رقم العملية</th><th>المبلغ</th><th>الشبكة</th><th>إجراء</th></tr></thead><tbody id="adminPaymentsTable"></tbody></table></div></div>
             <div id="os-tab-withdrawals" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>طلبات السحب</span></div><table class="os-table"><thead><tr><th>المستخدم</th><th>المبلغ</th><th>الشبكة</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWithdrawalsTable"></tbody></table></div></div>
             <div id="os-tab-wallets" class="os-tab-content" style="display:none;"><div class="os-card"><div class="os-card-header"><span>إضافة محفظة</span></div><div class="grid grid-cols-1 md:grid-cols-3 gap-3"><input id="newWalletName" type="text" class="os-input" placeholder="اسم المحفظة"><input id="newWalletAddress" type="text" class="os-input" dir="ltr" placeholder="عنوان المحفظة"><button onclick="addWallet()" class="os-btn h-auto">إضافة</button></div></div><div class="os-card mt-4"><div class="os-card-header"><span>المحافظ المتاحة</span></div><table class="os-table"><thead><tr><th>الاسم</th><th>العنوان</th><th>إجراء</th></tr></thead><tbody id="adminWalletsTable"></tbody></table></div></div>
@@ -223,12 +216,32 @@
 </div>
 
 <script>
-    function initDB() { if (!localStorage.getItem('cryptoDB')) { const defaultDB = { users: [{ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }], paymentRequests: [], withdrawalRequests: [], supportMessages: [], settings: { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 }, wallets: [ { id: 1, name: 'USDT TRC20', address: 'TJxKfNewExampleAddressTrc20' }, { id: 2, name: 'BTC Network', address: 'bc1qExampleAddressBtcNetwork' } ] }; localStorage.setItem('cryptoDB', JSON.stringify(defaultDB)); } } initDB(); function getDB() { return JSON.parse(localStorage.getItem('cryptoDB')); } function saveDB(db) { localStorage.setItem('cryptoDB', JSON.stringify(db)); }
+    // Self-Healing Database initialization
+    function initDB() { 
+        if (!localStorage.getItem('cryptoDB')) { 
+            const defaultDB = { users: [{ id: 1, username: 'admin', password: 'admin123', role: 'admin', isSubscribed: true, balance: 0, banned: false, isMining: false, lastMiningTimestamp: null, miningTimeSeconds: 0 }], paymentRequests: [], withdrawalRequests: [], supportMessages: [], settings: { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 }, wallets: [ { id: 1, name: 'USDT TRC20', address: 'TJxKfNewExampleAddressTrc20' }, { id: 2, name: 'BTC Network', address: 'bc1qExampleAddressBtcNetwork' } ] }; 
+            localStorage.setItem('cryptoDB', JSON.stringify(defaultDB)); 
+        } 
+    } initDB(); 
+    
+    function getDB() { 
+        let db = JSON.parse(localStorage.getItem('cryptoDB'));
+        // Fix missing arrays to prevent crashes
+        if(!db.supportMessages) db.supportMessages = [];
+        if(!db.paymentRequests) db.paymentRequests = [];
+        if(!db.withdrawalRequests) db.withdrawalRequests = [];
+        if(!db.wallets) db.wallets = [];
+        if(!db.settings) db.settings = { maintenance: false, subscriptionAmount: 100000, commission: 5, btcToUsd: 65000, usdToSyp: 15000, minWithdrawUsd: 10 };
+        return db;
+    }
+    
+    function saveDB(db) { localStorage.setItem('cryptoDB', JSON.stringify(db)); }
     
     let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningInterval: null, saveCounter: 0 }; 
     let activeSupportUserId = null;
     let userChatInterval = null;
     let adminChatInterval = null;
+    let adminRefreshInterval = null;
     
     window.onload = () => { 
         const session = localStorage.getItem('cryptoSession'); 
@@ -246,7 +259,19 @@
     });
     
     function updateOsTime() { const d = new Date(); const el = document.getElementById('osTime'); if(el) el.innerText = d.toLocaleTimeString('en-US', {hour12:false}); }
-    function openModal(id) { if(id === 'paymentModal') populateDepositWallets(); if(id === 'withdrawModal') populateWithdrawWallets(); if(id === 'supportModal') { renderUserChat(); startUserChatPolling(); } document.getElementById(id).classList.add('active'); }
+    
+    function openModal(id) { 
+        try {
+            if(id === 'paymentModal') populateDepositWallets(); 
+            if(id === 'withdrawModal') populateWithdrawWallets(); 
+            if(id === 'supportModal') { renderUserChat(); startUserChatPolling(); } 
+            document.getElementById(id).classList.add('active');
+        } catch(e) {
+            console.error("Modal Error:", e);
+            document.getElementById(id).classList.add('active'); // Fallback
+        }
+    }
+    
     function closeModal(id) { document.getElementById(id).classList.remove('active'); if(id === 'supportModal') stopUserChatPolling(); }
     
     function switchAuthTab(tab) {
@@ -298,19 +323,18 @@
     function populateWithdrawWallets() { const db = getDB(); const sel = document.getElementById('withdrawNetwork'); sel.innerHTML = ''; db.wallets.forEach(w => sel.innerHTML += `<option value="${w.name}">${w.name}</option>`); const usdBal = appState.currentUser.balance * (db.settings.btcToUsd || 65000); const sypBal = usdBal * (db.settings.usdToSyp || 15000); document.getElementById('withdrawBalance').textContent = appState.currentUser.balance.toFixed(8); document.getElementById('withdrawBalanceUsd').textContent = formatFiat(usdBal); document.getElementById('withdrawBalanceSyp').textContent = formatFiat(sypBal); calculateWithdraw(); }
     function submitPaymentRequest() { const txId = document.getElementById('txIdInput').value.trim(); const amount = document.getElementById('amountPaidInput').value; const walletName = document.getElementById('depositWalletSelect').options[document.getElementById('depositWalletSelect').selectedIndex].text; if(!txId || !amount) return showToast('الرجاء إدخال كافة البيانات', 'error'); const db = getDB(); db.paymentRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, txId, amount: parseFloat(amount), walletName, status: 'pending' }); saveDB(db); closeModal('paymentModal'); showToast('تم إرسال الطلب', 'info'); document.getElementById('txIdInput').value = ''; document.getElementById('amountPaidInput').value = ''; }
     function toggleMining() { if (!appState.currentUser) return openModal('authModal'); const db = getDB(); const freshUser = db.users.find(u => u.id === appState.currentUser.id); if (!freshUser.isSubscribed) return openModal('paymentModal'); if (appState.isMining) { const dbUpd = getDB(); const udb = dbUpd.users.find(u => u.id === appState.currentUser.id); udb.isMining = false; udb.lastMiningTimestamp = null; udb.balance = appState.currentUser.balance; udb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); stopMiningVisuals(); } else startMining(false); }
-    function startMining(isResuming) { appState.isMining = true; appState.saveCounter = 0; const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; appState.miningInterval = setInterval(() => { if (!appState.isMining) return; appState.currentUser.balance += 0.000000015 * (0.9 + Math.random() * 0.2); appState.miningTimeSeconds++; updateUIBalance(); document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds); document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2); if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } appState.saveCounter++; if (appState.saveCounter >= 10) { const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); } appState.saveCounter = 0; } }, 1000); if(!isResuming) showToast('تم بدء التعدين (يعمل حتى لو سجلت خروج)', 'success'); }
+    function startMining(isResuming) { appState.isMining = true; appState.saveCounter = 0; const db = getDB(); const user = db.users.find(u => u.id === appState.currentUser.id); user.isMining = true; user.lastMiningTimestamp = Date.now(); saveDB(db); document.getElementById('miningIcon').className = 'fas fa-pause text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'التعدين جارٍ...'; document.getElementById('miningStatus').style.color = 'var(--success)'; document.getElementById('miningRing').classList.add('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'var(--accent)'; appState.miningInterval = setInterval(() => { if (!appState.isMining) return; appState.currentUser.balance += 0.000000015 * (0.9 + Math.random() * 0.2); appState.miningTimeSeconds++; updateUIBalance(); document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds); document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2); if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; } appState.saveCounter++; if (appState.saveCounter >= 5) { const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id); if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); } appState.saveCounter = 0; } }, 1000); if(!isResuming) showToast('تم بدء التعدين (يعمل حتى لو سجلت خروج)', 'success'); }
     function stopMiningVisuals() { appState.isMining = false; clearInterval(appState.miningInterval); document.getElementById('miningIcon').className = 'fas fa-play text-4xl md:text-6xl text-black'; document.getElementById('miningStatus').textContent = 'متوقف'; document.getElementById('miningStatus').style.color = 'var(--muted)'; document.getElementById('miningRing').classList.remove('mining-pulse'); document.getElementById('miningRing').style.borderColor = 'rgba(247,147,26,0.2)'; document.getElementById('hashRate').textContent = '0.00'; }
     function formatTime(s) { return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
     function calculateWithdraw() { const db = getDB(); const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value) || 0; const currency = document.getElementById('withdrawCurrency').value; let btcNeeded = currency === 'USD' ? amountFiat / (db.settings.btcToUsd||65000) : (amountFiat / (db.settings.usdToSyp||15000)) / (db.settings.btcToUsd||65000); document.getElementById('withdrawDeductBtc').textContent = (btcNeeded * (1 + ((db.settings.commission || 0) / 100))).toFixed(8); }
     function processWithdraw() { const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value); const currency = document.getElementById('withdrawCurrency').value; const network = document.getElementById('withdrawNetwork').value; const walletAddr = document.getElementById('withdrawWalletAddr').value.trim(); if(!amountFiat || amountFiat <= 0 || !walletAddr) return showToast('أدخل بيانات صحيحة', 'error'); const db = getDB(); const settings = db.settings; const minUsd = settings.minWithdrawUsd || 10; const minSyp = minUsd * (settings.usdToSyp || 15000); if (currency === 'USD' && amountFiat < minUsd) return showToast(`الحد الأدنى $${minUsd}`, 'error'); if (currency === 'SYP' && amountFiat < minSyp) return showToast(`الحد الأدنى ${formatFiat(minSyp)} ل.س`, 'error'); let btcNeeded = currency === 'USD' ? amountFiat / (settings.btcToUsd||65000) : (amountFiat / (settings.usdToSyp||15000)) / (settings.btcToUsd||65000); let btcWithCommission = btcNeeded * (1 + ((settings.commission || 0) / 100)); if (btcWithCommission > appState.currentUser.balance) return showToast('رصيدك غير كافٍ', 'error'); appState.currentUser.balance -= btcWithCommission; const userInDb = db.users.find(u => u.id === appState.currentUser.id); userInDb.balance = appState.currentUser.balance; db.withdrawalRequests.push({ id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, requestedCurrency: currency, requestedAmount: amountFiat, deductedBtc: btcWithCommission, network, walletAddr, status: 'pending' }); saveDB(db); updateUIBalance(); closeModal('withdrawModal'); showToast('تم تقديم طلب السحب', 'success'); document.getElementById('withdrawAmountFiat').value = ''; document.getElementById('withdrawWalletAddr').value = ''; }
 
-    // Admin Logic
-    function openAdminOS() { if(!appState.currentUser || appState.currentUser.role !== 'admin') return; document.getElementById('adminOS').classList.add('active'); renderAdminData(); }
-    function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; stopAdminChatPolling(); }
+    // Admin Logic with Live Refresh
+    function openAdminOS() { if(!appState.currentUser || appState.currentUser.role !== 'admin') return; document.getElementById('adminOS').classList.add('active'); renderAdminData(); adminRefreshInterval = setInterval(renderAdminData, 3000); /* Live Refresh every 3s */ }
+    function closeAdminOS() { document.getElementById('adminOS').classList.remove('active'); activeSupportUserId = null; stopAdminChatPolling(); clearInterval(adminRefreshInterval); }
     function switchOsTab(tab, el) { document.querySelectorAll('.os-tab-content').forEach(e => e.style.display = 'none'); document.querySelectorAll('.os-nav-item').forEach(e => e.classList.remove('active')); document.getElementById(`os-tab-${tab}`).style.display = 'block'; el.classList.add('active'); renderAdminData(); if(tab === 'support') startAdminChatPolling(); else stopAdminChatPolling(); }
     function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); if(document.getElementById('os-tab-support').style.display === 'block') renderAdminSupport(); loadAdminSettings(); }
     
-    // Updated Admin Users Table with Multi-Currency
     function renderAdminUsers() { 
         const db = getDB(); const t = document.getElementById('adminUsersTable'); t.innerHTML = ''; 
         const users = db.users.filter(u=>u.role!=='admin'); 
@@ -344,7 +368,7 @@
     function togglePassView() { const el = document.getElementById('passMask'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); el.innerText = el.innerText === '********' ? admin.password : '********'; }
     function changePassword() { const curr = document.getElementById('currentPass').value; const newP = document.getElementById('newPass').value; const confP = document.getElementById('confirmNewPass').value; if(!curr || !newP || !confP) return showToast('املأ جميع الحقول', 'error'); const db = getDB(); const admin = db.users.find(u => u.role === 'admin'); if(curr !== admin.password) return showToast('كلمة المرور الحالية خاطئة', 'error'); if(newP !== confP) return showToast('كلمة المرور الجديدة غير متطابقة', 'error'); admin.password = newP; saveDB(db); showToast('تم تغيير كلمة المرور بنجاح', 'success'); document.getElementById('currentPass').value=''; document.getElementById('newPass').value=''; document.getElementById('confirmNewPass').value=''; document.getElementById('passMask').innerText = '********'; }
 
-    // Support Logic - Advanced Polling & Modern UI
+    // Support Logic
     function startUserChatPolling() { stopUserChatPolling(); userChatInterval = setInterval(renderUserChat, 1500); }
     function stopUserChatPolling() { if(userChatInterval) clearInterval(userChatInterval); userChatInterval = null; }
     function startAdminChatPolling() { stopAdminChatPolling(); adminChatInterval = setInterval(renderAdminSupport, 1500); }
@@ -354,27 +378,27 @@
         if(!appState.currentUser) return; 
         const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); 
         const box = document.getElementById('userChatBox'); let html = '';
-        if(thread && thread.messages.length > 0) { thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); } 
-        else { html = '<div class="text-center text-gray-500 text-sm mt-10"><i class="fas fa-comments text-4xl mb-4 block text-gray-700"></i>لا توجد رسائل بعد<br><span class="text-xs">كتب رسالتك وسنرد عليك فوراً</span></div>'; }
+        if(thread && thread.messages && thread.messages.length > 0) { thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? 'أنت' : 'الدعم الفني'}</span>${msg.text}</div>`; }); } 
+        else { html = '<div class="text-center text-gray-500 text-sm mt-10"><i class="fas fa-comments text-4xl mb-4 block text-gray-700"></i>لا توجد رسائل بعد<br><span class="text-xs">اكتب رسالتك وسنرد عليك فوراً</span></div>'; }
         if(box.innerHTML !== html) { box.innerHTML = html; box.scrollTop = box.scrollHeight; }
     }
-    function sendUserMsg() { const input = document.getElementById('userMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderUserChat(); } 
+    function sendUserMsg() { const input = document.getElementById('userMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); let thread = db.supportMessages.find(t => t.userId === appState.currentUser.id); if(!thread) { thread = { id: Date.now(), userId: appState.currentUser.id, username: appState.currentUser.username, messages: [] }; db.supportMessages.push(thread); } if(!thread.messages) thread.messages = []; thread.messages.push({ sender: 'user', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderUserChat(); } 
     
     function renderAdminSupport() { 
         const db = getDB(); const list = document.getElementById('supportUserList'); let listHtml = '';
         if(db.supportMessages.length === 0) { listHtml = '<div class="p-4 text-center text-gray-600 text-xs">لا توجد تذاكر دعم</div>'; } 
-        else { db.supportMessages.forEach(t => { const lastMsg = t.messages[t.messages.length - 1]; const isActive = activeSupportUserId === t.userId; listHtml += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg ? lastMsg.text : ''}</div></div>`; }); }
+        else { db.supportMessages.forEach(t => { const lastMsg = t.messages && t.messages.length > 0 ? t.messages[t.messages.length - 1] : null; const isActive = activeSupportUserId === t.userId; listHtml += `<div onclick="viewChat(${t.userId})" class="p-3 cursor-pointer hover:bg-gray-800 border-b border-gray-800 transition ${isActive ? 'bg-gray-800 border-r-2 border-r-cyan-400' : ''}"><div class="font-bold text-sm">${t.username}</div><div class="text-xs text-gray-500 truncate mt-1">${lastMsg ? lastMsg.text : ''}</div></div>`; }); }
         if(list.innerHTML !== listHtml) list.innerHTML = listHtml;
         if(activeSupportUserId) renderAdminChat(); 
     }
     function viewChat(userId) { activeSupportUserId = userId; renderAdminSupport(); }
     function renderAdminChat() { 
         const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); const box = document.getElementById('adminChatBox'); const nameEl = document.getElementById('chatUserName'); let html = '';
-        if(thread) { nameEl.innerText = thread.username; thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); } 
+        if(thread && thread.messages) { nameEl.innerText = thread.username; thread.messages.forEach(msg => { html += `<div class="chat-msg ${msg.sender === 'user' ? 'user' : 'admin'}"><span class="sender">${msg.sender === 'user' ? thread.username : 'أنت (الدعم)'}</span>${msg.text}</div>`; }); } 
         else { nameEl.innerText = ''; html = '<div class="text-center text-gray-500 text-sm mt-10">اختر مستخدمًا للمحادثة</div>'; }
         if(box.innerHTML !== html) { box.innerHTML = html; box.scrollTop = box.scrollHeight; }
     } 
-    function sendAdminReply() { if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); const input = document.getElementById('adminMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); if(thread) { thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderAdminChat(); } }
+    function sendAdminReply() { if(!activeSupportUserId) return showToast('اختر مستخدم أولاً', 'error'); const input = document.getElementById('adminMsgInput'); const text = input.value.trim(); if(!text) return; const db = getDB(); const thread = db.supportMessages.find(t => t.userId === activeSupportUserId); if(thread) { if(!thread.messages) thread.messages = []; thread.messages.push({ sender: 'admin', text, timestamp: Date.now() }); saveDB(db); input.value = ''; renderAdminChat(); } }
 
     // Background Animation
     const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
