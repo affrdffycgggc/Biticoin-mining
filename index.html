@@ -13,7 +13,7 @@
             --border: rgba(247, 147, 26, 0.15); --accent: #f7931a; --accent2: #ffd700;
             --fg: #e8e8f0; --muted: #6b6b8a; --success: #00e676; --danger: #ff3d57;
             --scary-bg: #0a0000; --scary-card: rgba(30, 0, 0, 0.9);
-            --scary-border: rgba(255, 0, 0, 0.3); --scary-accent: #ff1a1a;
+            --scary-border: rgba(255, 0, 0, 0.3);
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Cairo', sans-serif; background: var(--bg); color: var(--fg); overflow-x: hidden; min-height: 100vh; }
@@ -36,7 +36,7 @@
         @keyframes miningPulse { 0%, 100% { box-shadow: 0 0 20px rgba(247,147,26,0.2); } 50% { box-shadow: 0 0 50px rgba(247,147,26,0.5); } }
         .spin-slow { animation: spin 8s linear infinite; }
         @keyframes spin { to { transform: rotate(360deg); } }
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); z-index: 9999; padding: 14px 24px; border-radius: 10px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; font-size: 14px; }
+        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%) translateY(-120px); z-index: 10001; padding: 14px 24px; border-radius: 10px; font-weight: 600; backdrop-filter: blur(15px); transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); max-width: 90vw; text-align: center; font-size: 14px; }
         .toast.show { transform: translateX(-50%) translateY(0); }
         .toast.success { background: rgba(0,230,118,0.15); border: 1px solid rgba(0,230,118,0.4); color: var(--success); }
         .toast.error { background: rgba(255,61,87,0.15); border: 1px solid rgba(255,61,87,0.4); color: var(--danger); }
@@ -47,23 +47,62 @@
         .modal-scary { background: var(--scary-bg); border: 2px solid var(--scary-border); max-width: 900px; width: 100%; position: relative; box-shadow: 0 0 30px rgba(255,0,0,0.2); border-radius: 12px; animation: scaryIn 0.4s ease; }
         @keyframes scaryIn { 0% { transform: scale(0.95); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
         @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        .maintenance-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9998; display: none; flex-direction: column; align-items: center; justify-content: center; color: white; text-align: center; padding: 20px; }
-        .maintenance-overlay.active { display: flex; }
         .tab-btn { padding: 8px 15px; cursor: pointer; border-bottom: 2px solid transparent; color: #ffcccc; transition: 0.3s; font-size: 14px; }
         .tab-btn.active { color: #ff1a1a; border-bottom-color: #ff1a1a; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
-        @media (max-width: 640px) { .modal-content, .modal-scary { padding: 20px; } .modal-scary { max-height: 95vh; overflow-y: auto; } }
+
+        /* شاشة الصيانة المتطورة */
+        .maintenance-overlay { position: fixed; inset: 0; background: #030303; z-index: 900; display: none; flex-direction: column; align-items: center; justify-content: center; overflow: hidden; color: white; }
+        .maintenance-overlay.active { display: flex; }
+        .maintenance-grid { position: absolute; inset: 0; background-image: linear-gradient(rgba(255, 0, 0, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 0, 0, 0.05) 1px, transparent 1px); background-size: 40px 40px; animation: gridMove 4s linear infinite; }
+        @keyframes gridMove { 0% { transform: perspective(500px) rotateX(60deg) translateY(0); } 100% { transform: perspective(500px) rotateX(60deg) translateY(40px); } }
+        .scanlines { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,0) 50%, rgba(0,0,0,0.1) 50%, rgba(0,0,0,0.1)); background-size: 100% 4px; pointer-events: none; z-index: 2; }
+        .glitch-wrapper { position: relative; z-index: 3; text-align: center; }
+        .glitch { font-size: 4rem; font-weight: 900; color: white; position: relative; text-transform: uppercase; animation: glitch 3s infinite; }
+        .glitch::before, .glitch::after { content: attr(data-text); position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
+        .glitch::before { left: 2px; text-shadow: -2px 0 #ff0000; clip-path: inset(0 0 0 80%); animation: glitch-anim 2s infinite linear alternate-reverse; }
+        .glitch::after { left: -2px; text-shadow: -2px 0 #00ffcc; clip-path: inset(80% 0 0 0); animation: glitch-anim2 3s infinite linear alternate-reverse; }
+        @keyframes glitch { 0%, 100% { transform: translate(0); } 20% { transform: translate(-2px, 2px); } 40% { transform: translate(-2px, -2px); } 60% { transform: translate(2px, 2px); } 80% { transform: translate(2px, -2px); } }
+        @keyframes glitch-anim { 0% { clip-path: inset(20% 0 60% 0); } 20% { clip-path: inset(60% 0 10% 0); } 40% { clip-path: inset(40% 0 30% 0); } 60% { clip-path: inset(80% 0 5% 0); } 80% { clip-path: inset(10% 0 70% 0); } 100% { clip-path: inset(50% 0 20% 0); } }
+        @keyframes glitch-anim2 { 0% { clip-path: inset(10% 0 70% 0); } 20% { clip-path: inset(80% 0 5% 0); } 40% { clip-path: inset(50% 0 20% 0); } 60% { clip-path: inset(20% 0 60% 0); } 80% { clip-path: inset(40% 0 30% 0); } 100% { clip-path: inset(60% 0 10% 0); } }
+        .cog-container { position: absolute; z-index: 1; opacity: 0.1; color: #ff1a1a; }
+        .cog-1 { top: 10%; right: 10%; font-size: 8rem; animation: spin 10s linear infinite; }
+        .cog-2 { bottom: 15%; left: 5%; font-size: 12rem; animation: spin 15s linear infinite reverse; }
+        .pulse-ring { position: absolute; border: 2px solid rgba(255,0,0,0.3); border-radius: 50%; animation: pulseRing 2s infinite; z-index: 1; }
+        @keyframes pulseRing { 0% { transform: scale(0.5); opacity: 1; } 100% { transform: scale(2.5); opacity: 0; } }
+
+        @media (max-width: 640px) { .modal-content, .modal-scary { padding: 20px; } .modal-scary { max-height: 95vh; overflow-y: auto; } .glitch { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
 
 <canvas id="bgCanvas"></canvas>
 
+<!-- شاشة الصيانة المتطورة (تظهر فقط للمستخدم العادي إذا فعّلها المدير) -->
 <div id="maintenanceOverlay" class="maintenance-overlay">
-    <i class="fas fa-tools text-5xl mb-6" style="color:#ff1a1a;"></i>
-    <h1 class="font-creepster text-4xl md:text-5xl mb-4" style="color:#ff1a1a;">الموقع تحت الصيانة</h1>
-    <p class="text-lg" style="color:#ffcccc;">نحن نقوم بتحسين الأداء. سنعود قريباً!</p>
+    <div class="maintenance-grid"></div>
+    <div class="scanlines"></div>
+    
+    <div class="cog-container cog-1"><i class="fas fa-cog"></i></div>
+    <div class="cog-container cog-2"><i class="fas fa-cog"></i></div>
+    
+    <div class="pulse-ring" style="width: 200px; height: 200px;"></div>
+    <div class="pulse-ring" style="width: 200px; height: 200px; animation-delay: 1s;"></div>
+
+    <div class="glitch-wrapper p-8 rounded-xl" style="background: rgba(0,0,0,0.6); border: 1px solid rgba(255,0,0,0.3); backdrop-filter: blur(5px); z-index: 10;">
+        <div class="flex justify-center gap-4 mb-4 text-3xl text-red-500">
+            <i class="fas fa-wrench animate-pulse"></i>
+            <i class="fas fa-exclamation-triangle animate-pulse" style="animation-delay: 0.5s;"></i>
+            <i class="fas fa-tools animate-pulse" style="animation-delay: 1s;"></i>
+        </div>
+        <h1 class="glitch font-orbitron" data-text="صيانة">صيانة</h1>
+        <p class="text-red-300 mt-4 text-lg font-bold tracking-wider" style="text-shadow: 0 0 10px rgba(255,0,0,0.5);">النظام قيد التحديث والتطوير</p>
+        <div class="mt-6 w-64 h-1 bg-gray-800 rounded-full overflow-hidden mx-auto">
+            <div class="h-full bg-red-600 rounded-full" style="width: 70%; animation: gridMove 2s linear infinite; box-shadow: 0 0 15px #ff0000;"></div>
+        </div>
+        <p class="text-gray-500 text-sm mt-6">سنعود قريباً بأداء أفضل</p>
+    </div>
 </div>
 
 <div id="toast" class="toast" role="alert"></div>
@@ -209,6 +248,7 @@
             <div class="scary-card p-4">
                 <h3 class="font-bold text-red-400 mb-4">التحكم بالموقع</h3>
                 <button onclick="toggleMaintenance()" id="maintenanceBtn" class="w-full py-2 rounded-lg font-bold text-sm transition" style="background: #330000; border: 1px solid #ff0000; color: #ff1a1a;"><i class="fas fa-tools ml-2"></i> تفعيل وضع الصيانة</button>
+                <p class="text-xs text-gray-500 mt-2 text-center">عند التفعيل، سيتم منع المستخدمين العاديين من الدخول للمنصة. يمكنك أنت الدخول بشكل طبيعي.</p>
             </div>
         </div>
     </div>
@@ -290,20 +330,10 @@
     let appState = { currentUser: null, isMining: false, miningTimeSeconds: 0, blocksMined: 0, miningInterval: null, timeInterval: null };
 
     window.onload = () => {
-        checkMaintenance();
         const session = localStorage.getItem('cryptoSession');
-        if (session) { const db = getDB(); const user = db.users.find(u => u.id === parseInt(session)); if (user) loginSuccess(user); }
+        if (session) { const db = getDB(); const user = db.users.find(u => u.id === parseInt(session)); if (user) loginSuccess(user, true); }
         animateParticles();
     };
-
-    function checkMaintenance() {
-        const db = getDB();
-        const session = localStorage.getItem('cryptoSession');
-        let isAdmin = false;
-        if(session) { const user = db.users.find(u => u.id === parseInt(session)); if(user && user.role === 'admin') isAdmin = true; }
-        if(db.settings.maintenance && !isAdmin) { document.getElementById('maintenanceOverlay').classList.add('active'); } 
-        else { document.getElementById('maintenanceOverlay').classList.remove('active'); }
-    }
 
     function openModal(id) { 
         if(id === 'paymentModal') populateDepositWallets();
@@ -332,34 +362,51 @@
         const user = document.getElementById('loginUser').value.trim(); const pass = document.getElementById('loginPass').value;
         const db = getDB(); const foundUser = db.users.find(u => u.username === user && u.password === pass);
         if (!foundUser) return showToast('بيانات الدخول خاطئة', 'error'); if (foundUser.banned) return showToast('هذا الحساب موقوف', 'error');
-        localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser); closeModal('authModal'); checkMaintenance();
+        localStorage.setItem('cryptoSession', foundUser.id); loginSuccess(foundUser, false); closeModal('authModal');
     }
 
-    function loginSuccess(user) {
+    function loginSuccess(user, isOnLoad = false) {
         appState.currentUser = user; appState.miningTimeSeconds = user.miningTimeSeconds || 0;
+        
+        // منطق شاشة الصيانة الجديد
+        const db = getDB();
+        if(db.settings.maintenance && user.role !== 'admin') {
+            document.getElementById('maintenanceOverlay').classList.add('active');
+            document.getElementById('miningSection').classList.add('hidden');
+            document.getElementById('balanceNav').style.display = 'none';
+            document.getElementById('statusBadge').style.display = 'none';
+            if(!isOnLoad) showToast('الموقع حالياً تحت الصيانة', 'error');
+            return; // أوقف التنفيذ هنا للمستخدم العادي
+        } else {
+            document.getElementById('maintenanceOverlay').classList.remove('active');
+        }
+
+        // إكمال تسجيل الدخول الطبيعي
         if (user.isMining && user.lastMiningTimestamp) {
             const elapsedSeconds = (Date.now() - user.lastMiningTimestamp) / 1000;
             if (elapsedSeconds > 0) {
-                const offlineEarnings = elapsedSeconds * 0.000000015 * 0.5; // power factor 50% avg
+                const offlineEarnings = elapsedSeconds * 0.000000015 * 0.5;
                 user.balance += offlineEarnings; user.miningTimeSeconds += elapsedSeconds; appState.miningTimeSeconds = user.miningTimeSeconds;
-                const db = getDB(); const udb = db.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; saveDB(db);
-                showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success');
+                const dbUpdate = getDB(); const udb = dbUpdate.users.find(u => u.id === user.id); udb.balance = user.balance; udb.miningTimeSeconds = user.miningTimeSeconds; saveDB(dbUpdate);
+                if(!isOnLoad) showToast(`مرحباً! تم تعدين ${offlineEarnings.toFixed(8)} BTC أثناء غيابك`, 'success');
             }
             startMining(true);
         }
+        
         document.getElementById('authBtn').classList.add('hidden'); document.getElementById('logoutBtn').classList.remove('hidden');
         document.getElementById('miningSection').classList.remove('hidden'); document.getElementById('heroActionBtn').style.display = 'none';
         document.getElementById('balanceNav').style.display = 'flex'; updateUIBalance();
         document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds);
+        
         if (user.isSubscribed) { document.getElementById('statusBadge').style.display = 'flex'; document.getElementById('subWarning').style.display = 'none'; }
         else { document.getElementById('statusBadge').style.display = 'none'; document.getElementById('subWarning').style.display = 'block'; }
-        if (user.role === 'admin') setTimeout(() => openModal('adminModal'), 500);
+        
+        if (user.role === 'admin' && !isOnLoad) setTimeout(() => openModal('adminModal'), 500);
     }
 
-    function logout() { if(appState.isMining) stopMining(); localStorage.removeItem('cryptoSession'); location.reload(); }
+    function logout() { if(appState.isMining) stopMining(); localStorage.removeItem('cryptoSession'); document.getElementById('maintenanceOverlay').classList.remove('active'); location.reload(); }
     function copyText(id) { navigator.clipboard.writeText(document.getElementById(id).textContent); showToast('تم النسخ', 'success'); }
 
-    // المحافظ
     function populateDepositWallets() {
         const db = getDB(); const sel = document.getElementById('depositWalletSelect'); sel.innerHTML = '';
         db.wallets.forEach(w => sel.innerHTML += `<option value="${w.id}">${w.name}</option>`);
@@ -384,7 +431,6 @@
         saveDB(db); closeModal('paymentModal'); showToast('تم إرسال الطلب', 'info');
     }
 
-    // التعدين
     function toggleMining() {
         if (!appState.currentUser) return openModal('authModal');
         const db = getDB(); const freshUser = db.users.find(u => u.id === appState.currentUser.id);
@@ -397,8 +443,8 @@
         appState.timeInterval = setInterval(() => { appState.miningTimeSeconds++; document.getElementById('miningTime').textContent = formatTime(appState.miningTimeSeconds); }, 1000);
         appState.miningInterval = setInterval(() => {
             if (!appState.isMining) return; const earnings = 0.000000015 * (0.9 + Math.random() * 0.2);
-            appState.currentUser.balance += earnings; const db = getDB(); const userInDb = db.users.find(u => u.id === appState.currentUser.id);
-            if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(db); }
+            appState.currentUser.balance += earnings; const dbUpd = getDB(); const userInDb = dbUpd.users.find(u => u.id === appState.currentUser.id);
+            if(userInDb) { userInDb.balance = appState.currentUser.balance; userInDb.lastMiningTimestamp = Date.now(); userInDb.miningTimeSeconds = appState.miningTimeSeconds; saveDB(dbUpd); }
             updateUIBalance(); document.getElementById('hashRate').textContent = ((25 + Math.random() * 1.75) * (0.9 + Math.random() * 0.2)).toFixed(2);
             if (Math.random() < 0.001) { appState.blocksMined++; document.getElementById('blocksMined').textContent = appState.blocksMined; }
         }, 1000);
@@ -412,7 +458,6 @@
     function updateUIBalance() { document.getElementById('totalEarnings').textContent = appState.currentUser.balance.toFixed(8); document.getElementById('navBalance').textContent = appState.currentUser.balance.toFixed(8); }
     function formatTime(s) { return `${Math.floor(s/3600).toString().padStart(2,'0')}:${Math.floor((s%3600)/60).toString().padStart(2,'0')}:${Math.floor(s%60).toString().padStart(2,'0')}`; }
 
-    // السحب
     function calculateWithdraw() {
         const db = getDB(); const amountFiat = parseFloat(document.getElementById('withdrawAmountFiat').value) || 0; const currency = document.getElementById('withdrawCurrency').value;
         let btcNeeded = 0;
@@ -438,7 +483,6 @@
         saveDB(db); updateUIBalance(); closeModal('withdrawModal'); showToast('تم تقديم طلب السحب', 'success');
     }
 
-    // الإدارة
     function switchAdminTab(tab, el) { document.querySelectorAll('.tab-content').forEach(e => e.classList.remove('active')); document.querySelectorAll('.tab-btn').forEach(e => e.classList.remove('active')); document.getElementById(`tab-${tab}`).classList.add('active'); el.classList.add('active'); renderAdminData(); }
     function renderAdminData() { renderAdminUsers(); renderAdminPayments(); renderAdminWithdrawals(); renderAdminWallets(); loadAdminSettings(); }
 
@@ -459,7 +503,7 @@
 
     function loadAdminSettings() { const db = getDB(); document.getElementById('setAmount').value = db.settings.subscriptionAmount; document.getElementById('setBtcUsd').value = db.settings.btcToUsd; document.getElementById('setUsdSyp').value = db.settings.usdToSyp; document.getElementById('setCommission').value = db.settings.commission; document.getElementById('setMinWithdrawUsd').value = db.settings.minWithdrawUsd; const mBtn = document.getElementById('maintenanceBtn'); if(db.settings.maintenance) { mBtn.innerHTML = '<i class="fas fa-check-circle ml-2"></i> تعطيل الصيانة'; mBtn.style.background = '#003300'; mBtn.style.borderColor = '#00e676'; mBtn.style.color = '#00e676'; } else { mBtn.innerHTML = '<i class="fas fa-tools ml-2"></i> تفعيل وضع الصيانة'; mBtn.style.background = '#330000'; mBtn.style.borderColor = '#ff0000'; mBtn.style.color = '#ff1a1a'; } }
     function saveAdminSettings() { const db = getDB(); db.settings.subscriptionAmount = parseFloat(document.getElementById('setAmount').value); db.settings.btcToUsd = parseFloat(document.getElementById('setBtcUsd').value); db.settings.usdToSyp = parseFloat(document.getElementById('setUsdSyp').value); db.settings.commission = parseFloat(document.getElementById('setCommission').value); db.settings.minWithdrawUsd = parseFloat(document.getElementById('setMinWithdrawUsd').value); saveDB(db); showToast('تم الحفظ', 'success'); }
-    function toggleMaintenance() { const db = getDB(); db.settings.maintenance = !db.settings.maintenance; saveDB(db); loadAdminSettings(); checkMaintenance(); }
+    function toggleMaintenance() { const db = getDB(); db.settings.maintenance = !db.settings.maintenance; saveDB(db); loadAdminSettings(); showToast(db.settings.maintenance ? 'تم تفعيل وضع الصيانة' : 'تم تعطيل وضع الصيانة', 'info'); }
 
     const canvas = document.getElementById('bgCanvas'); const ctx = canvas.getContext('2d'); let particles = [];
     function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; } resizeCanvas(); window.addEventListener('resize', resizeCanvas);
